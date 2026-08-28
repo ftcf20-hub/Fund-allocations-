@@ -3,327 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Family Trust & Care Foundation (FTCF) - آفیشل پالیسی پورٹل</title>
-    <!-- Tailwind CSS -->
+    <title>Family Trust - Fand Imdad o Qarza Rules</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts for Urdu -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Vazirmatn:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Noto Naskh Arabic', serif;
-            background-color: #f8fafc;
+            font-family: 'Vazirmatn', 'Noto Nastaliq Urdu', serif;
+            background-color: #0f172a;
+            color: #f8fafc;
         }
-        .gradient-bg {
-            background: linear-gradient(135deg, #064e3b 0%, #047857 50%, #0f766e 100%);
+        .nastaliq {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            line-height: 2.2;
         }
-        .card-shadow {
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
-        @media print {
-            .no-print {
-                display: none !important;
-            }
-            body {
-                background: white !important;
-            }
+        .accent-gradient {
+            background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
         }
     </style>
 </head>
-<body class="text-slate-800 antialiased min-h-screen flex flex-col">
+<body class="min-h-screen pb-12">
 
-    <!-- Top Header Bar -->
-    <header class="gradient-bg text-white shadow-lg relative overflow-hidden">
-        <div class="absolute -right-10 -bottom-10 opacity-10 text-white pointer-events-none">
-            <i class="fa-solid fa-hand-holding-heart text-9xl"></i>
-        </div>
-        
-        <div class="max-w-6xl mx-auto px-4 py-8 text-center relative z-10">
-            <div class="inline-block px-4 py-1 bg-emerald-500/30 rounded-full text-emerald-200 text-sm mb-3 border border-emerald-400/30">
-                شیروان ایبٹ آباد — آفیشل پالیسی و آگاہی بینر (ستمبر ۲۰۲۶ء)
+    <!-- Header Section -->
+    <header class="border-b border-slate-800 bg-slate-900/80 sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl accent-gradient flex items-center justify-center text-2xl font-bold shadow-lg shadow-emerald-900/20">
+                    FT
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-emerald-400">Family Trust</h1>
+                    <p class="text-xs text-slate-400">Fand Imdad o Qarza Policy Dashboard</p>
+                </div>
             </div>
-            
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-2">
-                FAMILY TRUST & CARE FOUNDATION (FTCF)
-            </h1>
-            <h2 class="text-2xl sm:text-3xl font-bold text-emerald-200 mb-6">
-                فیملی ٹرسٹ — شیروان ایبٹ آباد
-            </h2>
-
-            <!-- Motto Banner -->
-            <div class="inline-flex flex-wrap items-center justify-center gap-2 sm:gap-6 bg-white/10 backdrop-blur-md px-6 py-3 rounded-2xl border border-white/20 text-lg font-semibold shadow-inner">
-                <span class="flex items-center gap-2"><i class="fa-solid fa-eye text-emerald-300"></i> ۱۰۰٪ ڈیجیٹل شفافیت</span>
-                <span class="hidden sm:inline text-emerald-400">•</span>
-                <span class="flex items-center gap-2"><i class="fa-solid fa-people-group text-emerald-300"></i> باہمی اتحاد</span>
-                <span class="hidden sm:inline text-emerald-400">•</span>
-                <span class="flex items-center gap-2"><i class="fa-solid fa-seedling text-emerald-300"></i> خود انحصار فیملی نیٹ ورک</span>
+            <div class="flex items-center gap-2 bg-slate-800/80 px-4 py-2 rounded-lg border border-slate-700">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="text-sm font-medium text-slate-300">Location: Sherwan, Abbottabad</span>
             </div>
         </div>
     </header>
 
-    <!-- Welcome & Congratulatory Message Banner -->
-    <section class="max-w-6xl mx-auto px-4 pt-8 w-full">
-        <div class="bg-gradient-to-r from-amber-500 via-emerald-600 to-teal-700 text-white p-6 sm:p-8 rounded-2xl card-shadow border border-amber-300/30 text-center space-y-4 relative overflow-hidden">
-            <div class="inline-flex items-center gap-2 bg-white/20 px-4 py-1 rounded-full text-amber-100 text-sm font-semibold backdrop-blur-sm">
-                <i class="fa-solid fa-trophy text-amber-300"></i> ۵ ماہ کی کامیابی
+    <main class="max-w-5xl mx-auto px-4 mt-8 space-y-8">
+
+        <!-- Top Important Updates Highlight -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Dynamic Adjustment Clause -->
+            <div class="glass-card p-5 rounded-2xl border-l-4 border-l-emerald-500 relative overflow-hidden">
+                <div class="flex items-start gap-4">
+                    <div class="p-3 bg-emerald-500/10 rounded-xl text-emerald-400">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-emerald-300 mb-1">Raqam Me Izafa Ki Shart</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            Bank balance mazboot hone aur mehangai ko mad-e-nazar rakhte hue imdadi aur qarza ki raqam me waqt ke sath <strong>izafa kiya ja sakta hai</strong>.
+                        </p>
+                    </div>
+                </div>
             </div>
-            
-            <h3 class="text-2xl sm:text-3xl font-extrabold leading-relaxed">
-                سب سے پہلے ۵ ماہ کامیابی کے ساتھ مکمل ہونے پر آپ سب کو مبارکباد اور آپ سب کا تہہِ دل سے شکریہ!
-            </h3>
-            
-            <p class="text-lg sm:text-xl text-emerald-50 max-w-3xl mx-auto font-medium leading-relaxed">
-                آج کی اس اہم میٹنگ میں ہم آپ تمام محترم ارکان سے تمام کیٹیگریز پر فنڈ کی تقسیم اور نئی پالیسی کے باری میں تفصیلی بات کریں گے۔
-            </p>
+
+            <!-- Unlock Timeline Clause -->
+            <div class="glass-card p-5 rounded-2xl border-l-4 border-l-amber-500 relative overflow-hidden">
+                <div class="flex items-start gap-4">
+                    <div class="p-3 bg-amber-500/10 rounded-xl text-amber-400">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-amber-300 mb-1">Categories Unlock Waqt</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            Tamam categories aur sahuliyat ko mukammal unlock hone ke liye <strong>2.5 se 3 saal (Dhai se Teen Saal)</strong> ka waqt zaroori hai.
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
 
-    <!-- Main Content Area -->
-    <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full space-y-8">
+        <!-- Policy Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-        <!-- Banner Print Action & Navigation -->
-        <div class="flex justify-between items-center bg-white p-4 rounded-xl border border-slate-200 card-shadow no-print">
-            <div class="flex items-center gap-3">
-                <span class="flex h-3 w-3 relative">
-                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
-                </span>
-                <span class="text-sm font-semibold text-slate-600">حالت پورٹل: فعال و اپڈیٹ شدہ</span>
-            </div>
-            <div class="flex gap-2">
-                <button onclick="window.print()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-all flex items-center gap-2 text-sm font-medium">
-                    <i class="fa-solid fa-print"></i> بینر پرنٹ / PDF
-                </button>
-            </div>
-        </div>
-
-        <!-- Section 1: Policy Limits & Loan Categories -->
-        <section class="space-y-6">
-            <div class="border-r-4 border-emerald-600 pr-3">
-                <h3 class="text-2xl font-bold text-slate-800">1. امدادی و ہنگامی قرضہ جات کی حد (Policy Limits)</h3>
-                <p class="text-slate-500 text-sm">فاؤنڈیشن کے قوانین کے مطابق تمام کیٹیگریز اور رقوم کی تفصیلات</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-                <!-- Death Assistance Card -->
-                <div class="bg-white rounded-2xl p-6 card-shadow border border-slate-100 hover:border-emerald-500 transition-all flex flex-col justify-between group">
-                    <div>
-                        <div class="w-12 h-12 bg-emerald-100 text-emerald-800 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-ribbon"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-slate-800 mb-1">معاونت برائے تدفین</h4>
-                        <p class="text-xs text-emerald-600 font-semibold mb-4">Death Assistance</p>
-                        
-                        <div class="text-3xl font-extrabold text-emerald-700 mb-2">
-                            Rs. 40,000
-                        </div>
-                    </div>
-                    
-                    <div class="mt-4 pt-4 border-t border-slate-100">
-                        <span class="inline-block px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-md">
-                            ★ بلا معاوضہ امداد — ناقابلِ واپسی
-                        </span>
-                    </div>
-                </div>
-
-                <!-- Medical Loan Card -->
-                <div class="bg-white rounded-2xl p-6 card-shadow border border-slate-100 hover:border-emerald-500 transition-all flex flex-col justify-between group">
-                    <div>
-                        <div class="w-12 h-12 bg-rose-100 text-rose-800 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-notes-medical"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-slate-800 mb-1">طبی معاونت و حادثات</h4>
-                        <p class="text-xs text-rose-600 font-semibold mb-4">Medical / Accident Loan</p>
-                        
-                        <div class="space-y-3">
-                            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-                                <span class="text-xs text-slate-500 block">بڑا آپریشن / سنگین بیماری</span>
-                                <span class="text-lg font-bold text-slate-800">Rs. 20,000 سے 25,000</span>
-                            </div>
-                            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-                                <span class="text-xs text-slate-500 block">حادثہ / درمیانی بیماری</span>
-                                <span class="text-lg font-bold text-slate-800">Rs. 10,000 سے 15,000</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="mt-4 pt-4 border-t border-slate-100">
-                        <span class="inline-block px-3 py-1 bg-blue-50 text-blue-700 text-xs font-bold rounded-md">
-                            بلا سود آسان اقساط
-                        </span>
-                    </div>
-                </div>
-
-                <!-- Marriage Loan Card -->
-                <div class="bg-white rounded-2xl p-6 card-shadow border border-slate-100 hover:border-emerald-500 transition-all flex flex-col justify-between group">
-                    <div>
-                        <div class="w-12 h-12 bg-amber-100 text-amber-800 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-hands-holding-child"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-slate-800 mb-1">معاونتِ شادی</h4>
-                        <p class="text-xs text-amber-600 font-semibold mb-4">Marriage Loan</p>
-                        
-                        <div class="text-2xl font-extrabold text-amber-700 mb-2">
-                            Rs. 40,000 سے 60,000
-                        </div>
-                        <p class="text-xs text-slate-500 mt-2">خاندان میں بچیوں کی شادی یا ضروری اخراجات میں معاونت۔</p>
-                    </div>
-                    
-                    <div class="mt-4 pt-4 border-t border-slate-100">
-                        <span class="inline-block px-3 py-1 bg-blue-50 text-blue-700 text-xs font-bold rounded-md">
-                            بلا سود آسان اقساط
-                        </span>
-                    </div>
-                </div>
-
-                <!-- General Emergency Card -->
-                <div class="bg-white rounded-2xl p-6 card-shadow border border-slate-100 hover:border-emerald-500 transition-all flex flex-col justify-between group">
-                    <div>
-                        <div class="w-12 h-12 bg-purple-100 text-purple-800 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-triangle-exclamation"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-slate-800 mb-1">ناگہانی ہنگامی ضرورت</h4>
-                        <p class="text-xs text-purple-600 font-semibold mb-4">General Emergency</p>
-                        
-                        <div class="text-2xl font-extrabold text-purple-700 mb-2">
-                            Rs. 5,000 سے 15,000
-                        </div>
-                    </div>
-                    
-                    <div class="mt-4 pt-4 border-t border-slate-100">
-                        <span class="inline-block px-3 py-1 bg-purple-50 text-purple-700 text-xs font-bold rounded-md">
-                            صورتِ حال کے جائزے کے بعد
-                        </span>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Section 2: Departmental Revival Target -->
-        <section class="bg-gradient-to-r from-emerald-900 to-teal-800 text-white rounded-2xl p-6 md:p-8 card-shadow relative overflow-hidden">
-            <div class="md:flex items-center justify-between gap-6">
-                <div class="space-y-4 max-w-2xl">
-                    <div class="inline-flex items-center gap-2 bg-amber-500/20 text-amber-300 px-3 py-1 rounded-full text-sm font-medium border border-amber-400/30">
-                        <i class="fa-solid fa-bullseye"></i> ہدف: اپریل ۲۰۲۷ء (April 2027)
-                    </div>
-                    <h3 class="text-2xl font-bold">2. شعبہ جات کی بحالی کا ہدف</h3>
-                    <ul class="space-y-3 text-slate-200 text-lg">
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-circle-check text-amber-400 mt-1.5 flex-shrink-0"></i>
-                            <span>بینک بیلنس کے استحکام کے ساتھ مرحلہ وار فنڈز کی فعال سازی کا آغاز۔</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-circle-check text-amber-400 mt-1.5 flex-shrink-0"></i>
-                            <span>اپریل ۲۰۲۷ء سے پہلے شعبے (معاونت برائے تدفین) کو باقاعدہ فعال کرنے کا ہدف۔</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="mt-6 md:mt-0 flex flex-col items-center justify-center bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 min-w-[200px]">
-                    <i class="fa-solid fa-clock text-4xl text-amber-300 mb-2"></i>
-                    <span class="text-sm text-slate-300">مرحلہ وار بحالی</span>
-                    <span class="text-2xl font-bold text-white mt-1">اپریل 2027</span>
-                    <span class="text-xs text-emerald-200 mt-2 bg-emerald-950/50 px-3 py-1 rounded-full">معاونت برائے تدفین پہلے</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 3: Family Self-Reliance Program & Calculator -->
-        <section class="bg-white rounded-2xl p-6 md:p-8 card-shadow border border-slate-100 space-y-6">
-            <div class="border-r-4 border-emerald-600 pr-3">
-                <h3 class="text-2xl font-bold text-slate-800">3. فیملی روزگار اسکیم (Family Self-Reliance Program)</h3>
-                <p class="text-slate-500 text-sm">خاندان کو کفالت سے خود انحصاری کی طرف لانے کا انقلابی منصوبہ</p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                <!-- Info List -->
-                <div class="space-y-4">
-                    <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100 flex items-start gap-4">
-                        <div class="bg-emerald-600 text-white rounded-lg p-3 text-lg">
-                            <i class="fa-solid fa-briefcase"></i>
-                        </div>
-                        <div>
-                            <h5 class="font-bold text-emerald-950 text-lg">نیا کاروبار / روزگار کا قیام</h5>
-                            <p class="text-slate-600 text-sm mt-1">
-                                فنڈ کے مستحکم ہونے پر خاندان کے بے روزگار افراد کو نیا کاروبار/روزگار قائم کر کے دیا جائے گا۔
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="bg-teal-50 p-4 rounded-xl border border-teal-100 flex items-start gap-4">
-                        <div class="bg-teal-600 text-white rounded-lg p-3 text-lg">
-                            <i class="fa-solid fa-rotate text-xl"></i>
-                        </div>
-                        <div>
-                            <h5 class="font-bold text-teal-950 text-lg">10٪ منافع کی فاؤنڈیشن میں واپسی</h5>
-                            <p class="text-slate-600 text-sm mt-1">
-                                اصل قرض کی ادائیگی اور کاروبار کے کامیاب ہونے پر، رکن اپنے منافع کا 10% (روزانہ/ماہانہ) فاؤنڈیشن کو دے گا تاکہ دیگر افراد کو بھی روزگار مل سکے۔
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Interactive 10% Profit Re-investment Calculator -->
-                <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-xl space-y-5 no-print">
-                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-                        <h5 class="font-bold text-lg text-emerald-400 flex items-center gap-2">
-                            <i class="fa-solid fa-calculator"></i> روزگار منافع حصہ داری کیلکولیٹر
-                        </h5>
-                        <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded">10% حصہ</span>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm text-slate-300 mb-2">ماہانہ حاصل شدہ منافع (روپے میں):</label>
-                        <input type="number" id="monthlyProfitInput" value="30000" step="1000" 
-                            class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-xl font-bold text-emerald-300 focus:outline-none focus:border-emerald-500"
-                            oninput="calculateShare()">
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4 pt-2">
-                        <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
-                            <span class="text-xs text-slate-400 block">رکن کا خالص منافع (90%)</span>
-                            <span id="memberProfit" class="text-xl font-extrabold text-white">Rs. 27,000</span>
-                        </div>
-                        <div class="bg-emerald-950/80 p-4 rounded-xl border border-emerald-500/30">
-                            <span class="text-xs text-emerald-300 block">فاؤنڈیشن کو تعاون (10%)</span>
-                            <span id="foundationShare" class="text-xl font-extrabold text-emerald-400">Rs. 3,000</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Dynamic Live Member Feedback & Submission Section -->
-        <section class="bg-white rounded-2xl p-6 md:p-8 card-shadow border border-slate-100 space-y-6">
-            <div class="border-r-4 border-emerald-600 pr-3">
-                <h3 class="text-2xl font-bold text-slate-800">4. ارکان کی رائے اور تجاویز (Live Member Feedback)</h3>
-                <p class="text-slate-500 text-sm">تمام کیٹیگریز اور پالیسی پر اپنے خیالات یہاں ریکارڈ کریں</p>
-            </div>
-
-            <!-- Feedback Submission Form (No-print) -->
-            <form id="feedbackForm" onsubmit="addFeedback(event)" class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4 no-print">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-1">آپ کا نام (رکن):</label>
-                        <input type="text" id="memberName" required placeholder="مثلاً: محمد افضل" 
-                            class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:border-emerald-600">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-1">موقف / فیصلہ:</label>
-                        <select id="memberStatus" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:border-emerald-600">
-                            <option value="متفق">ملا جلا متفق (Agreed)</option>
-                            <option value="تجویز">نیا مشورہ (Suggestion)</option>
-                            <option value="سوال">سوال / وضاحت (Question)</option>
-                        </select>
-                    </div>
-                </div>
-
+            <!-- Category 1: Death Relief -->
+            <div class="glass-card rounded-2xl p-6 border-t-4 border-t-rose-500 relative flex flex-col justify-between">
                 <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-1">آپ کی رائے / تجویز:</label>
-                    <textarea id="memberFeedback" rows="3" required placeholder="اس پالیسی یا کیٹیگری کی تقسیم کے بارے میں اپنی رائے درج کریں..." 
-                        class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:border-emerald-600"></textarea>
-      
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="px-3 py-1 bg-rose-500/10 text-rose-400 text-xs font-semibold rounded-full border border-rose-500/20">Bila Wapsi Imdad</span>
+                        <span class="text-xs text-slate-400">Category 01</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-slate-100 mb-2">Death (Wafat) Par Imdad</h2>
+                    <p class="text-slate-400 text-sm mb-6">Inteqal ki surat me khandan ko di jane wali imdadi raqam jo wapis nahi karni.</p>
+                </div>
+                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 flex justify-between items-center">
+                    <span class="text-sm text-slate-400">Taye Shuda Raqam:</span>
+                    <span class="text-2xl font-bold text-rose-400">Rs. 40,000</span>
+                </div>
+            </div>
+
+            <!-- Category 2: Major Illness / Operation -->
+            <div class="glass-card rounded-2xl p-6 border-t-4 border-t-blue-500 relative flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="px-3 py-1 bg-blue-500/10 text-blue-400 text-xs font-semibold rounded-full border border-blue-500/20">Asaan Qist Wapsi</span>
+                        <span class="text-xs text-slate-400">Category 02</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-slate-100 mb-2">Operation Ya Bari Bemari</h2>
+                    <p class="text-slate-400 text-sm mb-6">Bari bemari ya operation ke akhrajaat ke liye qarza-e-hasana jo qiston me wapis hoga.</p>
+                </div>
+                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 flex justify-between items-center">
+                    <span class="text-sm text-slate-400">Raqam Ki Had:</span>
+                    <span class="text-2xl font-bold text-blue-400">Rs. 20,000 - 25,000</span>
+                </div>
+            </div>
+
+            <!-- Category 3: Accident / Minor Illness -->
+            <div class="glass-card rounded-2xl p-6 border-t-4 border-t-cyan-500 relative flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="px-3 py-1 bg-cyan-500/10 text-cyan-400 text-xs font-semibold rounded-full border border-cyan-500/20">Asaan Qist Wapsi</span>
+                        <span class="text-xs text-slate-400">Category 03</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-slate-100 mb-2">Accident Ya Digar Bemari</h2>
+                    <p class="text-slate-400 text-sm mb-6">Haadsaat ya aam bemarion ke fawri akhrajaat ke liye financial support.</p>
+                </div>
+                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 flex justify-between items-center">
+                    <span class="text-sm text-slate-400">Raqam Ki Had:</span>
+                    <span class="text-2xl font-bold text-cyan-400">Rs. 10,000 - 15,000</span>
+                </div>
+            </div>
+
+            <!-- Category 4: Marriage Loan -->
+            <div class="glass-card rounded-2xl p-6 border-t-4 border-t-purple-500 relative flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="px-3 py-1 bg-purple-500/10 text-purple-400 text-xs font-semibold rounded-full border border-purple-500/20">Shadi Qarza</span>
+                        <span class="text-xs text-slate-400">Category 04</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-slate-100 mb-2">Shadi Ke Liye Qarza</h2>
+                    <p class="text-slate-400 text-sm mb-6">Bachi ya bachay ki shadi ke akhrajaat me taawun ke liye qarza-e-hasana.</p>
+                </div>
+                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 flex justify-between items-center">
+                    <span class="text-sm text-slate-400">Raqam Ki Had:</span>
+                    <span class="text-2xl font-bold text-purple-400">Rs. 40,000 - 60,000</span>
+                </div>
+            </div>
+
+            <!-- Category 5: Emergency Support -->
+            <div class="glass-card rounded-2xl p-6 border-t-4 border-t-amber-500 relative flex flex-col justify-between md:col-span-2">
+                <div>
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="px-3 py-1 bg-amber-500/10 text-amber-400 text-xs font-semibold rounded-full border border-amber-500/20">Jaiza Ke Baad Manzoori</span>
+                        <span class="text-xs text-slate-400">Category 05</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-slate-100 mb-2">Fawri Emergency Loan</h2>
+                    <p class="text-slate-400 text-sm mb-6">Kisi bhi achanak zaroorat ya emergency ki surat me suratehal ka jaiza lene ke baad raqam di jaye gi.</p>
+                </div>
+                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 flex justify-between items-center">
+                    <span class="text-sm text-slate-400">Raqam Ki Had:</span>
+                    <span class="text-2xl font-bold text-amber-400">Rs. 5,000 - 15,000</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Urdu Summary Section -->
+        <div class="glass-card rounded-2xl p-6 mt-8">
+            <h3 class="text-xl font-bold text-emerald-400 mb-4 border-b border-slate-800 pb-2 text-right">خلاصہ قوانین (اردو)</h3>
+            <ul class="space-y-3 text-right text-slate-300 nastaliq text-lg">
+                <li class="flex items-center justify-end gap-2">
+                    <span>1. وفات کی صورت میں 40,000 روپے کی بلا واپسی امداد دی جائے گی۔</span>
+                    <span class="text-emerald-400">●</span>
+                </li>
+                <li class="flex items-center justify-end gap-2">
+                    <span>2. بڑے آپریشن یا بیماری کے لیے 20,000 سے 25,000 روپے کا قرضہ مل سکے گا۔</span>
+                    <span class="text-emerald-400">●</span>
+                </li>
+                <li class="flex items-center justify-end gap-2">
+                    <span>3. حادثے یا دیگر بیماری کی صورت میں 10,000 سے 15,000 روپے جو قسطوں پر قابلِ واپسی ہوں گے۔</span>
+                    <span class="text-emerald-400">●</span>
+                </li>
+                <li class="flex items-center justify-end gap-2">
+                    <span>4. شادی کے لیے 50,000 سے 70,000 روپے تک کا قرضہ دیا جائے گا۔</span>
+                    <span class="text-emerald-400">●</span>
+                </li>
+                <li class="flex items-center justify-end gap-2">
+                    <span>5. کسی بھی ایمرجنسی کی صورت میں صورتحال کا جائزہ لینے کے بعد 5,000 سے 20,000 روپے قرضہ دیا جا سکتا ہے۔</span>
+                    <span class="text-emerald-400">●</span>
+                </li>
+                <li class="flex items-center justify-end gap-2 text-amber-300 font-bold">
+                    <span>6. تمام کیٹیگریز کو مکمل طور پر انلاک ہونے میں ڈھائی سے تین سال (2.5 - 3 سال) کا وقت درکار ہو گا۔</span>
+                    <span class="text-amber-400">★</span>
+                </li>
+                <li class="flex items-center justify-end gap-2 text-emerald-300 font-bold">
+                    <span>7. بینک بیلنس کے مضبوط ہونے اور مہنگائی کو مدِ نظر رکھتے ہوئے ان مبالغ میں اضافہ بھی کیا جا سکتا ہے۔</span>
+                    <span class="text-emerald-400">★</span>
+                </li>
+            </ul>
+        </div>
+
+    </main>
+
+    <footer class="text-center text-slate-500 text-sm mt-12">
+        <p>Family Trust © 2026 - Sherwan, Abbottabad Branch</p>
+    </footer>
+
+</body>
+                        </html>
+                        
