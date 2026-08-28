@@ -99,7 +99,7 @@
             </div>
         </div>
 
-        <!-- Section 1: Policy Limits & Loan Categories (Now First) -->
+        <!-- Section 1: Policy Limits & Loan Categories -->
         <section class="space-y-6">
             <div class="border-r-4 border-emerald-600 pr-3">
                 <h3 class="text-2xl font-bold text-slate-800">1. امدادی و ہنگامی قرضہ جات کی حد (Policy Limits)</h3>
@@ -167,7 +167,7 @@
                         <p class="text-xs text-amber-600 font-semibold mb-4">Marriage Loan</p>
                         
                         <div class="text-2xl font-extrabold text-amber-700 mb-2">
-                            Rs. 50,000 سے 70,000
+                            Rs. 40,000 سے 60,000
                         </div>
                         <p class="text-xs text-slate-500 mt-2">خاندان میں بچیوں کی شادی یا ضروری اخراجات میں معاونت۔</p>
                     </div>
@@ -189,7 +189,7 @@
                         <p class="text-xs text-purple-600 font-semibold mb-4">General Emergency</p>
                         
                         <div class="text-2xl font-extrabold text-purple-700 mb-2">
-                            Rs. 5,000 سے 20,000
+                            Rs. 5,000 سے 15,000
                         </div>
                     </div>
                     
@@ -297,37 +297,33 @@
             </div>
         </section>
 
-        <!-- Member Feedback Section -->
-        <section class="bg-emerald-50 rounded-2xl p-6 md:p-8 card-shadow border border-emerald-200">
-            <div class="text-center space-y-4 max-w-2xl mx-auto">
-                <div class="w-12 h-12 bg-emerald-600 text-white rounded-full flex items-center justify-center text-xl mx-auto shadow-md">
-                    <i class="fa-solid fa-comments"></i>
+        <!-- Dynamic Live Member Feedback & Submission Section -->
+        <section class="bg-white rounded-2xl p-6 md:p-8 card-shadow border border-slate-100 space-y-6">
+            <div class="border-r-4 border-emerald-600 pr-3">
+                <h3 class="text-2xl font-bold text-slate-800">4. ارکان کی رائے اور تجاویز (Live Member Feedback)</h3>
+                <p class="text-slate-500 text-sm">تمام کیٹیگریز اور پالیسی پر اپنے خیالات یہاں ریکارڈ کریں</p>
+            </div>
+
+            <!-- Feedback Submission Form (No-print) -->
+            <form id="feedbackForm" onsubmit="addFeedback(event)" class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4 no-print">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1">آپ کا نام (رکن):</label>
+                        <input type="text" id="memberName" required placeholder="مثلاً: محمد افضل" 
+                            class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:border-emerald-600">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1">موقف / فیصلہ:</label>
+                        <select id="memberStatus" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:border-emerald-600">
+                            <option value="متفق">ملا جلا متفق (Agreed)</option>
+                            <option value="تجویز">نیا مشورہ (Suggestion)</option>
+                            <option value="سوال">سوال / وضاحت (Question)</option>
+                        </select>
+                    </div>
                 </div>
-                <h4 class="text-2xl font-bold text-emerald-950">ارکان کی رائے اور تجاویز (Member Feedback)</h4>
-                <p class="text-slate-700 font-medium text-lg leading-relaxed">
-                    ان تمام کیٹیگریز، امدادی حدود اور قواعد و ضوابط کے حوالے سے تمام محترم ارکان کی کیا رائے ہے؟ آپ کی قیمتی تجاویز اور مشوروں کا تہہِ دل سے خیر مقدم کیا جائے گا۔
-                </p>
-            </div>
-        </section>
 
-        <!-- Foundation Success Prayer (Dua) Section -->
-        <section class="bg-gradient-to-r from-amber-600 via-emerald-700 to-teal-800 text-white rounded-2xl p-6 md:p-8 card-shadow text-center space-y-4 border border-amber-300/40">
-            <div class="inline-block p-3 bg-white/10 rounded-full text-amber-300 mb-1">
-                <i class="fa-solid fa-hands-praying text-3xl"></i>
-            </div>
-            <h4 class="text-2xl sm:text-3xl font-extrabold text-amber-200">فاؤنڈیشن کی کامیابی اور ترقی کی دعا</h4>
-            <div class="max-w-3xl mx-auto text-lg sm:text-xl font-medium leading-loose text-emerald-50 space-y-2">
-                <p>
-                    "اللہ تعالی ہماری اس فیملی ٹرسٹ اینڈ کیئر فاؤنڈیشن کو دن دگنی اور رات چوگنی برکت و کامیابی عطا فرمائے۔"
-                </p>
-                <p>
-                    "ہمارے اس باہمی اتحاد، شفافیت اور خدمت کے جذبے کو قبول فرمائے، اور تمام ارکان و خاندان کے رزق، صحت اور مال میں برکت عطا فرمائے۔ آمین!"
-                </p>
-            </div>
-        </section>
-
-        <!-- Dynamic Transparency Footer Note -->
-        <section class="bg-white rounded-2xl p-6 card-shadow border border-slate-100 text-center space-y-4">
-            <div class="max-w-xl mx-auto space-y-2">
-                <span class="text-xs uppercase tracking-widest text-emerald-600 font-bold">FAIRNESS & DIGITAL TRANSPARENCY</span>
-        
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">آپ کی رائے / تجویز:</label>
+                    <textarea id="memberFeedback" rows="3" required placeholder="اس پالیسی یا کیٹیگری کی تقسیم کے بارے میں اپنی رائے درج کریں..." 
+                        class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:border-emerald-600"></textarea>
+      
