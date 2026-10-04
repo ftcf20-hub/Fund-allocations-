@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>FTCF | Modern Financial Portal</title>
   
-  <!-- Tailwind CSS & FontAwesome -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
@@ -15,13 +14,7 @@
       theme: {
         extend: {
           colors: {
-            brand: {
-              50: '#ecfdf5',
-              500: '#10b981',
-              600: '#059669',
-              900: '#064e3b',
-              950: '#022c22'
-            }
+            brand: { 50: '#ecfdf5', 500: '#10b981', 600: '#059669', 900: '#064e3b', 950: '#022c22' }
           }
         }
       }
@@ -30,112 +23,43 @@
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap');
-    
-    body { 
-        font-family: 'Plus Jakarta Sans', sans-serif; 
-        background-color: #090d16; 
-        color: #f8fafc;
-        min-height: 100vh;
-        overflow-x: hidden;
-    }
-
-    .urdu-text { 
-        font-family: 'Noto Nastaliq Urdu', serif; 
-        line-height: 2.2; 
-    }
-
-    .ambient-glow-1 {
-        position: fixed;
-        top: -100px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 400px;
-        height: 400px;
-        background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, rgba(0,0,0,0) 70%);
-        pointer-events: none;
-        z-index: 0;
-        filter: blur(40px);
-    }
-
-    .ambient-glow-2 {
-        position: fixed;
-        top: 250px;
-        right: -100px;
-        width: 320px;
-        height: 320px;
-        background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, rgba(0,0,0,0) 70%);
-        pointer-events: none;
-        z-index: 0;
-    }
-
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #090d16; color: #f8fafc; min-height: 100vh; }
+    .urdu-text { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.2; }
     .bank-gradient { 
         background: linear-gradient(135deg, rgba(6, 78, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
         border: 1px solid rgba(16, 185, 129, 0.35);
         box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.2);
-        position: relative;
-        overflow: hidden;
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
     }
-
-    .bank-gradient::after {
-        content: '';
-        position: absolute;
-        top: 0; left: 0; right: 0; height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.8), transparent);
-    }
-
     .glass-card {
         background: rgba(15, 23, 42, 0.85); 
         backdrop-filter: blur(24px); 
-        -webkit-backdrop-filter: blur(24px);
         border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
-
-    .glass-card:hover {
-        border-color: rgba(16, 185, 129, 0.4);
-    }
-
     .pulse-dot {
-        width: 7px;
-        height: 7px;
-        background-color: #34d399;
-        border-radius: 50%;
-        box-shadow: 0 0 10px #34d399;
-        animation: pulse 2s infinite;
+        width: 7px; height: 7px; background-color: #34d399; border-radius: 50%;
+        box-shadow: 0 0 10px #34d399; animation: pulse 2s infinite;
     }
-
     @keyframes pulse {
         0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.8); }
         70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
         100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
     }
-
-    #missionBox::-webkit-scrollbar { width: 4px; }
-    #missionBox::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
   </style>
 </head>
-<body class="pb-12 relative antialiased selection:bg-emerald-900 selection:text-emerald-200">
+<body class="pb-12 relative antialiased p-4 max-w-md mx-auto space-y-6">
 
-  <div class="ambient-glow-1"></div>
-  <div class="ambient-glow-2"></div>
-
-  <main class="max-w-md mx-auto p-4 space-y-6 relative z-20">
-    
     <!-- Header -->
     <header class="flex justify-between items-center py-2 border-b border-slate-800">
         <div>
           <span class="text-[10px] font-black text-emerald-400 tracking-widest uppercase">2026-2027 FISCAL PORTAL</span>
           <h1 class="font-black text-xl text-slate-100 tracking-tight uppercase">Rules & Loans</h1>
         </div>
-        <div class="w-10 h-10 bg-slate-900 text-emerald-400 border border-slate-700/80 rounded-2xl flex items-center justify-center font-black text-xs shadow-lg shadow-emerald-950/40">
+        <div class="w-10 h-10 bg-slate-900 text-emerald-400 border border-slate-700/80 rounded-2xl flex items-center justify-center font-black text-xs shadow-lg">
             FTCF
         </div>
     </header>
 
-    <!-- Stat Highlights -->
+    <!-- Stats -->
     <section class="grid grid-cols-2 gap-3">
         <div class="col-span-2 bank-gradient p-6 rounded-3xl text-white shadow-2xl relative overflow-hidden">
             <div class="flex justify-between items-start">
@@ -160,7 +84,7 @@
         </div>
     </section>
 
-    <!-- Fund Allocations 2026 Layout -->
+    <!-- Allocations -->
     <section class="space-y-3">
       <div class="flex justify-between items-center px-1">
         <h3 class="font-black text-xs text-slate-300 tracking-[0.2em] uppercase">Fund Allocation Framework</h3>
@@ -168,18 +92,13 @@
       </div>
 
       <div class="grid grid-cols-2 gap-2.5">
-        <div class="p-3.5 glass-card rounded-2xl border border-slate-800 relative overflow-hidden">
+        <div class="p-3.5 glass-card rounded-2xl border border-slate-800">
           <div class="flex items-center justify-between mb-2">
             <i class="fas fa-ribbon text-purple-400 text-sm"></i>
             <span class="text-[8px] bg-amber-950/80 text-amber-300 font-bold px-2 py-0.5 rounded-full border border-amber-800/60 uppercase">Unlock-Apr 2027</span>
           </div>
-          <p class="text-xs font-bold text-slate-100 uppercase tracking-wide">Death Assistance</p>
-          <div class="flex justify-between items-center mt-1">
-            <p class="text-xs text-purple-400 font-extrabold">30% Share</p>
-          </div>
-          <div class="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
-            <div class="bg-purple-500 h-full rounded-full" style="width: 30%"></div>
-          </div>
+          <p class="text-xs font-bold text-slate-100 uppercase">Death Assistance</p>
+          <p class="text-xs text-purple-400 font-extrabold mt-1">30% Share</p>
         </div>
         
         <div class="p-3.5 glass-card rounded-2xl border border-slate-800">
@@ -187,11 +106,8 @@
             <i class="fas fa-notes-medical text-rose-400 text-sm"></i>
             <span class="text-[8px] bg-emerald-950/80 text-emerald-400 font-bold px-2 py-0.5 rounded-full border border-emerald-800/60 uppercase">Locked</span>
           </div>
-          <p class="text-xs font-bold text-slate-100 uppercase tracking-wide">Medical Aid</p>
+          <p class="text-xs font-bold text-slate-100 uppercase">Medical Aid</p>
           <p class="text-xs text-rose-400 font-extrabold mt-1">25% Share</p>
-          <div class="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
-            <div class="bg-rose-500 h-full rounded-full" style="width: 25%"></div>
-          </div>
         </div>
 
         <div class="p-3.5 glass-card rounded-2xl border border-slate-800">
@@ -199,11 +115,8 @@
             <i class="fas fa-heart text-amber-400 text-sm"></i>
             <span class="text-[8px] bg-emerald-950/80 text-emerald-400 font-bold px-2 py-0.5 rounded-full border border-emerald-800/60 uppercase">Locked</span>
           </div>
-          <p class="text-xs font-bold text-slate-100 uppercase tracking-wide">Marriage Support</p>
+          <p class="text-xs font-bold text-slate-100 uppercase">Marriage Support</p>
           <p class="text-xs text-amber-400 font-extrabold mt-1">25% Share</p>
-          <div class="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
-            <div class="bg-amber-500 h-full rounded-full" style="width: 25%"></div>
-          </div>
         </div>
 
         <div class="p-3.5 glass-card rounded-2xl border border-slate-800">
@@ -211,168 +124,70 @@
             <i class="fas fa-shield-halved text-sky-400 text-sm"></i>
             <span class="text-[8px] bg-emerald-950/80 text-emerald-400 font-bold px-2 py-0.5 rounded-full border border-emerald-800/60 uppercase">Locked</span>
           </div>
-          <p class="text-xs font-bold text-slate-100 uppercase tracking-wide">Emergency Reserve</p>
+          <p class="text-xs font-bold text-slate-100 uppercase">Emergency Reserve</p>
           <p class="text-xs text-sky-400 font-extrabold mt-1">20% Share</p>
-          <div class="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
-            <div class="bg-sky-500 h-full rounded-full" style="width: 20%"></div>
-          </div>
         </div>
       </div>
     </section>
 
-    <!-- Mission & Vision Drawer -->
+    <!-- Mission & Rules -->
     <div class="space-y-3">
-        <button onclick="toggleMission()" type="button" class="w-full bg-slate-900 hover:bg-slate-800 text-slate-100 border border-slate-700 p-3.5 rounded-2xl font-bold text-xs uppercase tracking-wider shadow-lg transition-all flex items-center justify-center gap-2 active:scale-95">
+        <button onclick="document.getElementById('missionBox').classList.toggle('hidden')" type="button" class="w-full bg-slate-900 text-slate-100 border border-slate-700 p-3.5 rounded-2xl font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2">
             <i class="fas fa-book-open text-emerald-400"></i>
             <span>Read Full Mission & Vision</span>
         </button>
         
-        <div id="missionBox" class="hidden glass-card p-5 rounded-3xl border border-slate-700/80 urdu-text text-right h-80 overflow-y-auto text-slate-200 text-xs leading-loose shadow-2xl">
-            <p class="whitespace-pre-line">
-                ہمارا ہدف: فیملی ٹرسٹ نیٹ ورک کو مثالی بنانا
-                ہمارا عزم ہے کہ ہم نے اپنے علاقے میں "فیملی ٹرسٹ" کو ایک مثالی نیٹ ورک بنانا ہے، تاکہ لوگ ہمارے اس فلاحی نظام اور بھائی چارے کی مثال دیں اور ہمارا یہ سیٹ اپ دوسروں کے لیے بھی ایک رول ماڈل بن کر ابھرے۔
-
-                یہ ہم سب کی فاؤنڈیشن ہے (ہمارا عہد)
-                یہ فاؤنڈیشن ہم سب ممبران کی اپنی مشترکہ فاؤنڈیشن ہے اور ہم سب نے ہی مل کر اسے کامیاب بنانا ہے۔ اس کا سب سے بڑا مقصد یہ ہے کہ کل کو ہمارا کوئی بھی فیملی ممبر کسی بھی مصیبت، پریشانی یا ضرورت کے وقت خود کو اکیلا نہ پائے۔
-
-                ہمارا وژن: خاندان سے آگے، ایک رجسٹرڈ ادارہ
-                ہم اس فاؤنڈیشن کو صرف اپنے خاندان تک محدود نہیں رکھنا چاہتے۔ ہمارا اصل مقصد اور عزم یہ ہے کہ آگے چل کر ہم اسے باقاعدہ ایک رجسٹرڈ آرگنائزیشن (NGO) بنائیں گے۔
-
-                رمضان المبارک کا خصوصی ہدف (صدقات کے ذریعے امداد)
-                ہم نے یہ نیت اور عزم کیا ہے کہ آنے والے رمضان المبارک سے ہی ہم اس فاؤنڈیشن میں اپنے صدقات کی مدد سے فیملیز کی بھرپور مدد کریں گے۔
-            </p>
+        <div id="missionBox" class="hidden glass-card p-5 rounded-3xl urdu-text text-right h-64 overflow-y-auto text-slate-200 text-xs leading-loose">
+            <p>ہمارا عزم ہے کہ ہم نے اپنے علاقے میں "فیملی ٹرسٹ" کو ایک مثالی نیٹ ورک بنانا ہے۔ یہ ہم سب ممبران کی اپنی مشترکہ فاؤنڈیشن hai.</p>
         </div>
     </div>
 
-    <!-- Loan List -->
-    <div class="glass-card p-5 rounded-3xl border border-slate-800">
-        <div class="flex justify-between items-center mb-4">
-          <h3 class="font-extrabold text-slate-100 flex items-center gap-2 text-xs uppercase tracking-wide"><i class="fas fa-list-check text-emerald-400"></i> Loan Ledger Records</h3>
-          <span class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Updated Today</span>
-        </div>
-        <div id="loan-list" class="space-y-2 text-xs">
-             <div class="flex justify-between items-center p-3 bg-slate-900/80 rounded-xl border border-slate-800">
-               <div>
-                 <span class="font-bold text-slate-200 block text-xs">Member Record #1</span>
-                 <span class="text-[9px] text-slate-400 uppercase font-bold tracking-wider">Status: Complete</span>
-               </div>
-               <span class="font-extrabold text-slate-200">Rs. 0</span>
-               <span class="text-emerald-400 bg-emerald-950/80 border border-emerald-800 px-2.5 py-1 rounded-full text-[9px] font-black tracking-wider">PAID</span>
-             </div>
-             <div class="flex justify-between items-center p-3 bg-slate-900/80 rounded-xl border border-slate-800">
-               <div>
-                 <span class="font-bold text-slate-200 block text-xs">Member Record #2</span>
-                 <span class="text-[9px] text-slate-400 uppercase font-bold tracking-wider">Status: Complete</span>
-               </div>
-               <span class="font-extrabold text-slate-200">Rs. 0</span>
-               <span class="text-emerald-400 bg-emerald-950/80 border border-emerald-800 px-2.5 py-1 rounded-full text-[9px] font-black tracking-wider">PAID</span>
-             </div>
-        </div>
-    </div>
-
-    <!-- Loan Rules -->
-    <div class="space-y-2.5 urdu-text text-right">
-        <div class="glass-card p-4 rounded-2xl border border-slate-800">
-            <h3 class="font-extrabold text-slate-100 mb-1 text-sm">قواعد و ضوابط (Loan Rules)</h3>
-            <p class="text-xs text-emerald-400/90 font-semibold">امانت میں خیانت نہیں، ہمارا سب سے پہلا اصول ہے۔ بہترین نظام ہی اصل کامیابی ہے۔</p>
-        </div>
-        
-        <div onclick="toggleRuleTip('rule1')" class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 text-xs text-slate-300 cursor-pointer hover:border-emerald-500/50 transition">
-            <div class="flex justify-between items-center">
-                <i class="fas fa-chevron-down text-[10px] text-emerald-400"></i>
-                <span>دیا گیا قرض 6 ماہ میں آسان اقساط میں واپس کرنا ہو گا۔</span>
-            </div>
-            <div id="rule1" class="hidden mt-2 pt-2 border-t border-slate-800 text-[11px] text-emerald-300 font-sans text-left">
-                💡 <span class="font-semibold">Guide:</span> Equal monthly installment calculated over 6 months duration.
-            </div>
-        </div>
-
-        <div onclick="toggleRuleTip('rule2')" class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 text-xs text-slate-300 cursor-pointer hover:border-emerald-500/50 transition">
-            <div class="flex justify-between items-center">
-                <i class="fas fa-chevron-down text-[10px] text-emerald-400"></i>
-                <span>پہلے لیا ہوا قرض واپس کیے جانے کے بعد نئی قسط جاری کی جائے گی۔</span>
-            </div>
-            <div id="rule2" class="hidden mt-2 pt-2 border-t border-slate-800 text-[11px] text-emerald-300 font-sans text-left">
-                💡 <span class="font-semibold">Guide:</span> Next loan cycle opens only after clearing previous balance.
-            </div>
-        </div>
-
-        <div onclick="toggleRuleTip('rule3')" class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 text-xs text-slate-300 cursor-pointer hover:border-emerald-500/50 transition">
-            <div class="flex justify-between items-center">
-                <i class="fas fa-chevron-down text-[10px] text-emerald-400"></i>
-                <span>وفات کی صورت میں دی جانے والی رقم قرض نہیں ہو گی۔</span>
-            </div>
-            <div id="rule3" class="hidden mt-2 pt-2 border-t border-slate-800 text-[11px] text-emerald-300 font-sans text-left">
-                💡 <span class="font-semibold">Guide:</span> Converted into family aid upon sudden death event.
-            </div>
-        </div>
-    </div>
-
-    <!-- Direct HTML Form for 100% Guaranteed WhatsApp Submission -->
+    <!-- Direct Guaranteed WhatsApp Form -->
     <div class="glass-card p-5 rounded-3xl border border-slate-800 shadow-2xl">
         <h3 class="font-black text-slate-100 uppercase tracking-wide text-sm text-center">Request Financial Assistance</h3>
-        <p class="text-[10px] text-slate-400 text-center mb-4 uppercase tracking-wider font-semibold">Fill in details to submit application via WhatsApp</p>
+        <p class="text-[10px] text-slate-400 text-center mb-4 uppercase font-semibold">Submit details directly to WhatsApp</p>
         
-        <form onsubmit="handleFormSubmit(event)" class="space-y-3">
+        <div class="space-y-3">
             <div>
-              <input type="text" id="usrName" placeholder="Full Name" required class="w-full p-3.5 text-xs rounded-2xl bg-slate-900/90 border border-slate-800 text-slate-100 placeholder-slate-500 focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition">
+              <input type="text" id="uName" placeholder="Full Name" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900 border border-slate-800 text-slate-100 outline-none">
             </div>
             
             <div>
-              <input type="number" id="usrAmount" placeholder="Loan Amount (PKR)" required class="w-full p-3.5 text-xs rounded-2xl bg-slate-900/90 border border-slate-800 text-slate-100 placeholder-slate-500 focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition">
+              <input type="number" id="uAmount" placeholder="Loan Amount (PKR)" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900 border border-slate-800 text-slate-100 outline-none">
             </div>
 
             <div>
-              <textarea id="usrReason" placeholder="Reason for Request" required class="w-full p-3.5 text-xs rounded-2xl bg-slate-900/90 border border-slate-800 text-slate-100 placeholder-slate-500 focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition" rows="3"></textarea>
+              <textarea id="uReason" placeholder="Reason for Request" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900 border border-slate-800 text-slate-100 outline-none" rows="3"></textarea>
             </div>
             
-            <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 p-3.5 rounded-2xl font-black text-xs uppercase tracking-wider transition shadow-lg shadow-emerald-950/50 active:scale-[0.98] flex items-center justify-center gap-2">
+            <a id="waAnchor" href="https://wa.me/923433052346" onclick="sendToWA(event)" target="_blank" class="w-full bg-emerald-600 text-slate-950 p-3.5 rounded-2xl font-black text-xs uppercase tracking-wider transition flex items-center justify-center gap-2 text-center block">
               <i class="fab fa-whatsapp text-base"></i> Submit via WhatsApp
-            </button>
-        </form>
-    </div>
-    
-    <!-- Contact Info -->
-    <div class="text-center pt-1">
-        <a href="mailto:ftcf.20@gmail.com" class="text-xs text-slate-400 font-semibold inline-flex items-center gap-2 hover:text-emerald-400 transition">
-            <i class="fas fa-envelope text-emerald-400"></i> ftcf.20@gmail.com
-        </a>
+            </a>
+        </div>
     </div>
 
-    <!-- Footer Tag -->
     <footer class="text-center pt-2">
       <p class="text-[9px] font-black text-slate-500 tracking-[0.2em] uppercase">@FTCF2026 Founder Mughal Brothers</p>
     </footer>
-  </main>
 
-  <!-- Digital Receipt Modal for Screenshot -->
-  <div id="receiptModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-      <div class="glass-card max-w-sm w-full p-6 rounded-3xl border border-emerald-500/50 text-center space-y-4 shadow-2xl relative">
-          
-          <div class="w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto text-xl border border-emerald-500/40">
-              <i class="fas fa-check-circle"></i>
-          </div>
+    <script>
+      function sendToWA(e) {
+        var n = document.getElementById('uName').value.trim();
+        var a = document.getElementById('uAmount').value.trim();
+        var r = document.getElementById('uReason').value.trim();
 
-          <div>
-            <span class="text-[9px] font-black text-emerald-400 tracking-widest uppercase">FTCF OFFICIAL RECEIPT</span>
-            <h3 class="font-black text-white text-base uppercase tracking-wider mt-0.5">Application Submitted</h3>
-            <p class="text-[9px] text-slate-400 uppercase tracking-widest">Take a screenshot of this receipt</p>
-          </div>
+        if(!n || !a || !r) {
+          e.preventDefault();
+          alert("Pehle tamam khane (Name, Amount, Reason) pur karein.");
+          return;
+        }
 
-          <div class="bg-slate-900/90 p-4 rounded-2xl border border-slate-800 text-left space-y-2.5 text-xs">
-              <div class="flex justify-between border-b border-slate-800/80 pb-2">
-                <span class="text-slate-400 font-medium">Date:</span>
-                <span id="recDate" class="font-bold text-slate-200">--</span>
-              </div>
-              <div class="flex justify-between border-b border-slate-800/80 pb-2">
-                <span class="text-slate-400 font-medium">Applicant Name:</span>
-                <span id="recName" class="font-bold text-slate-200">--</span>
-              </div>
-              <div class="flex justify-between border-b border-slate-800/80 pb-2">
-                <span class="text-slate-400 font-medium">Requested Amount:</span>
-                <span id="recAmount" class="font-bold text-emerald-400">--</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-slate-400 font-medium">Reason:</span>
-                <span id="recReason" class="font-bold text-slate-300 truncate max-w-[150px]">--</span>
-           
+        var text = "*FTCF Loan Application*\n*Name:* " + n + "\n*Amount:* Rs. " + a + "\n*Reason:* " + r;
+        var url = "https://api.whatsapp.com/send?phone=923433052346&text=" + encodeURIComponent(text);
+        
+        document.getElementById('waAnchor').href = url;
+      }
+    </script>
+</body>
+</html>
+
