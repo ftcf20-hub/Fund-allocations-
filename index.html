@@ -62,7 +62,7 @@
         }
         @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 
-        /* --- DOUBLE CIRCLE ANIMATION (NOW INTEGRATED IN LOCK SCREEN) --- */
+        /* --- DOUBLE CIRCLE ANIMATION ON LOCK SCREEN --- */
         .splash-circle-container {
             position: relative;
             width: 120px;
@@ -135,7 +135,7 @@
         <i data-lucide="wifi-off" class="w-3.5 h-3.5 inline mr-1 -mt-0.5"></i> Offline Mode: Pre-loaded cache available
     </div>
 
-    <!-- PASSCODE LOCK SCREEN MODAL (WITH TOP CIRCLE ANIMATION) -->
+    <!-- PASSCODE LOCK SCREEN MODAL -->
     <div id="lock-screen" class="fixed inset-0 z-[9000] bg-black/95 backdrop-blur-2xl flex flex-col justify-center items-center p-6 overflow-y-auto">
         <!-- Ambient Blue Glow -->
         <div class="absolute w-64 h-64 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -287,6 +287,7 @@
             const subtitle = document.getElementById('lock-subtitle');
 
             enteredPin = "";
+            tempFirstPin = "";
             updatePinDots();
 
             if (!savedPin) {
@@ -309,7 +310,7 @@
                 enteredPin += num;
                 updatePinDots();
                 if (enteredPin.length === 4) {
-                    setTimeout(validatePin, 150);
+                    setTimeout(validatePin, 100);
                 }
             }
         }
@@ -324,12 +325,26 @@
         function updatePinDots() {
             for (let i = 0; i < 4; i++) {
                 const dot = document.getElementById(`dot-${i}`);
-                if (i < enteredPin.length) {
-                    dot.classList.add('filled');
-                } else {
-                    dot.classList.remove('filled');
+                if (dot) {
+                    if (i < enteredPin.length) {
+                        dot.classList.add('filled');
+                    } else {
+                        dot.classList.remove('filled');
+                    }
                 }
             }
+        }
+
+        function unlockPortal() {
+            document.getElementById('lock-screen').classList.add('hidden');
+            enteredPin = "";
+            
+            // Open default or last saved tab
+            const lastTab = localStorage.getItem('activeTab') || 'ledger';
+            const targetBtn = document.querySelector(`button[data-target="${lastTab}"]`);
+            switchTab(lastTab, targetBtn);
+
+            checkAutoNotice();
         }
 
         function validatePin() {
@@ -350,10 +365,9 @@
                     // Confirming entry
                     if (enteredPin === tempFirstPin) {
                         localStorage.setItem('user_portal_pin', enteredPin);
-                        document.getElementById('lock-screen').classList.add('hidden');
                         tempFirstPin = "";
                         isSettingPin = false;
-                        checkAutoNotice();
+                        unlockPortal();
                     } else {
                         errorElement.innerText = "PINs do not match. Try again.";
                         tempFirstPin = "";
@@ -367,9 +381,7 @@
             } else {
                 // Verify Existing PIN
                 if (enteredPin === savedPin) {
-                    document.getElementById('lock-screen').classList.add('hidden');
-                    enteredPin = "";
-                    checkAutoNotice();
+                    unlockPortal();
                 } else {
                     errorElement.innerText = "Incorrect PIN. Please try again.";
                     enteredPin = "";
@@ -382,18 +394,9 @@
         function promptChangePin() {
             if (confirm("Do you want to reset your Security PIN?")) {
                 localStorage.removeItem('user_portal_pin');
-                tempFirstPin = "";
                 checkPasscodeFlow();
             }
         }
 
         function resetPinPrompt() {
-            if (confirm("Reset current PIN and set a new one?")) {
-                localStorage.removeItem('user_portal_pin');
-                tempFirstPin = "";
-                checkPasscodeFlow();
-            }
-        }
-
-        // Tab Switcher
-   
+ 
