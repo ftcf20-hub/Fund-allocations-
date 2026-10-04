@@ -117,7 +117,7 @@
             <div class="pin-dot" id="dot-3"></div>
         </div>
 
-        <!-- Keypad -->
+        <!-- Keypad Without Reset Button -->
         <div class="grid grid-cols-3 gap-3 max-w-xs w-full mb-4 relative z-10">
             <button type="button" onclick="pressPin('1')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">1</button>
             <button type="button" onclick="pressPin('2')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">2</button>
@@ -128,7 +128,7 @@
             <button type="button" onclick="pressPin('7')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">7</button>
             <button type="button" onclick="pressPin('8')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">8</button>
             <button type="button" onclick="pressPin('9')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">9</button>
-            <button type="button" onclick="resetPinStorage()" class="h-12 glass-panel rounded-2xl text-xs font-semibold text-amber-400 active:scale-90">Reset</button>
+            <div class="h-12"></div> <!-- Blank Space for symmetry -->
             <button type="button" onclick="pressPin('0')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90">0</button>
             <button type="button" onclick="deletePin()" class="h-12 glass-panel rounded-2xl text-white active:scale-90 flex items-center justify-center">
                 <i data-lucide="delete" class="w-5 h-5"></i>
@@ -140,7 +140,7 @@
 
     <!-- Header Controls -->
     <header class="fixed top-4 right-4 z-[60] flex gap-2">
-        <button type="button" onclick="resetPinStorage()" title="Reset PIN" class="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500">
+        <button type="button" onclick="resetPinStorageSecure()" title="Reset PIN" class="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500">
             <i data-lucide="key-round" class="w-4 h-4"></i>
         </button>
         <button type="button" onclick="toggleModal('bank-popup', true)" class="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500">
@@ -216,6 +216,8 @@
 
     <script>
         const PIN_KEY = "ftcf_pin_v2";
+        const MASTER_ADMIN_KEY = "7860"; // Aap is Master Code ko change kar sakte hain
+
         let enteredPin = "";
         let confirmPin = "";
         let isSettingPin = false;
@@ -285,7 +287,7 @@
                         localStorage.setItem(PIN_KEY, enteredPin);
                         openDashboard();
                     } else {
-                        errorElement.innerText = "PIN match nahi hua. Reset karke dubara karein.";
+                        errorElement.innerText = "PIN match nahi hua. Dubara try karein.";
                         confirmPin = "";
                         enteredPin = "";
                         updateDots();
@@ -311,9 +313,16 @@
             switchTab('ledger', document.querySelector('[data-target="ledger"]'));
         }
 
-        function resetPinStorage() {
-            localStorage.removeItem(PIN_KEY);
-            initPasscode();
+        function resetPinStorageSecure() {
+            const masterInput = prompt("PIN Reset karne ke liye Admin Master Key enter karein:");
+            if (masterInput === MASTER_ADMIN_KEY) {
+                localStorage.removeItem(PIN_KEY);
+                document.getElementById('lock-screen').style.display = 'flex';
+                initPasscode();
+                alert("PIN Reset ho chuka hai! Ab naya PIN set karein.");
+            } else if (masterInput !== null) {
+                alert("Galat Admin Master Key!");
+            }
         }
 
         function switchTab(id, btnElement) { 
@@ -344,4 +353,3 @@
     </script>
 </body>
 </html>
-
