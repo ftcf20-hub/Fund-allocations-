@@ -1,379 +1,365 @@
 <!DOCTYPE html>
-<html lang="ur" dir="ltr">
+<html lang="en" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FTCF | Family Trust Dashboard 2026</title>
-    
-    <!-- Google Fonts: Plus Jakarta Sans & Noto Sans Urdu -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Urdu:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        urdu: ['Noto Sans Urdu', 'sans-serif'],
-                    }
-                }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>FTCF | Modern Financial Portal</title>
+  
+  <!-- Tailwind CSS & FontAwesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#ecfdf5',
+              500: '#10b981',
+              600: '#059669',
+              900: '#064e3b',
+              950: '#022c22'
             }
+          }
         }
-    </script>
-    <style>
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: #090d16; 
-            color: #f8fafc;
-            min-height: 100vh;
-            overflow-x: hidden;
-            transition: background-color 0.8s ease;
-        }
+      }
+    }
+  </script>
 
-        /* Ambient Glow Background Filters */
-        .ambient-glow-1 {
-            position: fixed;
-            top: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, rgba(0,0,0,0) 70%);
-            pointer-events: none;
-            z-index: 0;
-            filter: blur(40px);
-        }
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap');
+    
+    body { 
+        font-family: 'Plus Jakarta Sans', sans-serif; 
+        background-color: #090d16; 
+        color: #f8fafc;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
 
-        .ambient-glow-2 {
-            position: fixed;
-            top: 250px;
-            right: -100px;
-            width: 320px;
-            height: 320px;
-            background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, rgba(0,0,0,0) 70%);
-            pointer-events: none;
-            z-index: 0;
-        }
+    .urdu-text { 
+        font-family: 'Noto Nastaliq Urdu', serif; 
+        line-height: 2.2; 
+    }
 
-        /* Executive Gradient Hero Card */
-        .bank-gradient { 
-            background: linear-gradient(135deg, rgba(6, 78, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
-            border: 1px solid rgba(16, 185, 129, 0.35);
-            box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.2);
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-        }
+    /* Ambient Lighting Mesh Glows */
+    .ambient-glow-1 {
+        position: fixed;
+        top: -100px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, rgba(0,0,0,0) 70%);
+        pointer-events: none;
+        z-index: 0;
+        filter: blur(40px);
+    }
 
-        .bank-gradient::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.8), transparent);
-        }
+    .ambient-glow-2 {
+        position: fixed;
+        top: 250px;
+        right: -100px;
+        width: 320px;
+        height: 320px;
+        background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, rgba(0,0,0,0) 70%);
+        pointer-events: none;
+        z-index: 0;
+    }
 
-        /* Deficit State Style for Negative Reserve Balance */
-        .bank-gradient-deficit {
-            background: linear-gradient(135deg, rgba(136, 19, 55, 0.6) 0%, rgba(15, 23, 42, 0.85) 100%) !important;
-            border: 1.5px solid rgba(244, 63, 94, 0.8) !important;
-            box-shadow: 0 10px 30px -5px rgba(244, 63, 94, 0.3) !important;
-        }
+    /* Executive Hero Card */
+    .bank-gradient { 
+        background: linear-gradient(135deg, rgba(6, 78, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+        border: 1px solid rgba(16, 185, 129, 0.35);
+        box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.2);
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+    }
 
-        /* Glass Cards */
-        .glass-card { 
-            background: rgba(15, 23, 42, 0.85); 
-            backdrop-filter: blur(24px); 
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+    .bank-gradient::after {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.8), transparent);
+    }
 
-        /* Dark Shimmer Skeleton Loader */
-        .shimmer-box {
-            background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-        }
+    /* Glass Cards */
+    .glass-card {
+        background: rgba(15, 23, 42, 0.85); 
+        backdrop-filter: blur(24px); 
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
+    .glass-card:hover {
+        border-color: rgba(16, 185, 129, 0.4);
+    }
 
-        /* Live Pulse Indicator Dot */
-        .pulse-dot {
-            width: 7px;
-            height: 7px;
-            background-color: #34d399;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #34d399;
-            animation: pulse 2s infinite;
-        }
+    /* Live Pulse Dot */
+    .pulse-dot {
+        width: 7px;
+        height: 7px;
+        background-color: #34d399;
+        border-radius: 50%;
+        box-shadow: 0 0 10px #34d399;
+        animation: pulse 2s infinite;
+    }
 
-        @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.8); }
-            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
-        }
+    @keyframes pulse {
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.8); }
+        70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
+        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+    }
 
-        /* Scrollbar Styling */
-        #monthly-list::-webkit-scrollbar,
-        #ramzan-content::-webkit-scrollbar { width: 4px; }
-        #monthly-list::-webkit-scrollbar-thumb,
-        #ramzan-content::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
-    </style>
+    /* Scrollbar Styling */
+    #missionBox::-webkit-scrollbar { width: 4px; }
+    #missionBox::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+  </style>
 </head>
 <body class="pb-12 relative antialiased selection:bg-emerald-900 selection:text-emerald-200">
 
-    <!-- Background Ambient Glows -->
-    <div class="ambient-glow-1"></div>
-    <div class="ambient-glow-2"></div>
+  <!-- Background Ambient Glows -->
+  <div class="ambient-glow-1"></div>
+  <div class="ambient-glow-2"></div>
 
-    <!-- Header Section -->
-    <header class="bg-gradient-to-b from-slate-900 via-slate-900/90 to-transparent pt-6 pb-8 px-4 relative z-10">
-        <div class="max-w-md mx-auto flex flex-col items-center text-center space-y-3">
-            
-            <!-- Top Controls Row -->
-            <div class="w-full flex items-center justify-between">
-                <button onclick="toggleModal('ramzan-modal', true)" class="flex items-center gap-1.5 bg-emerald-950/80 hover:bg-emerald-900/90 border border-emerald-500/30 text-emerald-300 px-3.5 py-1.5 rounded-full backdrop-blur-md transition-all text-xs font-bold active:scale-95 shadow-md shadow-emerald-950/40">
-                    <span>🌙</span>
-                    <span>Ramzan Vision 2027</span>
-                </button>
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-700/80 text-[10px] font-bold text-slate-300 shadow-sm backdrop-blur-md">
-                    <span class="pulse-dot"></span> <span>FTCF LIVE</span>
-                </div>
-            </div>
-
-            <div>
-                <h1 class="text-lg font-black tracking-tight text-slate-100 flex items-center justify-center gap-2 uppercase">
-                    Family Trust & Care Foundation
-                </h1>
-                <p class="text-xs text-emerald-400/90 font-urdu mt-1 font-semibold">مستقبل کی بہتری اور باہمی تعاون کا شفاف ڈیش بورڈ</p>
-            </div>
-
-            <div class="inline-flex items-center px-3.5 py-1 rounded-full bg-slate-950/80 border border-slate-800 text-emerald-400 text-[10px] font-mono tracking-widest font-bold uppercase shadow-inner">
-                FISCAL YEAR 2026 - 2027
-            </div>
+  <main class="max-w-md mx-auto p-4 space-y-6 relative z-20">
+    
+    <!-- Modern Header -->
+    <header class="flex justify-between items-center py-2 border-b border-slate-800">
+        <div>
+          <span class="text-[10px] font-black text-emerald-400 tracking-widest uppercase">2026-2027 FISCAL PORTAL</span>
+          <h1 class="font-black text-xl text-slate-100 tracking-tight uppercase">Rules & Loans</h1>
+        </div>
+        <div class="w-10 h-10 bg-slate-900 text-emerald-400 border border-slate-700/80 rounded-2xl flex items-center justify-center font-black text-xs shadow-lg shadow-emerald-950/40">
+            FTCF
         </div>
     </header>
 
-    <!-- Main Content Container -->
-    <main class="max-w-md mx-auto px-4 space-y-4 relative z-20 -mt-2">
-
-        <!-- Net Reserve Balance Card (Executive Dark Hero Card) -->
-        <div id="savings-box" class="bank-gradient p-5 rounded-3xl shadow-2xl transition-all duration-300">
-            <div class="flex justify-between items-start mb-1">
-                <div>
-                    <p class="text-[10px] font-black tracking-[0.2em] text-slate-300 uppercase">Net Reserve Balance</p>
-                    <p class="text-xs text-emerald-300/90 font-urdu font-semibold mt-0.5">کل دستیاب فنڈز</p>
-                </div>
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 backdrop-blur-md">
-                    Active
-                </span>
-            </div>
-            
-            <h2 id="net-savings" class="text-3xl font-black tracking-tight text-emerald-400 my-2">
-                <span class="inline-block w-36 h-8 shimmer-box rounded-lg"></span>
-            </h2>
-
-            <!-- Expense Ratio Progress Bar -->
-            <div class="mt-4 pt-3 border-t border-white/10">
-                <div class="flex justify-between text-[10px] font-bold mb-1.5">
-                    <span class="text-slate-300 uppercase tracking-wider">Expense Ratio</span>
-                    <span id="expense-percentage" class="text-emerald-400 font-mono">0%</span>
-                </div>
-                <div class="w-full h-2 bg-slate-950 rounded-full overflow-hidden p-0.5 border border-white/10">
-                    <div id="expense-progress-bar" class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-500" style="width: 0%"></div>
-                </div>
+    <!-- Stat Highlights (Glass Cards) -->
+    <section class="grid grid-cols-2 gap-3">
+        <!-- Hero Card -->
+        <div class="col-span-2 bank-gradient p-6 rounded-3xl text-white shadow-2xl relative overflow-hidden">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-emerald-300 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Active Loans</p>
+                <h2 class="font-extrabold text-4xl text-white tracking-tight">0</h2>
+              </div>
+              <span class="bg-emerald-500/10 text-emerald-300 text-[9px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-emerald-500/20 backdrop-blur-md flex items-center gap-1.5">
+                  <span class="pulse-dot"></span> Live Status
+              </span>
             </div>
         </div>
 
-        <!-- Quick Summary Stats Grid -->
-        <div class="grid grid-cols-2 gap-3">
-            <!-- Total Income Card -->
-            <div class="glass-card p-3.5 rounded-2xl flex flex-col justify-between border-l-4 border-l-emerald-500">
-                <div class="flex items-center justify-between mb-1">
-                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider">Total Income</span>
-                    <span class="w-5 h-5 rounded-md bg-emerald-950 text-emerald-400 font-black text-xs flex items-center justify-center border border-emerald-800">↓</span>
-                </div>
-                <h3 id="total-balance" class="text-base font-extrabold text-slate-100 tracking-tight my-1">
-                    <span class="inline-block w-20 h-5 shimmer-box rounded"></span>
-                </h3>
-                <p class="text-[10px] text-slate-400 font-urdu font-semibold">کل آمدن</p>
-            </div>
-
-            <!-- Total Expenses Card -->
-            <div class="glass-card p-3.5 rounded-2xl flex flex-col justify-between border-l-4 border-l-rose-500">
-                <div class="flex items-center justify-between mb-1">
-                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider">Total Outflow</span>
-                    <span class="w-5 h-5 rounded-md bg-rose-950 text-rose-400 font-black text-xs flex items-center justify-center border border-rose-800">↑</span>
-                </div>
-                <h3 id="total-expenses" class="text-base font-extrabold text-slate-100 tracking-tight my-1">
-                    <span class="inline-block w-20 h-5 shimmer-box rounded"></span>
-                </h3>
-                <p class="text-[10px] text-slate-400 font-urdu font-semibold">کل اخراجات</p>
-            </div>
+        <div class="glass-card p-4 rounded-2xl text-left border border-slate-800">
+            <p class="text-[9px] text-slate-400 uppercase font-black tracking-wider">Inflow</p>
+            <p class="font-extrabold text-emerald-400 text-base mt-1 tracking-tight">Rs. 11,500</p>
         </div>
 
-        <!-- Monthly Overview Section -->
-        <div class="pt-2">
-            <div class="flex items-center justify-between mb-3 px-1">
-                <div>
-                    <h3 class="text-xs font-black uppercase tracking-[0.2em] text-slate-200">Monthly Overview</h3>
-                    <p class="text-[10px] text-slate-400 font-urdu font-semibold mt-0.5">ماہانہ وصولی و اخراجات کا تفصیلی ریکارڈ</p>
-                </div>
-                <span class="text-[9px] font-bold text-emerald-400 bg-slate-900 px-2.5 py-1 rounded-md border border-slate-800 font-mono">2026 LOG</span>
-            </div>
+        <div class="glass-card p-4 rounded-2xl text-left border border-slate-800">
+            <p class="text-[9px] text-slate-400 uppercase font-black tracking-wider">Outflow</p>
+            <p class="font-extrabold text-rose-400 text-base mt-1 tracking-tight">Rs. 0</p>
+        </div>
+    </section>
 
-            <div id="monthly-list" class="space-y-2.5">
-                <!-- Skeleton Shimmers -->
-                <div class="glass-card p-4 rounded-2xl flex justify-between items-center border border-slate-800">
-                    <div class="w-24 h-4 shimmer-box rounded"></div>
-                    <div class="w-16 h-4 shimmer-box rounded"></div>
-                </div>
-                <div class="glass-card p-4 rounded-2xl flex justify-between items-center border border-slate-800">
-                    <div class="w-24 h-4 shimmer-box rounded"></div>
-                    <div class="w-16 h-4 shimmer-box rounded"></div>
-                </div>
-            </div>
+    <!-- Fund Allocations 2026 Layout -->
+    <section class="space-y-3">
+      <div class="flex justify-between items-center px-1">
+        <h3 class="font-black text-xs text-slate-300 tracking-[0.2em] uppercase">Fund Allocation Framework</h3>
+        <span class="text-[9px] font-bold text-emerald-400/80 uppercase tracking-wider">2026 Scheme</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2.5">
+        <div class="p-3.5 glass-card rounded-2xl border border-slate-800 relative overflow-hidden">
+          <div class="flex items-center justify-between mb-2">
+            <i class="fas fa-ribbon text-purple-400 text-sm"></i>
+            <span class="text-[8px] bg-amber-950/80 text-amber-300 font-bold px-2 py-0.5 rounded-full border border-amber-800/60 uppercase">Unlock-Apr 2027</span>
+          </div>
+          <p class="text-xs font-bold text-slate-100 uppercase tracking-wide">Death Assistance</p>
+          <p class="text-xs text-purple-400 font-extrabold mt-1">30% Share</p>
+        </div>
+        
+        <div class="p-3.5 glass-card rounded-2xl border border-slate-800">
+          <div class="flex items-center justify-between mb-2">
+            <i class="fas fa-notes-medical text-rose-400 text-sm"></i>
+            <span class="text-[8px] bg-emerald-950/80 text-emerald-400 font-bold px-2 py-0.5 rounded-full border border-emerald-800/60 uppercase">Locked</span>
+          </div>
+          <p class="text-xs font-bold text-slate-100 uppercase tracking-wide">Medical Aid</p>
+          <p class="text-xs text-rose-400 font-extrabold mt-1">25% Share</p>
         </div>
 
-        <!-- Footer -->
-        <div class="text-center opacity-40 text-[9px] font-black uppercase tracking-[0.25em] pt-4 text-slate-500">
-            @FTCF2026 Founder Mughal Brothers
+        <div class="p-3.5 glass-card rounded-2xl border border-slate-800">
+          <div class="flex items-center justify-between mb-2">
+            <i class="fas fa-heart text-amber-400 text-sm"></i>
+            <span class="text-[8px] bg-emerald-950/80 text-emerald-400 font-bold px-2 py-0.5 rounded-full border border-emerald-800/60 uppercase">Locked</span>
+          </div>
+          <p class="text-xs font-bold text-slate-100 uppercase tracking-wide">Marriage Support</p>
+          <p class="text-xs text-amber-400 font-extrabold mt-1">25% Share</p>
         </div>
-    </main>
 
-    <!-- Ramzan Modal -->
-    <div id="ramzan-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-        <div class="glass-card rounded-3xl p-6 w-full max-w-sm border border-slate-700/80 shadow-2xl relative overflow-hidden">
-            <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-800">
-                <div>
-                    <h3 class="text-sm font-black text-slate-100 flex items-center gap-2 uppercase tracking-wide">
-                        <span>🌙</span> Ramzan Vision 2027
-                    </h3>
-                    <p class="text-[11px] text-emerald-400 font-urdu font-semibold mt-0.5">رمضان فنڈ اور منصوبہ بندی کی تفصیلات</p>
-                </div>
-                <button onclick="toggleModal('ramzan-modal', false)" class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white flex items-center justify-center text-sm font-bold transition-all">✕</button>
-            </div>
-            
-            <div id="ramzan-content" class="space-y-2.5 max-h-72 overflow-y-auto pr-1 text-xs">
-                <div class="p-4 text-center space-y-2">
-                    <div class="w-full h-8 shimmer-box rounded-lg"></div>
-                    <div class="w-full h-8 shimmer-box rounded-lg"></div>
-                </div>
-            </div>
+        <div class="p-3.5 glass-card rounded-2xl border border-slate-800">
+          <div class="flex items-center justify-between mb-2">
+            <i class="fas fa-shield-halved text-sky-400 text-sm"></i>
+            <span class="text-[8px] bg-emerald-950/80 text-emerald-400 font-bold px-2 py-0.5 rounded-full border border-emerald-800/60 uppercase">Locked</span>
+          </div>
+          <p class="text-xs font-bold text-slate-100 uppercase tracking-wide">Emergency Reserve</p>
+          <p class="text-xs text-sky-400 font-extrabold mt-1">20% Share</p>
+        </div>
+      </div>
+    </section>
 
-            <button onclick="toggleModal('ramzan-modal', false)" class="mt-5 w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black py-2.5 rounded-xl text-xs uppercase tracking-wider transition-all shadow-lg shadow-emerald-950/50 active:scale-95">
-                Close Panel
-            </button>
+    <!-- Mission & Vision Drawer -->
+    <div class="space-y-3">
+        <button onclick="toggleMission()" class="w-full bg-slate-900 hover:bg-slate-800 text-slate-100 border border-slate-700 p-3.5 rounded-2xl font-bold text-xs uppercase tracking-wider shadow-lg transition-all flex items-center justify-center gap-2 active:scale-95">
+            <i class="fas fa-book-open text-emerald-400"></i>
+            <span>Read Full Mission & Vision</span>
+        </button>
+        
+        <div id="missionBox" class="hidden glass-card p-5 rounded-3xl border border-slate-700/80 urdu-text text-right h-80 overflow-y-auto text-slate-200 text-xs leading-loose shadow-2xl">
+            <p class="whitespace-pre-line">
+                ہمارا ہدف: فیملی ٹرسٹ نیٹ ورک کو مثالی بنانا
+                ہمارا عزم ہے کہ ہم نے اپنے علاقے میں "فیملی ٹرسٹ" کو ایک مثالی نیٹ ورک بنانا ہے، تاکہ لوگ ہمارے اس فلاحی نظام اور بھائی چارے کی مثال دیں اور ہمارا یہ سیٹ اپ دوسروں کے لیے بھی ایک رول ماڈل بن کر ابھرے۔
+
+                یہ ہم سب کی فاؤنڈیشن ہے (ہمارا عہد)
+                یہ فاؤنڈیشن ہم سب ممبران کی اپنی مشترکہ فاؤنڈیشن ہے اور ہم سب نے ہی مل کر اسے کامیاب بنانا ہے۔ اس کا سب سے بڑا مقصد یہ ہے کہ کل کو ہمارا کوئی بھی فیملی ممبر کسی بھی مصیبت، پریشانی یا ضرورت کے وقت خود کو اکیلا نہ پائے۔
+
+                ہمارا وژن: خاندان سے آگے، ایک رجسٹرڈ ادارہ
+                ہم اس فاؤنڈیشن کو صرف اپنے خاندان تک محدود نہیں رکھنا چاہتے۔ ہمارا اصل مقصد اور عزم یہ ہے کہ آگے چل کر ہم اسے باقاعدہ ایک رجسٹرڈ آرگنائزیشن (NGO) بنائیں گے۔
+
+                رمضان المبارک کا خصوصی ہدف (صدقات کے ذریعے امداد)
+                ہم نے یہ نیت اور عزم کیا ہے کہ آنے والے رمضان المبارک سے ہی ہم اس فاؤنڈیشن میں اپنے صدقات کی مدد سے فیملیز کی بھرپور مدد کریں گے۔
+            </p>
         </div>
     </div>
 
-    <!-- Script Engine -->
-    <script>
-        const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6wLoB92RkkkAwO_IC6Bx-8Si5lYfpMpdtRo_e_9RB1DnceQ4aG-5_Cs9QWENrY_ZP9L7MF6psgGwD/pub?output=csv";
-        const RAMZAN_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRZ93s9o0iygZgHmzA0Z2JG7Wb_efFRi7AdifVoYjv3_nsNM_4OdvnUTyRzn9BdKskJzi43lCYDI4eW/pub?gid=0&single=true&output=csv";
+    <!-- Loan List (Interactive Ledger Table Visual) -->
+    <div class="glass-card p-5 rounded-3xl border border-slate-800">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="font-extrabold text-slate-100 flex items-center gap-2 text-xs uppercase tracking-wide"><i class="fas fa-list-check text-emerald-400"></i> Loan Ledger Records</h3>
+          <span class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Updated Today</span>
+        </div>
+        <div id="loan-list" class="space-y-2 text-xs">
+             <div class="flex justify-between items-center p-3 bg-slate-900/80 rounded-xl border border-slate-800">
+               <div>
+                 <span class="font-bold text-slate-200 block text-xs">Member Record #1</span>
+                 <span class="text-[9px] text-slate-400 uppercase font-bold tracking-wider">Status: Complete</span>
+               </div>
+               <span class="font-extrabold text-slate-200">Rs. 0</span>
+               <span class="text-emerald-400 bg-emerald-950/80 border border-emerald-800 px-2.5 py-1 rounded-full text-[9px] font-black tracking-wider">PAID</span>
+             </div>
+             <div class="flex justify-between items-center p-3 bg-slate-900/80 rounded-xl border border-slate-800">
+               <div>
+                 <span class="font-bold text-slate-200 block text-xs">Member Record #2</span>
+                 <span class="text-[9px] text-slate-400 uppercase font-bold tracking-wider">Status: Complete</span>
+               </div>
+               <span class="font-extrabold text-slate-200">Rs. 0</span>
+               <span class="text-emerald-400 bg-emerald-950/80 border border-emerald-800 px-2.5 py-1 rounded-full text-[9px] font-black tracking-wider">PAID</span>
+             </div>
+        </div>
+    </div>
 
-        function toggleModal(modalId, show) {
-            const modal = document.getElementById(modalId);
-            if (show) modal.classList.remove('hidden');
-            else modal.classList.add('hidden');
-        }
+    <!-- Loan Rules (Styled Urdu Accordion Layout) -->
+    <div class="space-y-2.5 urdu-text text-right">
+        <div class="glass-card p-4 rounded-2xl border border-slate-800">
+            <h3 class="font-extrabold text-slate-100 mb-1 text-sm">قواعد و ضوابط (Loan Rules)</h3>
+            <p class="text-xs text-emerald-400/90 font-semibold">امانت میں خیانت نہیں، ہمارا سب سے پہلا اصول ہے۔ بہترین نظام ہی اصل کامیابی ہے۔</p>
+        </div>
+        <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 text-xs text-slate-300">دیا گیا قرض 6 ماہ میں آسان اقساط میں واپس کرنا ہو گا۔</div>
+        <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 text-xs text-slate-300">پہلے لیا ہوا قرض واپس کیے جانے کے بعد نئی قسط جاری کی جائے گی۔</div>
+        <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 text-xs text-slate-300">وفات کی صورت میں دی جانے والی رقم قرض نہیں ہو گی۔</div>
+    </div>
 
-        fetch(CSV_URL)
-            .then(res => res.text())
-            .then(data => {
-                const rows = data.split('\n');
-                const list = document.getElementById('monthly-list');
-                let totalB = 0, totalE = 0;
-                let htmlContent = "";
+    <!-- Loan Application Form with Live Calculator -->
+    <div class="glass-card p-5 rounded-3xl border border-slate-800 shadow-2xl">
+        <h3 class="font-black text-slate-100 uppercase tracking-wide text-sm text-center">Request Financial Assistance</h3>
+        <p class="text-[10px] text-slate-400 text-center mb-4 uppercase tracking-wider font-semibold">Fill in details to submit application via WhatsApp</p>
+        
+        <form id="loanForm" class="space-y-3">
+            <div>
+              <input type="text" id="n" placeholder="Full Name" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900/90 border border-slate-800 text-slate-100 placeholder-slate-500 focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition" required>
+            </div>
+            
+            <div>
+              <input type="number" id="a" oninput="calculateInstallment(this.value)" placeholder="Loan Amount (PKR)" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900/90 border border-slate-800 text-slate-100 placeholder-slate-500 focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition" required>
+            </div>
 
-                for(let i = 1; i < rows.length; i++) {
-                    const row = rows[i];
-                    if(!row.trim()) continue;
-                    
-                    const cols = row.split(',').map(c => c.replace(/"/g, '').trim());
-                    if(cols[0]) {
-                        const b = parseFloat(cols[1]?.replace(/,/g, '')) || 0;
-                        const e = parseFloat(cols[2]?.replace(/,/g, '')) || 0;
-                        totalB += b;
-                        totalE += e;
+            <!-- Dynamic 6-Month Estimate Box -->
+            <div id="calcBox" class="hidden p-3 bg-emerald-950/80 rounded-xl border border-emerald-800 text-xs text-emerald-300 flex justify-between items-center">
+              <span class="font-bold">Est. 6-Month Installment:</span>
+              <span id="monthlyAmount" class="font-black text-sm text-emerald-400">Rs. 0 / mo</span>
+            </div>
 
-                        htmlContent += `
-                        <div class="glass-card p-3.5 rounded-2xl border border-slate-800/80 flex justify-between items-center hover:border-emerald-500/40 transition-all">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center text-xs font-bold font-mono text-emerald-400 shadow-md">
-                                    ${i.toString().padStart(2, '0')}
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-slate-100 text-xs uppercase tracking-wide">${cols[0]}</h4>
-                                    <span class="text-[9px] text-slate-500 font-mono font-bold tracking-wider uppercase">LOGGED</span>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-emerald-400 font-extrabold text-xs tracking-tight">+Rs. ${b.toLocaleString()}</p>
-                                <p class="text-rose-400 font-bold text-[10px] mt-0.5 tracking-tight">-Rs. ${e.toLocaleString()}</p>
-                            </div>
-                        </div>`;
-                    }
-                }
+            <div>
+              <textarea id="r" placeholder="Reason for Request" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900/90 border border-slate-800 text-slate-100 placeholder-slate-500 focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition" rows="3" required></textarea>
+            </div>
+            
+            <button type="button" onclick="send(this)" class="w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 p-3.5 rounded-2xl font-black text-xs uppercase tracking-wider transition shadow-lg shadow-emerald-950/50 active:scale-[0.98]">
+              Submit Application
+            </button>
+        </form>
+    </div>
+    
+    <!-- Contact Info -->
+    <div class="text-center pt-1">
+        <a href="mailto:ftcf.20@gmail.com" class="text-xs text-slate-400 font-semibold inline-flex items-center gap-2 hover:text-emerald-400 transition">
+            <i class="fas fa-envelope text-emerald-400"></i> ftcf.20@gmail.com
+        </a>
+    </div>
 
-                list.innerHTML = htmlContent || "<p class='text-center text-xs text-slate-500 py-4'>No data found.</p>";
-                
-                const netSavings = totalB - totalE;
-                document.getElementById('total-balance').innerText = "Rs. " + totalB.toLocaleString();
-                document.getElementById('total-expenses').innerText = "Rs. " + totalE.toLocaleString();
-                document.getElementById('net-savings').innerText = "Rs. " + netSavings.toLocaleString();
+    <!-- Footer Tag -->
+    <footer class="text-center pt-2">
+      <p class="text-[9px] font-black text-slate-500 tracking-[0.2em] uppercase">@FTCF2026 Founder Mughal Brothers</p>
+    </footer>
+  </main>
 
-                const expPercentage = totalB > 0 ? Math.min(Math.round((totalE / totalB) * 100), 100) : 0;
-                document.getElementById('expense-percentage').innerText = expPercentage + "%";
-                document.getElementById('expense-progress-bar').style.width = expPercentage + "%";
+  <script>
+    function toggleMission() {
+      const box = document.getElementById('missionBox');
+      box.classList.toggle('hidden');
+    }
 
-                if (netSavings < 0) {
-                    document.getElementById('savings-box').className = "bank-gradient bank-gradient-deficit p-5 rounded-3xl shadow-2xl transition-all duration-300";
-                    document.getElementById('expense-progress-bar').className = "h-full bg-rose-500 rounded-full transition-all duration-500";
-                }
-            })
-            .catch(err => {
-                document.getElementById('monthly-list').innerHTML = `<p class="text-center text-xs text-rose-400 font-bold py-6">Failed to load live data.</p>`;
-            });
+    function calculateInstallment(val) {
+      const box = document.getElementById('calcBox');
+      const target = document.getElementById('monthlyAmount');
+      if (val && val > 0) {
+        box.classList.remove('hidden');
+        const perMonth = Math.round(val / 6);
+        target.innerText = `Rs. ${perMonth.toLocaleString()} / mo`;
+      } else {
+        box.classList.add('hidden');
+      }
+    }
 
-        fetch(RAMZAN_CSV_URL)
-            .then(res => res.text())
-            .then(data => {
-                const rows = data.split('\n');
-                let html = "";
-                for(let i = 1; i < rows.length; i++) {
-                    const row = rows[i];
-                    if(!row.trim()) continue;
-                    const cols = row.split(',').map(c => c.replace(/"/g, '').trim());
-                    
-                    if(cols[0]) {
-                        let badgeStyle = 'text-emerald-400 border-emerald-800/80 bg-emerald-950/80';
-                        if (cols[0].toLowerCase().includes('balance')) badgeStyle = 'text-sky-400 border-sky-800/80 bg-sky-950/80';
-                        if (cols[0].toLowerCase().includes('expense') || cols[0].toLowerCase().includes('donate')) badgeStyle = 'text-rose-400 border-rose-800/80 bg-rose-950/80';
+    function send(btn) {
+      const n = document.getElementById('n').value;
+      const a = document.getElementById('a').value;
+      const r = document.getElementById('r').value;
+      const date = new Date().toLocaleDateString();
 
-                        html += `
-                        <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 flex justify-between items-center">
-                            <div>
-                                <p class="text-[10px] text-slate-400 uppercase tracking-wider font-extrabold">${cols[0]}</p>
-                            </div>
-                            <span class="text-xs font-black px-2.5 py-1 rounded-lg border ${badgeStyle}">
-                                ${cols[1] || '0'}
-                            </span>
-                        </div>`;
-                    }
-                }
-                document.getElementById('ramzan-content').innerHTML = html || "<p class='text-center text-slate-500 py-4'>No details recorded yet.</p>";
-            });
-    </script>
+      if (!n || !a || !r) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      const originalText = btn.innerText;
+      btn.innerText = "Processing...";
+      btn.disabled = true;
+
+      const msg = `New Loan Application:%0ADate: ${date}%0AName: ${n}%0AAmount: Rs. ${a}%0AReason: ${r}`;
+      window.open(`https://wa.me/923433052346?text=${msg}`, '_blank');
+
+      setTimeout(() => {
+        btn.innerText = originalText;
+        btn.disabled = false;
+        document.getElementById('loanForm').reset();
+        document.getElementById('calcBox').classList.add('hidden');
+      }, 2000);
+    }
+  </script>
 </body>
 </html>
