@@ -222,7 +222,7 @@
 
     <!-- Mission & Vision Drawer -->
     <div class="space-y-3">
-        <button onclick="toggleMission()" class="w-full bg-slate-900 hover:bg-slate-800 text-slate-100 border border-slate-700 p-3.5 rounded-2xl font-bold text-xs uppercase tracking-wider shadow-lg transition-all flex items-center justify-center gap-2 active:scale-95">
+        <button onclick="toggleMission()" type="button" class="w-full bg-slate-900 hover:bg-slate-800 text-slate-100 border border-slate-700 p-3.5 rounded-2xl font-bold text-xs uppercase tracking-wider shadow-lg transition-all flex items-center justify-center gap-2 active:scale-95">
             <i class="fas fa-book-open text-emerald-400"></i>
             <span>Read Full Mission & Vision</span>
         </button>
@@ -313,23 +313,23 @@
         <h3 class="font-black text-slate-100 uppercase tracking-wide text-sm text-center">Request Financial Assistance</h3>
         <p class="text-[10px] text-slate-400 text-center mb-4 uppercase tracking-wider font-semibold">Fill in details to submit application via WhatsApp</p>
         
-        <form id="loanForm" class="space-y-3" onsubmit="sendApp(event)">
+        <div class="space-y-3">
             <div>
-              <input type="text" id="n" placeholder="Full Name" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900/90 border border-slate-800 text-slate-100 placeholder-slate-500 focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition" required>
+              <input type="text" id="n" placeholder="Full Name" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900/90 border border-slate-800 text-slate-100 placeholder-slate-500 focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition">
             </div>
             
             <div>
-              <input type="number" id="a" placeholder="Loan Amount (PKR)" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900/90 border border-slate-800 text-slate-100 placeholder-slate-500 focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition" required>
+              <input type="number" id="a" placeholder="Loan Amount (PKR)" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900/90 border border-slate-800 text-slate-100 placeholder-slate-500 focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition">
             </div>
 
             <div>
-              <textarea id="r" placeholder="Reason for Request" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900/90 border border-slate-800 text-slate-100 placeholder-slate-500 focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition" rows="3" required></textarea>
+              <textarea id="r" placeholder="Reason for Request" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900/90 border border-slate-800 text-slate-100 placeholder-slate-500 focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition" rows="3"></textarea>
             </div>
             
-            <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 p-3.5 rounded-2xl font-black text-xs uppercase tracking-wider transition shadow-lg shadow-emerald-950/50 active:scale-[0.98]">
+            <button id="submitBtn" onclick="processSubmission()" type="button" class="w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 p-3.5 rounded-2xl font-black text-xs uppercase tracking-wider transition shadow-lg shadow-emerald-950/50 active:scale-[0.98]">
               <i class="fab fa-whatsapp text-sm mr-1.5"></i> Submit via WhatsApp
             </button>
-        </form>
+        </div>
     </div>
     
     <!-- Contact Info -->
@@ -378,4 +378,4 @@
               </div>
           </div>
 
-          <div class="p-2.5 bg-emerald-950/60 rounded-xl border bo
+          <div class="p-2.5 bg-emerald-950/60 rounded-xl border border-emera
