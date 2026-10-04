@@ -138,7 +138,7 @@
         <p style="font-size: 9px; color: #94a3b8; text-align: center; text-transform: uppercase; margin-bottom: 14px; font-weight: 700;">Submit details directly to WhatsApp</p>
         
         <input type="text" id="uName" placeholder="Full Name" class="input-field">
-        <input type="number" id="uAmount" placeholder="Loan Amount (PKR)" class="input-field" min="1">
+        <input type="number" id="uAmount" placeholder="Loan Amount (PKR)" class="input-field">
         <textarea id="uReason" placeholder="Reason for Request" class="input-field" rows="3" style="resize: none;"></textarea>
         
         <button onclick="handleApplication()" class="btn btn-emerald">
@@ -206,7 +206,7 @@
             <!-- WhatsApp Number Config -->
             <div class="glass-card" style="margin-bottom: 14px;">
                 <p style="font-size: 11px; font-weight: 900; color: #38bdf8; margin-bottom: 8px; text-transform: uppercase;"><i class="fab fa-whatsapp"></i> Configure WhatsApp Number</p>
-                <label style="font-size: 9px; color: #94a3b8; display: block; margin-bottom: 4px;">WhatsApp Number (with country code, e.g. 923433052346)</label>
+                <label style="font-size: 9px; color: #94a3b8; display: block; margin-bottom: 4px;">WhatsApp Number (e.g. 923433052346)</label>
                 <input type="text" id="admWaNumber" class="input-field" style="margin-bottom: 8px;">
                 <button onclick="saveWhatsAppNumber()" class="btn btn-slate" style="padding: 8px; font-size: 10px; background: #0369a1; color: #fff;">Save WhatsApp Number</button>
             </div>
@@ -217,16 +217,16 @@
                 <div class="grid-2">
                     <div>
                         <label style="font-size: 9px; color: #94a3b8; display: block; margin-bottom: 4px;">Inflow (PKR)</label>
-                        <input type="number" id="admInflow" class="input-field" style="margin-bottom: 8px;" min="0">
+                        <input type="number" id="admInflow" class="input-field" style="margin-bottom: 8px;">
                     </div>
                     <div>
                         <label style="font-size: 9px; color: #94a3b8; display: block; margin-bottom: 4px;">Outflow (PKR)</label>
-                        <input type="number" id="admOutflow" class="input-field" style="margin-bottom: 8px;" min="0">
+                        <input type="number" id="admOutflow" class="input-field" style="margin-bottom: 8px;">
                     </div>
                 </div>
                 <div>
                     <label style="font-size: 9px; color: #94a3b8; display: block; margin-bottom: 4px;">Active Loans Count</label>
-                    <input type="number" id="admLoans" class="input-field" style="margin-bottom: 8px;" min="0">
+                    <input type="number" id="admLoans" class="input-field" style="margin-bottom: 8px;">
                 </div>
                 <button onclick="saveAdminStats()" class="btn btn-emerald" style="padding: 10px; font-size: 11px;">Save Metrics</button>
             </div>
@@ -237,7 +237,7 @@
                 <input type="hidden" id="editIndex" value="-1">
                 <input type="text" id="ltName" placeholder="Loantaker Name" class="input-field">
                 <div class="grid-2">
-                    <input type="number" id="ltAmount" placeholder="Amount (PKR)" class="input-field" style="margin-bottom: 0;" min="1">
+                    <input type="number" id="ltAmount" placeholder="Amount (PKR)" class="input-field" style="margin-bottom: 0;">
                     <input type="text" id="ltDuration" placeholder="Duration (e.g. 6 Months)" class="input-field" style="margin-bottom: 0;">
                 </div>
                 <div style="display: flex; gap: 8px; margin-top: 10px;">
@@ -263,25 +263,39 @@
         var outflow = localStorage.getItem('ftcf_outflow') || '0';
         var loans = localStorage.getItem('ftcf_loans') || '0';
 
-        document.getElementById('inflowDisplay').innerText = 'Rs. ' + Number(inflow).toLocaleString();
-        document.getElementById('outflowDisplay').innerText = 'Rs. ' + Number(outflow).toLocaleString();
-        document.getElementById('activeLoansDisplay').innerText = loans;
+        var inflowEl = document.getElementById('inflowDisplay');
+        var outflowEl = document.getElementById('outflowDisplay');
+        var activeLoansEl = document.getElementById('activeLoansDisplay');
+        var admInflowEl = document.getElementById('admInflow');
+        var admOutflowEl = document.getElementById('admOutflow');
+        var admLoansEl = document.getElementById('admLoans');
+        var admWaNumberEl = document.getElementById('admWaNumber');
 
-        document.getElementById('admInflow').value = inflow;
-        document.getElementById('admOutflow').value = outflow;
-        document.getElementById('admLoans').value = loans;
-        document.getElementById('admWaNumber').value = getWhatsAppNumber();
+        if(inflowEl) inflowEl.innerText = 'Rs. ' + Number(inflow).toLocaleString();
+        if(outflowEl) outflowEl.innerText = 'Rs. ' + Number(outflow).toLocaleString();
+        if(activeLoansEl) activeLoansEl.innerText = loans;
+
+        if(admInflowEl) admInflowEl.value = inflow;
+        if(admOutflowEl) admOutflowEl.value = outflow;
+        if(admLoansEl) admLoansEl.value = loans;
+        if(admWaNumberEl) admWaNumberEl.value = getWhatsAppNumber();
       }
 
       function toggleMission() {
         var box = document.getElementById('missionBox');
-        box.classList.toggle('hidden');
+        if(box) box.classList.toggle('hidden');
       }
 
       function handleApplication() {
-        var n = document.getElementById('uName').value.trim();
-        var a = Number(document.getElementById('uAmount').value);
-        var r = document.getElementById('uReason').value.trim();
+        var nInput = document.getElementById('uName');
+        var aInput = document.getElementById('uAmount');
+        var rInput = document.getElementById('uReason');
+
+        if(!nInput || !aInput || !rInput) return;
+
+        var n = nInput.value.trim();
+        var a = Number(aInput.value);
+        var r = rInput.value.trim();
 
         if(!n || !a || !r) {
           alert("Pehle tamam khane (Name, Amount, Reason) theek se pur karein.");
@@ -309,37 +323,52 @@
       }
 
       function closeReceiptModal() {
-        document.getElementById('receiptModal').classList.add('hidden');
+        var modal = document.getElementById('receiptModal');
+        if(modal) modal.classList.add('hidden');
       }
 
       function openPinModal() {
-        document.getElementById('adminPinInput').value = '';
-        document.getElementById('pinErrorMsg').style.display = 'none';
-        document.getElementById('pinModal').classList.remove('hidden');
+        var pinInput = document.getElementById('adminPinInput');
+        var errorMsg = document.getElementById('pinErrorMsg');
+        var modal = document.getElementById('pinModal');
+        
+        if(pinInput) pinInput.value = '';
+        if(errorMsg) errorMsg.style.display = 'none';
+        if(modal) modal.classList.remove('hidden');
       }
 
       function closePinModal() {
-        document.getElementById('pinModal').classList.add('hidden');
+        var modal = document.getElementById('pinModal');
+        if(modal) modal.classList.add('hidden');
       }
 
       function verifyPin() {
-        var pin = document.getElementById('adminPinInput').value.trim();
+        var pinInput = document.getElementById('adminPinInput');
+        if(!pinInput) return;
+
+        var pin = pinInput.value.trim();
         if(pin === ADMIN_PIN) {
             closePinModal();
-            document.getElementById('adminDashboardModal').classList.remove('hidden');
+            var dash = document.getElementById('adminDashboardModal');
+            if(dash) dash.classList.remove('hidden');
             loadMetrics();
         } else {
-            document.getElementById('pinErrorMsg').style.display = 'block';
+            var err = document.getElementById('pinErrorMsg');
+            if(err) err.style.display = 'block';
         }
       }
 
       function closeAdminDashboard() {
-        document.getElementById('adminDashboardModal').classList.add('hidden');
+        var dash = document.getElementById('adminDashboardModal');
+        if(dash) dash.classList.add('hidden');
         resetLoantakerForm();
       }
 
       function saveWhatsAppNumber() {
-        var num = document.getElementById('admWaNumber').value.trim();
+        var numEl = document.getElementById('admWaNumber');
+        if(!numEl) return;
+
+        var num = numEl.value.trim();
         if(!num) {
             alert("WhatsApp number khali nahi ho sakta.");
             return;
@@ -349,9 +378,15 @@
       }
 
       function saveAdminStats() {
-        var inflow = Number(document.getElementById('admInflow').value);
-        var outflow = Number(document.getElementById('admOutflow').value);
-        var loans = Number(document.getElementById('admLoans').value);
+        var infEl = document.getElementById('admInflow');
+        var outEl = document.getElementById('admOutflow');
+        var loanEl = document.getElementById('admLoans');
+
+        if(!infEl || !outEl || !loanEl) return;
+
+        var inflow = Number(infEl.value);
+        var outflow = Number(outEl.value);
+        var loans = Number(loanEl.value);
 
         if(inflow < 0 || outflow < 0 || loans < 0) {
             alert("Values negative nahi ho sakti!");
@@ -366,35 +401,5 @@
       }
 
       function saveLoantaker() {
-        var name = document.getElementById('ltName').value.trim();
-        var amount = Number(document.getElementById('ltAmount').value);
-        var duration = document.getElementById('ltDuration').value.trim();
-        var editIndex = Number(document.getElementById('editIndex').value);
-
-        if(!name || !amount) {
-            alert("Name aur Amount lazmi bharein.");
-            return;
-        }
-
-        if(amount <= 0) {
-            alert("Amount positive honi chahiye.");
-            return;
-        }
-
-        var loantakers = JSON.parse(localStorage.getItem('ftcf_loantakers') || '[]');
-
-        if(editIndex === -1) {
-            // Add new
-            loantakers.push({ name: name, amount: amount, duration: duration || 'Flexible' });
-        } else {
-            // Update existing
-            loantakers[editIndex] = { name: name, amount: amount, duration: duration || 'Flexible' };
-        }
-
-        localStorage.setItem('ftcf_loantakers', JSON.stringify(loantakers));
-        localStorage.setItem('ftcf_loans', loantakers.length);
-        
-        resetLoantakerForm();
-        loadMetrics();
-        renderMainLoantakers();
-       
+        var nameEl = document.getElementById('ltName');
+        var amountEl = document.getElementById('ltAmoun
