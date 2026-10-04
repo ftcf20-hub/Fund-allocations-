@@ -134,7 +134,7 @@
 
   <main class="max-w-md mx-auto p-4 space-y-6 relative z-20">
     
-    <!-- Modern Header -->
+    <!-- Header -->
     <header class="flex justify-between items-center py-2 border-b border-slate-800">
         <div>
           <span class="text-[10px] font-black text-emerald-400 tracking-widest uppercase">2026-2027 FISCAL PORTAL</span>
@@ -323,7 +323,7 @@
         <h3 class="font-black text-slate-100 uppercase tracking-wide text-sm text-center">Request Financial Assistance</h3>
         <p class="text-[10px] text-slate-400 text-center mb-4 uppercase tracking-wider font-semibold">Fill in details to submit application via WhatsApp</p>
         
-        <form id="loanForm" class="space-y-3">
+        <form id="loanForm" class="space-y-3" onsubmit="event.preventDefault(); send();">
             <div>
               <input type="text" id="n" placeholder="Full Name" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900/90 border border-slate-800 text-slate-100 placeholder-slate-500 focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition" required>
             </div>
@@ -351,7 +351,7 @@
               <textarea id="r" placeholder="Reason for Request" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900/90 border border-slate-800 text-slate-100 placeholder-slate-500 focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition" rows="3" required></textarea>
             </div>
             
-            <button type="button" onclick="send(this)" class="w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 p-3.5 rounded-2xl font-black text-xs uppercase tracking-wider transition shadow-lg shadow-emerald-950/50 active:scale-[0.98]">
+            <button type="button" onclick="send()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 p-3.5 rounded-2xl font-black text-xs uppercase tracking-wider transition shadow-lg shadow-emerald-950/50 active:scale-[0.98]">
               Submit Application
             </button>
         </form>
@@ -377,8 +377,8 @@
               <i class="fas fa-check-circle"></i>
           </div>
           <div>
-            <h3 class="font-black text-white text-base uppercase tracking-wider">Application Submitted</h3>
-            <p class="text-[10px] text-slate-400 uppercase tracking-widest mt-0.5">Digital Receipt Generated</p>
+            <h3 class="font-black text-white text-base uppercase tracking-wider">Application Generated</h3>
+            <p class="text-[10px] text-slate-400 uppercase tracking-widest mt-0.5">Digital Receipt Ready</p>
           </div>
 
-          <div class="bg-slate-900/90 p-4 rounded-2xl border border-slate-800 text-left space-y-2 t
+          <div class="bg-slate-900/90 p-4 rounded-2xl border border-sla
