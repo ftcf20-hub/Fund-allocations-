@@ -30,10 +30,11 @@
             overflow: hidden; 
             margin: 0; 
             -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
         
         .glass-panel { 
-            background: rgba(17, 24, 39, 0.75); 
+            background: rgba(17, 24, 39, 0.85); 
             backdrop-filter: blur(20px); 
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.08); 
@@ -45,8 +46,8 @@
 
         .splash-circle-container {
             position: relative;
-            width: 120px;
-            height: 120px;
+            width: 110px;
+            height: 110px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -65,7 +66,7 @@
 
         .inner-white-circle {
             position: absolute;
-            inset: 10px;
+            inset: 8px;
             border-radius: 50%;
             border: 2px dashed #ffffff;
             animation: spinCounterClockwise 1.8s linear infinite;
@@ -82,32 +83,31 @@
             width: 14px;
             height: 14px;
             border-radius: 50%;
-            border: 2px solid rgba(245, 158, 11, 0.5);
-            transition: all 0.2s ease;
+            border: 2px solid rgba(245, 158, 11, 0.4);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .pin-dot.filled {
             background-color: #f59e0b;
             border-color: #f59e0b;
-            box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.8);
+            transform: scale(1.15);
         }
 
-        /* Shake animation for incorrect Admin PIN or passcode */
         .shake {
             animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
         }
         @keyframes shake {
-            10%, 90% { transform: translate3d(-1px, 0, 0); }
-            20%, 80% { transform: translate3d(2px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-            40%, 60% { transform: translate3d(4px, 0, 0); }
+            10%, 90% { transform: translate3d(-2px, 0, 0); }
+            20%, 80% { transform: translate3d(3px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-5px, 0, 0); }
+            40%, 60% { transform: translate3d(5px, 0, 0); }
         }
     </style>
 </head>
 <body class="text-slate-100 antialiased selection:bg-amber-500 selection:text-black">
 
-    <!-- PASSCODE LOCK SCREEN MODAL -->
-    <div id="lock-screen" class="fixed inset-0 z-[9000] bg-black/95 backdrop-blur-2xl flex flex-col justify-center items-center p-6 overflow-y-auto">
-        <div class="absolute w-64 h-64 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div id="lock-screen" class="fixed inset-0 z-[9000] bg-black/95 backdrop-blur-2xl flex flex-col justify-center items-center p-6">
+        <div class="absolute w-72 h-72 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
         <div class="splash-circle-container mb-3 relative z-10">
             <div class="outer-blue-circle"></div>
@@ -115,10 +115,10 @@
             <span class="text-2xl font-black tracking-wider text-white drop-shadow-[0_2px_8px_rgba(56,189,248,0.5)] z-10">FTCF</span>
         </div>
 
-        <p class="text-sky-300 font-mono text-[10px] font-bold uppercase tracking-[0.25em] pulse-subtext mb-6 relative z-10">Secure Portal</p>
+        <p class="text-sky-300 font-mono text-[10px] font-bold uppercase tracking-[0.25em] pulse-subtext mb-5 relative z-10">Secure Portal</p>
 
-        <h2 id="lock-title" class="text-white text-base font-bold mb-1 relative z-10">Set Security PIN</h2>
-        <p id="lock-subtitle" class="text-slate-400 text-xs mb-5 font-mono relative z-10 text-center">Choose a 4-digit PIN for portal protection</p>
+        <h2 id="lock-title" class="text-white text-lg font-bold mb-1 relative z-10">Set Security PIN</h2>
+        <p id="lock-subtitle" class="text-slate-400 text-xs mb-5 font-mono text-center max-w-xs relative z-10">Set a 4-digit PIN for first-time protection</p>
 
         <!-- PIN Dots Indicator -->
         <div id="pin-dots-container" class="flex gap-4 mb-6 relative z-10">
@@ -128,7 +128,7 @@
             <div class="pin-dot" id="dot-3"></div>
         </div>
 
-        <!-- Keypad with Reset Option -->
+        <!-- Keypad with Reset & Delete Buttons -->
         <div class="grid grid-cols-3 gap-3 max-w-xs w-full mb-4 relative z-10">
             <button type="button" onclick="pressPin('1')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90 hover:bg-white/10 transition">1</button>
             <button type="button" onclick="pressPin('2')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90 hover:bg-white/10 transition">2</button>
@@ -140,7 +140,7 @@
             <button type="button" onclick="pressPin('8')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90 hover:bg-white/10 transition">8</button>
             <button type="button" onclick="pressPin('9')" class="h-12 glass-panel rounded-2xl text-xl font-bold text-white active:scale-90 hover:bg-white/10 transition">9</button>
             
-            <!-- Reset Button on Keypad -->
+            <!-- Reset Option Button -->
             <button type="button" onclick="openAdminResetModal()" class="h-12 glass-panel rounded-2xl text-xs font-bold text-amber-400 active:scale-90 hover:bg-amber-500/10 transition flex items-center justify-center gap-1">
                 <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset
             </button>
@@ -155,7 +155,6 @@
         <p id="lock-error" class="text-red-400 text-xs font-semibold h-4 text-center relative z-10"></p>
     </div>
 
-    <!-- ADMIN PIN RESET MODAL -->
     <div id="admin-reset-modal" class="hidden fixed inset-0 z-[9500] bg-black/85 backdrop-blur-xl flex items-center justify-center p-6">
         <div id="admin-modal-box" class="glass-panel p-6 rounded-3xl w-full max-w-sm text-center border border-amber-500/30 shadow-2xl relative">
             <div class="w-12 h-12 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-amber-500/20">
@@ -163,24 +162,23 @@
             </div>
             
             <h3 class="text-white text-base font-bold mb-1">Admin Verification</h3>
-            <p class="text-slate-400 text-xs mb-5 font-mono">PIN Reset karne ke liye Admin Key enter karein</p>
+            <p class="text-slate-400 text-xs mb-4 font-mono">Enter Admin PIN to reset security PIN</p>
             
-            <div class="mb-5">
-                <input type="password" id="admin-pin-input" maxlength="6" placeholder="Admin Key" class="w-full text-center tracking-[0.3em] font-mono text-lg py-3 px-4 rounded-xl bg-black/50 border border-white/10 text-amber-400 focus:outline-none focus:border-amber-500 transition">
+            <div class="mb-4">
+                <input type="password" id="admin-pin-input" maxlength="8" placeholder="Enter '7860'" class="w-full text-center tracking-[0.3em] font-mono text-lg py-3 px-4 rounded-xl bg-black/60 border border-white/10 text-amber-400 focus:outline-none focus:border-amber-500 transition">
             </div>
 
             <p id="admin-error" class="text-red-400 text-xs font-semibold mb-4 min-h-[1rem]"></p>
 
             <div class="flex gap-3">
                 <button type="button" onclick="closeAdminResetModal()" class="flex-1 py-3 bg-white/5 hover:bg-white/10 rounded-xl text-slate-300 font-medium text-xs transition">Cancel</button>
-                <button type="button" onclick="verifyAdminKeyAndReset()" class="flex-1 py-3 bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs rounded-xl transition shadow-lg shadow-amber-500/20">Confirm Reset</button>
+                <button type="button" onclick="verifyAdminKeyAndReset()" class="flex-1 py-3 bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs rounded-xl transition shadow-lg shadow-amber-500/20">Verify & Reset</button>
             </div>
         </div>
     </div>
 
-    <!-- Header Controls -->
     <header class="fixed top-4 right-4 z-[60] flex gap-2">
-        <button type="button" onclick="openAdminResetModal()" title="Reset PIN" class="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500 transition">
+        <button type="button" onclick="openAdminResetModal()" title="Reset Security PIN" class="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500 transition">
             <i data-lucide="key-round" class="w-4 h-4"></i>
         </button>
         <button type="button" onclick="toggleModal('bank-popup', true)" class="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500 transition">
@@ -229,13 +227,11 @@
         </div>
     </div>
 
-    <!-- Tab Contents -->
     <div id="ledger" class="tab-content" data-src="https://ftcf20-hub.github.io/FTCF.com/"></div>
     <div id="monthly" class="tab-content" data-src="https://ftcf20-hub.github.io/Monthly-Status/"></div>
     <div id="yearly" class="tab-content" data-src="https://ftcf20-hub.github.io/Yearly-Record/"></div>
     <div id="rules" class="tab-content" data-src="https://ftcf20-hub.github.io/Loneportal/"></div>
 
-    <!-- Bottom Navigation -->
     <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[99] glass-panel rounded-3xl p-1.5 flex items-center border border-white/10 max-w-xs w-full justify-between">
         <button type="button" data-target="ledger" onclick="switchTab('ledger', this)" class="tab-btn flex-1 py-3 flex items-center justify-center text-slate-400 transition">
             <i data-lucide="wallet" class="w-5 h-5"></i>
@@ -255,30 +251,38 @@
     </nav>
 
     <script>
-        const PIN_KEY = "ftcf_pin_v2";
-        const ADMIN_PIN = "7860"; // Required Admin Key for PIN Reset
+        const USER_PIN_KEY = "ftcf_user_pin";
+        const ADMIN_PIN_CODE = "7860";
 
         let enteredPin = "";
-        let confirmPin = "";
+        let confirmPinState = "";
         let isSettingPin = false;
 
         function initPasscode() {
-            const savedPin = localStorage.getItem(PIN_KEY);
+            let savedPin = null;
+            try {
+                savedPin = localStorage.getItem(USER_PIN_KEY);
+            } catch(e) {
+                console.error("Storage read error", e);
+            }
+
             const title = document.getElementById('lock-title');
             const subtitle = document.getElementById('lock-subtitle');
+            const errorElement = document.getElementById('lock-error');
 
             enteredPin = "";
-            confirmPin = "";
+            confirmPinState = "";
+            if (errorElement) errorElement.innerText = "";
             updateDots();
 
-            if (!savedPin) {
+            if (!savedPin || savedPin.trim() === "" || savedPin.length !== 4) {
                 isSettingPin = true;
                 title.innerText = "Set Security PIN";
                 subtitle.innerText = "Set a 4-digit PIN for first-time protection";
             } else {
                 isSettingPin = false;
                 title.innerText = "Enter Security PIN";
-                subtitle.innerText = "Enter 4-digit PIN to open dashboard";
+                subtitle.innerText = "Enter 4-digit PIN to open portal";
             }
         }
 
@@ -287,7 +291,7 @@
                 enteredPin += num;
                 updateDots();
                 if (enteredPin.length === 4) {
-                    setTimeout(handlePinComplete, 100);
+                    setTimeout(handlePinComplete, 120);
                 }
             }
         }
@@ -312,37 +316,42 @@
         function triggerShake(elementId) {
             const el = document.getElementById(elementId);
             if (el) {
+                el.classList.remove('shake');
+                void el.offsetWidth; // Force reflow
                 el.classList.add('shake');
-                setTimeout(() => el.classList.remove('shake'), 400);
             }
         }
 
         function handlePinComplete() {
-            const savedPin = localStorage.getItem(PIN_KEY);
+            const savedPin = localStorage.getItem(USER_PIN_KEY);
             const title = document.getElementById('lock-title');
             const subtitle = document.getElementById('lock-subtitle');
             const errorElement = document.getElementById('lock-error');
 
             if (isSettingPin) {
-                if (!confirmPin) {
-                    confirmPin = enteredPin;
+                if (!confirmPinState) {
+                    confirmPinState = enteredPin;
                     enteredPin = "";
                     updateDots();
                     title.innerText = "Confirm Security PIN";
                     subtitle.innerText = "Re-enter your 4-digit PIN to confirm";
                 } else {
-                    if (enteredPin === confirmPin) {
-                        localStorage.setItem(PIN_KEY, enteredPin);
+                    if (enteredPin === confirmPinState) {
+                        try {
+                            localStorage.setItem(USER_PIN_KEY, enteredPin);
+                        } catch(e) {
+                            console.error("Storage write error", e);
+                        }
                         openDashboard();
                     } else {
                         triggerShake('pin-dots-container');
-                        errorElement.innerText = "PIN match nahi hua. Match karein!";
-                        confirmPin = "";
+                        errorElement.innerText = "PIN match nahi hua. Reset kar ke dubara try karein.";
+                        confirmPinState = "";
                         enteredPin = "";
                         updateDots();
                         title.innerText = "Set Security PIN";
                         subtitle.innerText = "Set a 4-digit PIN for first-time protection";
-                        setTimeout(() => { errorElement.innerText = ""; }, 2500);
+                        setTimeout(() => { if(errorElement) errorElement.innerText = ""; }, 3000);
                     }
                 }
             } else {
@@ -350,10 +359,10 @@
                     openDashboard();
                 } else {
                     triggerShake('pin-dots-container');
-                    errorElement.innerText = "Galat PIN. Phir se enter karein.";
+                    errorElement.innerText = "Incorrect PIN! Please try again.";
                     enteredPin = "";
                     updateDots();
-                    setTimeout(() => { errorElement.innerText = ""; }, 2000);
+                    setTimeout(() => { if(errorElement) errorElement.innerText = ""; }, 2500);
                 }
             }
         }
@@ -370,17 +379,4 @@
             
             input.value = "";
             err.innerText = "";
-            modal.classList.remove('hidden');
-            setTimeout(() => input.focus(), 100);
-        }
-
-        function closeAdminResetModal() {
-            document.getElementById('admin-reset-modal').classList.add('hidden');
-        }
-
-        function verifyAdminKeyAndReset() {
-            const input = document.getElementById('admin-pin-input').value.trim();
-            const err = document.getElementById('admin-error');
-
-            if (input === ADMIN_PIN) {
-    
+            modal.
