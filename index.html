@@ -12,37 +12,31 @@
         
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: #f0fdfa; 
-            color: #0f172a;
+            background-color: #090d16; 
+            color: #f8fafc;
             min-height: 100vh;
             overflow-x: hidden;
             transition: background-color 0.8s ease;
         }
 
-        /* Weather Theme Dynamic Transitions (Teal / Ocean Accents) */
-        .theme-sunny {
-            background-color: #fef3c7 !important;
-        }
+        /* Dynamic Weather Overlays for Dark Theme */
         .theme-sunny .ambient-glow-1 {
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.3) 0%, rgba(255,255,255,0) 70%) !important;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.25) 0%, rgba(0,0,0,0) 70%) !important;
         }
 
-        .theme-rainy {
-            background-color: #e0f2fe !important;
-        }
         .theme-rainy .ambient-glow-1 {
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.3) 0%, rgba(255,255,255,0) 70%) !important;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, rgba(0,0,0,0) 70%) !important;
         }
 
-        /* Ambient Lighting Mesh Glows - Ocean Teal Glow */
+        /* Neon Glow Accents */
         .ambient-glow-1 {
             position: absolute;
             top: -100px;
             left: 50%;
             transform: translateX(-50%);
-            width: 350px;
-            height: 350px;
-            background: radial-gradient(circle, rgba(13, 148, 136, 0.25) 0%, rgba(255,255,255,0) 70%);
+            width: 380px;
+            height: 380px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, rgba(0,0,0,0) 70%);
             pointer-events: none;
             z-index: 0;
             transition: all 0.8s ease;
@@ -52,27 +46,27 @@
             position: absolute;
             top: 250px;
             right: -100px;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(14, 165, 233, 0.2) 0%, rgba(255,255,255,0) 70%);
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, rgba(0,0,0,0) 70%);
             pointer-events: none;
             z-index: 0;
         }
 
-        /* Modern Soft Light Glassmorphism */
+        /* Glassmorphism Dark Modal */
         .glass-card {
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(204, 251, 241, 0.8);
-            box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.08);
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
-        /* Glowing Total Card (Teal & Ocean Breeze Gradient) */
+        /* Total Card Neon Gradient */
         .total-card {
-            background: linear-gradient(135deg, #ccfbf1 0%, #e0f2fe 100%);
-            border: 1px solid rgba(20, 184, 166, 0.35);
-            box-shadow: 0 10px 25px -5px rgba(13, 148, 136, 0.2);
+            background: linear-gradient(135deg, rgba(6, 78, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.2);
             position: relative;
             overflow: hidden;
             transition: all 0.8s ease;
@@ -82,80 +76,80 @@
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(20, 184, 166, 0.6), transparent);
+            background: linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.8), transparent);
         }
 
-        /* Notice Card Light Amber */
+        /* Dark Amber Notice Card */
         .notice-card {
-            background: linear-gradient(145deg, #fef3c7 0%, #fde68a 100%);
+            background: linear-gradient(145deg, rgba(120, 53, 15, 0.4) 0%, rgba(30, 27, 75, 0.4) 100%);
             border: 1px solid rgba(245, 158, 11, 0.3);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 20px -5px rgba(245, 158, 11, 0.1);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
         }
 
         .notice-card::before {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 4px; height: 100%;
-            background: #d97706;
+            background: #f59e0b;
         }
 
         /* Custom Scrollbar */
         .scroll-container {
-            background: rgba(255, 255, 255, 0.65);
-            border: 1px solid rgba(204, 251, 241, 0.8);
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         #members-list::-webkit-scrollbar { width: 4px; }
-        #members-list::-webkit-scrollbar-thumb { background: #99f6e4; border-radius: 10px; }
+        #members-list::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
 
         /* Card Interactive Hover Effects */
         .member-item {
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
-            background: rgba(255, 255, 255, 0.95);
-            border: 1px solid #ccfbf1;
-            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .member-item:hover {
             transform: translateY(-2px) scale(1.01);
-            border-color: rgba(13, 148, 136, 0.5);
-            box-shadow: 0 12px 20px -5px rgba(15, 23, 42, 0.08), 0 0 12px rgba(13, 148, 136, 0.2);
-            background: #ffffff;
+            border-color: rgba(52, 211, 153, 0.5);
+            box-shadow: 0 12px 24px -5px rgba(0, 0, 0, 0.4), 0 0 15px rgba(16, 185, 129, 0.25);
+            background: rgba(30, 41, 59, 0.9);
         }
 
-        /* Pulse Dot Animation - Cyan Glow */
+        /* Neon Pulse Dot */
         .pulse-dot {
             width: 6px;
             height: 6px;
-            background-color: #2dd4bf;
+            background-color: #34d399;
             border-radius: 50%;
-            box-shadow: 0 0 8px #2dd4bf;
+            box-shadow: 0 0 10px #34d399;
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(45, 212, 191, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(45, 212, 191, 0); }
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.8); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
         }
     </style>
 </head>
-<body class="pb-8 relative antialiased selection:bg-teal-100">
+<body class="pb-8 relative antialiased selection:bg-emerald-900 selection:text-emerald-200">
 
     <div class="ambient-glow-1"></div>
     <div class="ambient-glow-2"></div>
 
-    <header class="p-6 sm:p-8 pb-16 sm:pb-20 bg-teal-950 text-white rounded-b-[2rem] sm:rounded-b-[2.5rem] shadow-xl text-center relative z-10 border-b border-teal-800/40">
-        <div class="inline-flex items-center gap-2 mb-2 px-3 py-1 rounded-full bg-teal-900/80 border border-teal-700/60 text-[10px] font-medium tracking-widest text-teal-200 uppercase">
+    <header class="p-6 sm:p-8 pb-16 sm:pb-20 bg-slate-950 text-white rounded-b-[2rem] sm:rounded-b-[2.5rem] shadow-2xl text-center relative z-10 border-b border-slate-800">
+        <div class="inline-flex items-center gap-2 mb-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-700/80 text-[10px] font-medium tracking-widest text-emerald-400 uppercase">
             <span class="pulse-dot"></span> <span id="weather-status">Live Portal</span>
         </div>
         <h1 class="text-xl sm:text-2xl font-black tracking-tight text-white leading-tight">
             Family Trust & Care Foundation
         </h1>
-        <p class="inline-block mt-3 px-3.5 py-1.5 rounded-full text-teal-200 font-medium text-[11px] sm:text-xs tracking-wide bg-teal-900/50 border border-teal-700/50 backdrop-blur-xl max-w-[90%]">
+        <p class="inline-block mt-3 px-3.5 py-1.5 rounded-full text-amber-300 font-medium text-[11px] sm:text-xs tracking-wide bg-amber-500/10 border border-amber-400/20 backdrop-blur-xl max-w-[90%]">
             "Amanat me khiyanat nahi,Behtreen Nizam Asal Kamyabi"
         </p>
     </header>
@@ -164,26 +158,26 @@
         
         <div class="total-card p-5 sm:p-6 rounded-2xl sm:rounded-3xl text-center backdrop-blur-xl">
             <div class="flex items-center justify-center gap-2">
-                <p class="text-[10px] font-bold uppercase tracking-[0.25em] text-teal-900 opacity-80">Total Contribution</p>
+                <p class="text-[10px] font-bold uppercase tracking-[0.25em] text-emerald-300 opacity-90">Total Contribution</p>
             </div>
-            <h2 id="grand-total" class="text-3xl sm:text-4xl font-black mt-2 text-teal-950 tracking-tight">Rs. 0</h2>
-            <p id="last-updated" class="text-[9px] font-bold uppercase tracking-[0.15em] text-teal-800 opacity-75 mt-2"></p>
+            <h2 id="grand-total" class="text-3xl sm:text-4xl font-black mt-2 text-emerald-400 tracking-tight drop-shadow-md">Rs. 0</h2>
+            <p id="last-updated" class="text-[9px] font-bold uppercase tracking-[0.15em] text-slate-400 opacity-80 mt-2"></p>
         </div>
 
         <section>
             <div class="flex justify-between items-center mb-2.5 ml-1">
-                <h3 class="text-[10px] font-bold uppercase tracking-[0.2em] text-teal-800">Members List</h3>
-                <span class="text-[9px] font-semibold text-teal-600/70 uppercase tracking-wider">Tap for history</span>
+                <h3 class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Members List</h3>
+                <span class="text-[9px] font-semibold text-slate-500 uppercase tracking-wider">Tap for history</span>
             </div>
             <div id="members-list" class="scroll-container grid grid-cols-2 gap-2.5 sm:gap-3 max-h-[300px] sm:max-h-[360px] overflow-y-auto p-2.5 sm:p-3 rounded-2xl sm:rounded-3xl backdrop-blur-xl"></div>
         </section>
 
         <!-- History Modal -->
-        <div id="modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50 transition-all duration-300">
-            <div class="glass-card p-5 sm:p-6 rounded-2xl sm:rounded-3xl w-full max-w-xs sm:max-w-sm max-h-[75vh] flex flex-col border border-teal-100 shadow-2xl relative">
-                <div class="flex justify-between items-center mb-3 pb-2.5 border-b border-teal-100">
-                    <h3 id="modal-name" class="font-bold text-slate-900 text-xs sm:text-sm tracking-wide truncate pr-2"></h3>
-                    <button onclick="triggerVibrate(20); document.getElementById('modal').classList.add('hidden')" class="w-7 h-7 rounded-full bg-teal-50 text-teal-700 hover:text-teal-950 flex items-center justify-center shrink-0 transition-all hover:bg-teal-100">
+        <div id="modal" class="fixed inset-0 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4 z-50 transition-all duration-300">
+            <div class="glass-card p-5 sm:p-6 rounded-2xl sm:rounded-3xl w-full max-w-xs sm:max-w-sm max-h-[75vh] flex flex-col border border-slate-700 shadow-2xl relative">
+                <div class="flex justify-between items-center mb-3 pb-2.5 border-b border-slate-800">
+                    <h3 id="modal-name" class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate pr-2"></h3>
+                    <button onclick="triggerVibrate(20); document.getElementById('modal').classList.add('hidden')" class="w-7 h-7 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center shrink-0 transition-all hover:bg-slate-700">
                         <i class="fas fa-times text-xs"></i>
                     </button>
                 </div>
@@ -193,17 +187,17 @@
 
         <div class="notice-card p-4 sm:p-5 rounded-2xl sm:rounded-3xl">
             <div class="flex items-center gap-2 mb-1.5">
-                <div class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-amber-500/20 flex items-center justify-center border border-amber-500/30 shrink-0">
-                    <i class="fas fa-bell text-amber-800 text-[9px] sm:text-[10px]"></i>
+                <div class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-amber-500/20 flex items-center justify-center border border-amber-500/40 shrink-0">
+                    <i class="fas fa-bell text-amber-400 text-[9px] sm:text-[10px]"></i>
                 </div>
-                <h4 class="font-bold uppercase tracking-widest text-xs text-amber-900">Important Notice</h4>
+                <h4 class="font-bold uppercase tracking-widest text-xs text-amber-300">Important Notice</h4>
             </div>
-            <p class="text-xs leading-relaxed text-amber-950 opacity-90 font-medium dir-rtl text-right">
+            <p class="text-xs leading-relaxed text-amber-100/90 font-medium dir-rtl text-right">
                 تمام بھائیوں سے گزارش ہے کہ ہر مہینے کی 10 تاریخ تک اپنی پیمنٹ جمع کروا دیا کریں، تاکہ نہ سسٹم میں رکاوٹ آئے اور نہ ہی آپ پر بوجھ بڑھے۔ شکریہ۔
             </p>
         </div>
 
-        <div class="text-center opacity-60 text-[9px] font-bold uppercase tracking-[0.25em] pt-2 text-teal-800">
+        <div class="text-center opacity-40 text-[9px] font-bold uppercase tracking-[0.25em] pt-2 text-slate-500">
             @FTCF2026 Founder Mughal Brothers
         </div>
     </main>
@@ -266,13 +260,13 @@
 
             const list = document.getElementById('members-list');
             main.forEach(m => {
-                const profilePic = m.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(m.name)}&background=ccfbf1&color=0f766e`;
+                const profilePic = m.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(m.name)}&background=1e293b&color=34d399`;
                 list.innerHTML += `
                     <div onclick="triggerVibrate(30); showHistory('${m.name}')" class="member-item p-2.5 rounded-xl sm:rounded-2xl flex items-center gap-2.5 cursor-pointer group min-w-0">
-                        <img src="${profilePic}" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover ring-2 ring-teal-500/30 group-hover:ring-teal-500 transition-all duration-300 shrink-0">
+                        <img src="${profilePic}" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover ring-2 ring-emerald-500/30 group-hover:ring-emerald-400 transition-all duration-300 shrink-0">
                         <div class="overflow-hidden min-w-0">
-                            <p class="text-[10px] font-bold text-slate-800 uppercase tracking-wide truncate group-hover:text-teal-700 transition-colors">${m.name}</p>
-                            <p class="text-[10px] font-black text-teal-600 mt-0.5 truncate">Rs. ${m.fund.toLocaleString()}</p>
+                            <p class="text-[10px] font-bold text-slate-200 uppercase tracking-wide truncate group-hover:text-emerald-400 transition-colors">${m.name}</p>
+                            <p class="text-[10px] font-black text-emerald-400 mt-0.5 truncate">Rs. ${m.fund.toLocaleString()}</p>
                         </div>
                     </div>
                 `;
@@ -292,14 +286,14 @@
                 container.innerHTML = memberHistory.map(row => {
                     const values = Object.values(row);
                     return `
-                        <div class="flex justify-between items-center text-xs border-b border-teal-50 pb-2 pt-1 text-slate-700">
+                        <div class="flex justify-between items-center text-xs border-b border-slate-800 pb-2 pt-1 text-slate-300">
                             <span class="opacity-80 font-medium truncate pr-2">${values[1] || 'N/A'}</span>
-                            <span class="font-bold text-teal-700 bg-teal-50 px-2.5 py-0.5 rounded-full border border-teal-200 shrink-0">Rs. ${values[2] ? parseInt(values[2]).toLocaleString() : 0}</span>
+                            <span class="font-bold text-emerald-400 bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-800/60 shrink-0">Rs. ${values[2] ? parseInt(values[2]).toLocaleString() : 0}</span>
                         </div>
                     `;
                 }).join('');
             } else {
-                container.innerHTML = '<p class="text-xs text-center text-slate-400 py-6">No records found.</p>';
+                container.innerHTML = '<p class="text-xs text-center text-slate-500 py-6">No records found.</p>';
             }
             document.getElementById('modal').classList.remove('hidden');
         }
