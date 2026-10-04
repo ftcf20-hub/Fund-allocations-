@@ -313,7 +313,7 @@
         <h3 class="font-black text-slate-100 uppercase tracking-wide text-sm text-center">Request Financial Assistance</h3>
         <p class="text-[10px] text-slate-400 text-center mb-4 uppercase tracking-wider font-semibold">Fill in details to submit application via WhatsApp</p>
         
-        <form id="loanForm" class="space-y-3" onsubmit="event.preventDefault(); send();">
+        <form id="loanForm" class="space-y-3" onsubmit="sendApp(event)">
             <div>
               <input type="text" id="n" placeholder="Full Name" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900/90 border border-slate-800 text-slate-100 placeholder-slate-500 focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition" required>
             </div>
@@ -378,4 +378,4 @@
               </div>
           </div>
 
-          <div class="p-2.5 bg-emerald-950/60 rou
+          <div class="p-2.5 bg-emerald-950/60 rounded-xl border bo
