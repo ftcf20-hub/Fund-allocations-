@@ -191,7 +191,7 @@
         </div>
     </div>
 
-    <!-- ADMIN DASHBOARD MODAL (Clean & Fully Visible Layout) -->
+    <!-- ADMIN DASHBOARD MODAL -->
     <div id="adminDashboardModal" class="modal hidden" style="align-items: flex-start; overflow-y: auto; padding: 20px 10px;">
         <div style="width: 100%; max-width: 400px; margin: auto; background: #0f172a; border: 1px solid #334155; border-radius: 24px; padding: 20px;">
             <div class="flex-row" style="margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 12px;">
@@ -222,7 +222,7 @@
                 <button onclick="saveAdminStats()" class="btn btn-emerald" style="padding: 10px; font-size: 11px;">Save Metrics</button>
             </div>
 
-            <!-- Add Loantaker -->
+            <!-- Add & Manage Loantaker -->
             <div class="glass-card" style="margin-bottom: 14px;">
                 <p style="font-size: 11px; font-weight: 900; color: #38bdf8; margin-bottom: 10px; text-transform: uppercase;"><i class="fas fa-user-plus mr-1"></i> Add / Manage Loantakers</p>
                 <input type="text" id="ltName" placeholder="Loantaker Name" class="input-field">
@@ -232,8 +232,8 @@
                 </div>
                 <button onclick="addLoantaker()" class="btn btn-slate" style="margin-top: 10px; padding: 10px; font-size: 11px; background: #0369a1; color: #fff;">Add Loantaker to List</button>
                 
-                <!-- Container for listing and deleting loantakers inside admin panel -->
-                <div id="adminLoantakersListContainer" style="margin-top: 12px;"></div>
+                <!-- Fixed Static Container Inside Modal -->
+                <div id="adminLoantakersListContainer" style="margin-top: 14px; border-top: 1px solid #1e293b; padding-top: 10px;"></div>
             </div>
             
             <button onclick="closeAdminDashboard()" class="btn btn-slate" style="padding: 12px;">Exit Dashboard</button>
@@ -374,6 +374,7 @@
         var container = document.getElementById('mainLoantakersContainer');
         var badge = document.getElementById('loantakersCountBadge');
 
+        if(!container || !badge) return;
         badge.innerText = loantakers.length + " Active";
 
         if(loantakers.length === 0) {
@@ -396,6 +397,4 @@
 
       function renderAdminLoantakersList() {
         var loantakers = JSON.parse(localStorage.getItem('ftcf_loantakers') || '[]');
-        var adminContainer = document.getElementById('adminLoantakersListContainer');
-        
-        if(!adminContainer) 
+        var adminContainer = document.getElementById('adminLoantakersListContainer'
