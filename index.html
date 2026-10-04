@@ -1,395 +1,497 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ur" dir="ltr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>FTCF | Modern Financial Portal</title>
-  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FTCF | Family Trust Dashboard 2026</title>
     
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { 
-        font-family: 'Plus Jakarta Sans', sans-serif; 
-        background-color: #090d16; 
-        color: #f8fafc; 
-        min-height: 100vh; 
-        padding: 16px;
-        max-width: 480px;
-        margin: 0 auto;
-    }
-    .urdu-text { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.2; direction: rtl; }
+    <!-- Google Fonts: Plus Jakarta Sans & Noto Sans Urdu -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Urdu:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
-    .bank-gradient { 
-        background: linear-gradient(135deg, rgba(6, 78, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
-        border: 1px solid rgba(16, 185, 129, 0.35);
-        box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.2);
-    }
-    .glass-card {
-        background: rgba(15, 23, 42, 0.95); 
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
-        padding: 16px;
-        margin-bottom: 12px;
-    }
-    .btn {
-        width: 100%;
-        padding: 14px;
-        border-radius: 14px;
-        font-weight: 800;
-        font-size: 12px;
-        text-transform: uppercase;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        transition: 0.2s;
-    }
-    .btn-emerald { background-color: #10b981; color: #022c22; }
-    .btn-emerald:active { transform: scale(0.98); }
-    .btn-slate { background-color: #1e293b; color: #f8fafc; border: 1px solid #334155; }
-    .input-field {
-        width: 100%;
-        padding: 12px 14px;
-        font-size: 13px;
-        background-color: #090d16;
-        border: 1px solid #334155;
-        color: #f8fafc;
-        border-radius: 14px;
-        outline: none;
-        margin-bottom: 10px;
-    }
-    .input-field:focus { border-color: #10b981; }
-    .modal {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.9);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 16px;
-        z-index: 100;
-    }
-    .hidden { display: none !important; }
-    .flex-row { display: flex; justify-content: space-between; align-items: center; }
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  </style>
-</head>
-<body>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        urdu: ['Noto Sans Urdu', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #090d16; 
+            color: #f8fafc;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background-color 0.8s ease;
+        }
 
-    <!-- Header -->
-    <header class="flex-row" style="padding-bottom: 16px; border-bottom: 1px solid #1e293b; margin-bottom: 16px;">
-        <div>
-          <span style="font-size: 10px; font-weight: 900; color: #34d399; letter-spacing: 1px;">2026-2027 FISCAL PORTAL</span>
-          <h1 style="font-size: 18px; font-weight: 900; text-transform: uppercase;">Rules & Loans</h1>
+        /* Ambient Glow Background Filters */
+        .ambient-glow-1 {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, rgba(0,0,0,0) 70%);
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(40px);
+        }
+
+        .ambient-glow-2 {
+            position: fixed;
+            top: 250px;
+            right: -100px;
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, rgba(0,0,0,0) 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Executive Gradient Hero Card */
+        .bank-gradient { 
+            background: linear-gradient(135deg, rgba(6, 78, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.2);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .bank-gradient::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.8), transparent);
+        }
+
+        /* Deficit State Style for Negative Reserve Balance */
+        .bank-gradient-deficit {
+            background: linear-gradient(135deg, rgba(136, 19, 55, 0.6) 0%, rgba(15, 23, 42, 0.85) 100%) !important;
+            border: 1.5px solid rgba(244, 63, 94, 0.8) !important;
+            box-shadow: 0 10px 30px -5px rgba(244, 63, 94, 0.3) !important;
+        }
+
+        /* Glass Cards */
+        .glass-card { 
+            background: rgba(15, 23, 42, 0.85); 
+            backdrop-filter: blur(24px); 
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Dark Shimmer Skeleton Loader */
+        .shimmer-box {
+            background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Live Pulse Indicator Dot */
+        .pulse-dot {
+            width: 7px;
+            height: 7px;
+            background-color: #34d399;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #34d399;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.8); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+        }
+
+        /* Scrollbar Styling */
+        #monthly-list::-webkit-scrollbar,
+        #ramzan-content::-webkit-scrollbar,
+        #expenses-detail-list::-webkit-scrollbar { width: 4px; }
+        #monthly-list::-webkit-scrollbar-thumb,
+        #ramzan-content::-webkit-scrollbar-thumb,
+        #expenses-detail-list::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+    </style>
+</head>
+<body class="pb-12 relative antialiased selection:bg-emerald-900 selection:text-emerald-200">
+
+    <!-- Background Ambient Glows -->
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-b from-slate-900 via-slate-900/90 to-transparent pt-6 pb-8 px-4 relative z-10">
+        <div class="max-w-md mx-auto flex flex-col items-center text-center space-y-3">
+            
+            <!-- Top Controls Row -->
+            <div class="w-full flex items-center justify-between">
+                <button onclick="toggleModal('ramzan-modal', true)" class="flex items-center gap-1.5 bg-emerald-950/80 hover:bg-emerald-900/90 border border-emerald-500/30 text-emerald-300 px-3.5 py-1.5 rounded-full backdrop-blur-md transition-all text-xs font-bold active:scale-95 shadow-md shadow-emerald-950/40">
+                    <span>🌙</span>
+                    <span>Ramzan Vision 2027</span>
+                </button>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-700/80 text-[10px] font-bold text-slate-300 shadow-sm backdrop-blur-md">
+                    <span class="pulse-dot"></span> <span>FTCF LIVE</span>
+                </div>
+            </div>
+
+            <div>
+                <h1 class="text-lg font-black tracking-tight text-slate-100 flex items-center justify-center gap-2 uppercase">
+                    Family Trust & Care Foundation
+                </h1>
+                <p class="text-xs text-emerald-400/90 font-urdu mt-1 font-semibold">مستقبل کی بہتری اور باہمی تعاون کا شفاف ڈیش بورڈ</p>
+            </div>
+
+            <div class="inline-flex items-center px-3.5 py-1 rounded-full bg-slate-950/80 border border-slate-800 text-emerald-400 text-[10px] font-mono tracking-widest font-bold uppercase shadow-inner">
+                FISCAL YEAR 2026 - 2027
+            </div>
         </div>
-        <button onclick="openPinModal()" class="btn-slate" style="width: 42px; height: 42px; border-radius: 14px; font-weight: 900; color: #34d399;">FTCF</button>
     </header>
 
-    <!-- Stats -->
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;">
-        <div class="bank-gradient" style="grid-column: span 2; padding: 20px; border-radius: 20px;">
-            <p style="font-size: 10px; font-weight: 900; color: #34d399; text-transform: uppercase; margin-bottom: 4px;">Active Loans</p>
-            <h2 id="activeLoansDisplay" style="font-size: 36px; font-weight: 900;">0</h2>
-        </div>
+    <!-- Main Content Container -->
+    <main class="max-w-md mx-auto px-4 space-y-4 relative z-20 -mt-2">
 
-        <div class="glass-card" style="margin: 0;">
-            <p style="font-size: 9px; color: #94a3b8; font-weight: 900; text-transform: uppercase;">Inflow</p>
-            <p id="inflowDisplay" style="font-size: 15px; font-weight: 900; color: #34d399; margin-top: 4px;">Rs. 11,500</p>
-        </div>
-
-        <div class="glass-card" style="margin: 0;">
-            <p style="font-size: 9px; color: #94a3b8; font-weight: 900; text-transform: uppercase;">Outflow</p>
-            <p id="outflowDisplay" style="font-size: 15px; font-weight: 900; color: #fb7185; margin-top: 4px;">Rs. 0</p>
-        </div>
-    </div>
-
-    <!-- Active Loantakers Directory -->
-    <div style="margin-bottom: 16px;">
-        <div class="flex-row" style="margin-bottom: 8px; padding: 0 4px;">
-          <h3 style="font-size: 11px; font-weight: 900; color: #cbd5e1; text-transform: uppercase;">Active Loantakers Directory</h3>
-          <span id="loantakersCountBadge" style="font-size: 9px; font-weight: 900; color: #34d399; background: #064e3b; padding: 2px 8px; border-radius: 20px;">0 Active</span>
-        </div>
-        <div id="mainLoantakersContainer">
-            <!-- Dynamically populated -->
-        </div>
-    </div>
-
-    <!-- Mission & Vision -->
-    <div style="margin-bottom: 16px;">
-        <button onclick="toggleMission()" class="btn btn-slate">
-            <i class="fas fa-book-open" style="color: #34d399;"></i>
-            <span>Read Full Mission & Vision</span>
-        </button>
-        
-        <div id="missionBox" class="glass-card urdu-text hidden" style="margin-top: 10px; max-height: 200px; overflow-y: auto; font-size: 12px; color: #e2e8f0;">
-            <p>ہمارا عزم ہے کہ ہم نے اپنے علاقے میں "فیملی ٹرسٹ" کو ایک مثالی نیٹ ورک بنانا ہے۔ یہ ہم سب ممبران کی اپنی مشترکہ فاؤنڈیشن hai.</p>
-        </div>
-    </div>
-
-    <!-- Application Form -->
-    <div class="glass-card">
-        <h3 style="font-size: 13px; font-weight: 900; text-align: center; text-transform: uppercase; margin-bottom: 4px;">Request Financial Assistance</h3>
-        <p style="font-size: 9px; color: #94a3b8; text-align: center; text-transform: uppercase; margin-bottom: 14px; font-weight: 700;">Submit details directly to WhatsApp</p>
-        
-        <input type="text" id="uName" placeholder="Full Name" class="input-field">
-        <input type="number" id="uAmount" placeholder="Loan Amount (PKR)" class="input-field">
-        <textarea id="uReason" placeholder="Reason for Request" class="input-field" rows="3" style="resize: none;"></textarea>
-        
-        <button onclick="handleApplication()" class="btn btn-emerald">
-            <i class="fab fa-whatsapp" style="font-size: 16px;"></i> Submit & Generate Receipt
-        </button>
-    </div>
-
-    <!-- DIGITAL RECEIPT MODAL -->
-    <div id="receiptModal" class="modal hidden">
-        <div style="width: 100%; max-width: 360px;">
-            <div class="glass-card" style="border: 1px solid #334155; margin-bottom: 10px;">
-                <div class="flex-row" style="border-bottom: 1px solid #1e293b; padding-bottom: 12px; margin-bottom: 12px;">
-                    <div>
-                        <span style="color: #34d399; font-weight: 900; font-size: 11px;"><i class="fas fa-check-circle"></i> FTCF Official</span>
-                        <h4 style="font-size: 15px; font-weight: 900; margin-top: 2px;">Receipt</h4>
-                    </div>
-                    <span id="rcptStatusBadge" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; font-size: 9px; font-weight: 900; padding: 2px 8px; border-radius: 20px;">Pending</span>
-                </div>
-
-                <div style="font-size: 12px;">
-                    <div class="flex-row" style="margin-bottom: 6px;"><span style="color: #94a3b8;">Ref ID:</span> <span id="rcptRef" style="font-weight: bold;">#FTCF-0000</span></div>
-                    <div class="flex-row" style="margin-bottom: 6px;"><span style="color: #94a3b8;">Name:</span> <span id="rcptName" style="font-weight: bold;">---</span></div>
-                    <div class="flex-row" style="margin-bottom: 6px;"><span style="color: #94a3b8;">Amount:</span> <span id="rcptAmount" style="font-weight: 900; color: #34d399;">Rs. 0</span></div>
-                    <div style="margin-top: 8px;"><span style="color: #94a3b8; font-size: 10px;">Reason:</span> <p id="rcptReason" style="font-size: 11px; font-style: italic; color: #cbd5e1; margin-top: 2px;">---</p></div>
-                </div>
-            </div>
-
-            <a id="modalWaBtn" href="#" target="_blank" class="btn btn-emerald" style="text-decoration: none; margin-bottom: 8px;">
-                <i class="fab fa-whatsapp"></i> Send on WhatsApp Now
-            </a>
-            <button onclick="closeReceiptModal()" class="btn btn-slate">Close</button>
-        </div>
-    </div>
-
-    <!-- ADMIN PIN MODAL -->
-    <div id="pinModal" class="modal hidden">
-        <div class="glass-card" style="width: 100%; max-width: 300px; text-align: center; margin: 0;">
-            <div style="width: 45px; height: 45px; background: rgba(16, 185, 129, 0.1); color: #34d399; border-radius: 14px; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 18px;">
-                <i class="fas fa-user-shield"></i>
-            </div>
-            <h3 style="font-size: 14px; font-weight: 900; text-transform: uppercase;">Admin Verification</h3>
-            <p style="font-size: 10px; color: #94a3b8; margin-bottom: 12px;">Enter 4-Digit PIN (2026)</p>
-            
-            <input type="password" id="adminPinInput" maxlength="4" placeholder="••••" class="input-field" style="text-align: center; letter-spacing: 6px; font-size: 20px;">
-            <p id="pinErrorMsg" style="font-size: 10px; color: #fb7185; font-weight: bold; margin-bottom: 10px; display: none;">Incorrect PIN!</p>
-
-            <div class="grid-2">
-                <button onclick="verifyPin()" class="btn btn-emerald" style="padding: 10px;">Verify</button>
-                <button onclick="closePinModal()" class="btn btn-slate" style="padding: 10px;">Cancel</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ADMIN DASHBOARD MODAL -->
-    <div id="adminDashboardModal" class="modal hidden" style="align-items: flex-start; overflow-y: auto; padding: 20px 10px;">
-        <div style="width: 100%; max-width: 400px; margin: auto; background: #0f172a; border: 1px solid #334155; border-radius: 24px; padding: 20px;">
-            <div class="flex-row" style="margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 12px;">
+        <!-- Net Reserve Balance Card (Executive Dark Hero Card) -->
+        <div id="savings-box" class="bank-gradient p-5 rounded-3xl shadow-2xl transition-all duration-300">
+            <div class="flex justify-between items-start mb-1">
                 <div>
-                    <span style="font-size: 9px; font-weight: 900; color: #10b981; letter-spacing: 1px;">CONTROL CENTER</span>
-                    <h2 style="font-size: 16px; font-weight: 900;">Admin Dashboard</h2>
+                    <p class="text-[10px] font-black tracking-[0.2em] text-slate-300 uppercase">Net Reserve Balance</p>
+                    <p class="text-xs text-emerald-300/90 font-urdu font-semibold mt-0.5">کل دستیاب فنڈز</p>
                 </div>
-                <button onclick="closeAdminDashboard()" class="btn-slate" style="width: 32px; height: 32px; border-radius: 10px;"><i class="fas fa-times"></i></button>
-            </div>
-
-            <!-- WhatsApp Number Config -->
-            <div class="glass-card" style="margin-bottom: 14px;">
-                <p style="font-size: 11px; font-weight: 900; color: #38bdf8; margin-bottom: 8px; text-transform: uppercase;"><i class="fab fa-whatsapp"></i> Configure WhatsApp Number</p>
-                <input type="text" id="admWaNumber" class="input-field" placeholder="923433052346" style="margin-bottom: 8px;">
-                <button onclick="saveWhatsAppNumber()" class="btn btn-slate" style="padding: 8px; font-size: 10px; background: #0369a1; color: #fff;">Save WhatsApp Number</button>
-            </div>
-
-            <!-- Metrics Manager -->
-            <div class="glass-card" style="margin-bottom: 14px;">
-                <p style="font-size: 11px; font-weight: 900; color: #34d399; margin-bottom: 10px; text-transform: uppercase;"><i class="fas fa-sliders-h"></i> Update Portal Metrics</p>
-                <div class="grid-2">
-                    <div>
-                        <label style="font-size: 9px; color: #94a3b8; display: block; margin-bottom: 4px;">Inflow (PKR)</label>
-                        <input type="number" id="admInflow" class="input-field" style="margin-bottom: 8px;">
-                    </div>
-                    <div>
-                        <label style="font-size: 9px; color: #94a3b8; display: block; margin-bottom: 4px;">Outflow (PKR)</label>
-                        <input type="number" id="admOutflow" class="input-field" style="margin-bottom: 8px;">
-                    </div>
-                </div>
-                <div>
-                    <label style="font-size: 9px; color: #94a3b8; display: block; margin-bottom: 4px;">Active Loans Count</label>
-                    <input type="number" id="admLoans" class="input-field" style="margin-bottom: 8px;">
-                </div>
-                <button onclick="saveAdminStats()" class="btn btn-emerald" style="padding: 10px; font-size: 11px;">Save Metrics</button>
-            </div>
-
-            <!-- Add / Edit Loantaker -->
-            <div class="glass-card" style="margin-bottom: 14px;">
-                <p id="loantakerFormTitle" style="font-size: 11px; font-weight: 900; color: #38bdf8; margin-bottom: 10px; text-transform: uppercase;"><i class="fas fa-user-plus"></i> Add Active Loantaker</p>
-                <input type="hidden" id="editIndex" value="-1">
-                <input type="text" id="ltName" placeholder="Loantaker Name" class="input-field">
-                <div class="grid-2">
-                    <input type="number" id="ltAmount" placeholder="Amount (PKR)" class="input-field" style="margin-bottom: 0;">
-                    <input type="text" id="ltDuration" placeholder="Duration (e.g. 6 Months)" class="input-field" style="margin-bottom: 0;">
-                </div>
-                <div style="display: flex; gap: 8px; margin-top: 10px;">
-                    <button onclick="saveLoantaker()" id="loantakerSubmitBtn" class="btn btn-slate" style="padding: 10px; font-size: 11px; background: #0369a1; color: #fff;">Add Loantaker</button>
-                    <button onclick="resetLoantakerForm()" id="loantakerCancelBtn" class="btn btn-slate hidden" style="padding: 10px; font-size: 11px;">Cancel</button>
-                </div>
-            </div>
-
-            <!-- Manage / Delete Loantakers List -->
-            <div class="glass-card" style="margin-bottom: 14px;">
-                <p style="font-size: 11px; font-weight: 900; color: #fb7185; margin-bottom: 10px; text-transform: uppercase;"><i class="fas fa-trash-alt"></i> Manage / Delete Loantakers</p>
-                <div id="adminLoantakersList" style="max-height: 160px; overflow-y: auto;">
-                    <!-- Dynamically populated list -->
-                </div>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 backdrop-blur-md">
+                    Active
+                </span>
             </div>
             
-            <button onclick="closeAdminDashboard()" class="btn btn-slate" style="padding: 12px;">Exit Dashboard</button>
+            <h2 id="net-savings" class="text-3xl font-black tracking-tight text-emerald-400 my-2">
+                <span class="inline-block w-36 h-8 shimmer-box rounded-lg"></span>
+            </h2>
+
+            <!-- Expense Ratio Progress Bar -->
+            <div class="mt-4 pt-3 border-t border-white/10">
+                <div class="flex justify-between text-[10px] font-bold mb-1.5">
+                    <span class="text-slate-300 uppercase tracking-wider">Expense Ratio</span>
+                    <span id="expense-percentage" class="text-emerald-400 font-mono">0%</span>
+                </div>
+                <div class="w-full h-2 bg-slate-950 rounded-full overflow-hidden p-0.5 border border-white/10">
+                    <div id="expense-progress-bar" class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Summary Stats Grid -->
+        <div class="grid grid-cols-2 gap-3">
+            <!-- Total Income Card -->
+            <div class="glass-card p-3.5 rounded-2xl flex flex-col justify-between border-l-4 border-l-emerald-500">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider">Total Income</span>
+                    <span class="w-5 h-5 rounded-md bg-emerald-950 text-emerald-400 font-black text-xs flex items-center justify-center border border-emerald-800">↓</span>
+                </div>
+                <h3 id="total-balance" class="text-base font-extrabold text-slate-100 tracking-tight my-1">
+                    <span class="inline-block w-20 h-5 shimmer-box rounded"></span>
+                </h3>
+                <p class="text-[10px] text-slate-400 font-urdu font-semibold">کل آمدن</p>
+            </div>
+
+            <!-- Total Expenses Card (Clickable to open details) -->
+            <div onclick="openExpensesModal()" class="glass-card p-3.5 rounded-2xl flex flex-col justify-between border-l-4 border-l-rose-500 cursor-pointer hover:bg-slate-800/80 transition-all group">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider group-hover:text-rose-400 transition-colors">Total Outflow 📋</span>
+                    <span class="w-5 h-5 rounded-md bg-rose-950 text-rose-400 font-black text-xs flex items-center justify-center border border-rose-800">↑</span>
+                </div>
+                <h3 id="total-expenses" class="text-base font-extrabold text-slate-100 tracking-tight my-1">
+                    <span class="inline-block w-20 h-5 shimmer-box rounded"></span>
+                </h3>
+                <p class="text-[10px] text-slate-400 font-urdu font-semibold">تفصیل کے لیے کلک کریں</p>
+            </div>
+        </div>
+
+        <!-- Monthly Overview Section -->
+        <div class="pt-2">
+            <div class="flex items-center justify-between mb-3 px-1">
+                <div>
+                    <h3 class="text-xs font-black uppercase tracking-[0.2em] text-slate-200">Monthly Overview</h3>
+                    <p class="text-[10px] text-slate-400 font-urdu font-semibold mt-0.5">ماہانہ وصولی و اخراجات کا تفصیلی ریکارڈ</p>
+                </div>
+                <span class="text-[9px] font-bold text-emerald-400 bg-slate-900 px-2.5 py-1 rounded-md border border-slate-800 font-mono">2026 LOG</span>
+            </div>
+
+            <div id="monthly-list" class="space-y-2.5">
+                <!-- Skeleton Shimmers -->
+                <div class="glass-card p-4 rounded-2xl flex justify-between items-center border border-slate-800">
+                    <div class="w-24 h-4 shimmer-box rounded"></div>
+                    <div class="w-16 h-4 shimmer-box rounded"></div>
+                </div>
+                <div class="glass-card p-4 rounded-2xl flex justify-between items-center border border-slate-800">
+                    <div class="w-24 h-4 shimmer-box rounded"></div>
+                    <div class="w-16 h-4 shimmer-box rounded"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center opacity-40 text-[9px] font-black uppercase tracking-[0.25em] pt-4 text-slate-500">
+            @FTCF2026 Founder Mughal Brothers
+        </div>
+    </main>
+
+    <!-- Expenses Detail Modal with Admin Add Option -->
+    <div id="expenses-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="glass-card rounded-3xl p-6 w-full max-w-sm border border-slate-700/80 shadow-2xl relative overflow-hidden">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-800">
+                <div>
+                    <h3 class="text-sm font-black text-slate-100 flex items-center gap-2 uppercase tracking-wide">
+                        <span>📊</span> Expense Details
+                    </h3>
+                    <p class="text-[11px] text-rose-400 font-urdu font-semibold mt-0.5">اخراجات کی تفصیلی فہرست اور انتظام</p>
+                </div>
+                <button onclick="toggleModal('expenses-modal', false)" class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white flex items-center justify-center text-sm font-bold transition-all">✕</button>
+            </div>
+            
+            <!-- List of Expenses -->
+            <div id="expenses-detail-list" class="space-y-2.5 max-h-52 overflow-y-auto pr-1 text-xs mb-4">
+                <!-- Dynamically populated -->
+            </div>
+
+            <!-- Admin Add Expense Section -->
+            <div class="pt-3 border-t border-slate-800 bg-slate-900/50 p-3 rounded-2xl">
+                <p class="text-[10px] font-bold text-slate-300 uppercase tracking-wider mb-2">➕ Add New Expense (Admin Only)</p>
+                <div class="space-y-2">
+                    <input type="text" id="exp-title" placeholder="Expense Title / Reason" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-rose-500">
+                    <input type="number" id="exp-amount" placeholder="Amount (PKR)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-rose-500">
+                    <button onclick="addNewExpense()" class="w-full bg-rose-600 hover:bg-rose-500 text-slate-950 font-black py-2 rounded-xl text-xs uppercase tracking-wider transition-all shadow-lg shadow-rose-950/50 active:scale-95">
+                        Add Expense Securely
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Script -->
+    <!-- Ramzan Modal -->
+    <div id="ramzan-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="glass-card rounded-3xl p-6 w-full max-w-sm border border-slate-700/80 shadow-2xl relative overflow-hidden">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-800">
+                <div>
+                    <h3 class="text-sm font-black text-slate-100 flex items-center gap-2 uppercase tracking-wide">
+                        <span>🌙</span> Ramzan Vision 2027
+                    </h3>
+                    <p class="text-[11px] text-emerald-400 font-urdu font-semibold mt-0.5">رمضان فنڈ اور منصوبہ بندی کی تفصیلات</p>
+                </div>
+                <button onclick="toggleModal('ramzan-modal', false)" class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white flex items-center justify-center text-sm font-bold transition-all">✕</button>
+            </div>
+            
+            <div id="ramzan-content" class="space-y-2.5 max-h-72 overflow-y-auto pr-1 text-xs">
+                <div class="p-4 text-center space-y-2">
+                    <div class="w-full h-8 shimmer-box rounded-lg"></div>
+                    <div class="w-full h-8 shimmer-box rounded-lg"></div>
+                </div>
+            </div>
+
+            <button onclick="toggleModal('ramzan-modal', false)" class="mt-5 w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black py-2.5 rounded-xl text-xs uppercase tracking-wider transition-all shadow-lg shadow-emerald-950/50 active:scale-95">
+                Close Panel
+            </button>
+        </div>
+    </div>
+
+    <!-- Script Engine -->
     <script>
-      var ADMIN_PIN = "2026";
+        const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6wLoB92RkkkAwO_IC6Bx-8Si5lYfpMpdtRo_e_9RB1DnceQ4aG-5_Cs9QWENrY_ZP9L7MF6psgGwD/pub?output=csv";
+        const RAMZAN_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRZ93s9o0iygZgHmzA0Z2JG7Wb_efFRi7AdifVoYjv3_nsNM_4OdvnUTyRzn9BdKskJzi43lCYDI4eW/pub?gid=0&single=true&output=csv";
+        
+        // Admin Secret Password
+        const ADMIN_SECRET = "2026";
 
-      function getWhatsAppNumber() {
-        return localStorage.getItem('ftcf_wa_number') || '923433052346';
-      }
+        let sheetExpenses = [];
+        let customExpenses = JSON.parse(localStorage.getItem('ftcf_custom_expenses') || '[]');
 
-      function loadMetrics() {
-        var inflow = localStorage.getItem('ftcf_inflow') || '11500';
-        var outflow = localStorage.getItem('ftcf_outflow') || '0';
-        var loans = localStorage.getItem('ftcf_loans') || '0';
-
-        document.getElementById('inflowDisplay').innerText = 'Rs. ' + Number(inflow).toLocaleString();
-        document.getElementById('outflowDisplay').innerText = 'Rs. ' + Number(outflow).toLocaleString();
-        document.getElementById('activeLoansDisplay').innerText = loans;
-
-        document.getElementById('admInflow').value = inflow;
-        document.getElementById('admOutflow').value = outflow;
-        document.getElementById('admLoans').value = loans;
-        document.getElementById('admWaNumber').value = getWhatsAppNumber();
-      }
-
-      function toggleMission() {
-        var box = document.getElementById('missionBox');
-        if(box) box.classList.toggle('hidden');
-      }
-
-      function handleApplication() {
-        var n = document.getElementById('uName').value.trim();
-        var a = Number(document.getElementById('uAmount').value);
-        var r = document.getElementById('uReason').value.trim();
-
-        if(!n || !a || !r) {
-          alert("Pehle tamam khane (Name, Amount, Reason) theek se pur karein.");
-          return;
+        function toggleModal(modalId, show) {
+            const modal = document.getElementById(modalId);
+            if (show) modal.classList.remove('hidden');
+            else modal.classList.add('hidden');
         }
 
-        if(a <= 0) {
-          alert("Amount 0 ya negative nahi ho sakti!");
-          return;
+        function openExpensesModal() {
+            renderExpensesList();
+            toggleModal('expenses-modal', true);
         }
 
-        var refId = "FTCF-" + Math.floor(1000 + Math.random() * 9000);
+        function renderExpensesList() {
+            const container = document.getElementById('expenses-detail-list');
+            let html = "";
+            
+            // Render Sheet Expenses
+            sheetExpenses.forEach((item, idx) => {
+                html += `
+                <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 flex justify-between items-center">
+                    <div>
+                        <p class="text-[10px] text-slate-300 font-bold uppercase">${item.month} Expense</p>
+                    </div>
+                    <span class="text-xs font-black px-2.5 py-1 rounded-lg border text-rose-400 border-rose-800/80 bg-rose-950/80">
+                        -Rs. ${item.amount.toLocaleString()}
+                    </span>
+                </div>`;
+            });
 
-        document.getElementById('rcptRef').innerText = "#" + refId;
-        document.getElementById('rcptName').innerText = n;
-        document.getElementById('rcptAmount').innerText = "Rs. " + a.toLocaleString();
-        document.getElementById('rcptReason').innerText = r;
+            // Render Custom Local Admin Expenses
+            customExpenses.forEach((item, idx) => {
+                html += `
+                <div class="bg-slate-900/80 p-3 rounded-xl border border-rose-900/50 flex justify-between items-center">
+                    <div>
+                        <p class="text-[10px] text-slate-200 font-bold uppercase">${item.title}</p>
+                        <span class="text-[8px] text-emerald-400 font-mono">Admin Added</span>
+                    </div>
+                    <span class="text-xs font-black px-2.5 py-1 rounded-lg border text-rose-400 border-rose-800/80 bg-rose-950/80">
+                        -Rs. ${item.amount.toLocaleString()}
+                    </span>
+                </div>`;
+            });
 
-        var waNumber = getWhatsAppNumber();
-        var waText = "*FTCF Loan Application*\nName: " + n + "\nAmount: Rs. " + a.toLocaleString() + "\nReason: " + r;
-        var waUrl = "https://api.whatsapp.com/send?phone=" + waNumber + "&text=" + encodeURIComponent(waText);
-        document.getElementById('modalWaBtn').href = waUrl;
-
-        document.getElementById('receiptModal').classList.remove('hidden');
-      }
-
-      function closeReceiptModal() {
-        document.getElementById('receiptModal').classList.add('hidden');
-      }
-
-      function openPinModal() {
-        document.getElementById('adminPinInput').value = '';
-        document.getElementById('pinErrorMsg').style.display = 'none';
-        document.getElementById('pinModal').classList.remove('hidden');
-      }
-
-      function closePinModal() {
-        document.getElementById('pinModal').classList.add('hidden');
-      }
-
-      function verifyPin() {
-        var pin = document.getElementById('adminPinInput').value.trim();
-        if(pin === ADMIN_PIN) {
-            closePinModal();
-            document.getElementById('adminDashboardModal').classList.remove('hidden');
-            loadMetrics();
-            renderAdminLoantakers();
-        } else {
-            document.getElementById('pinErrorMsg').style.display = 'block';
-        }
-      }
-
-      function closeAdminDashboard() {
-        document.getElementById('adminDashboardModal').classList.add('hidden');
-        resetLoantakerForm();
-      }
-
-      function saveWhatsAppNumber() {
-        var num = document.getElementById('admWaNumber').value.trim();
-        if(!num) {
-            alert("WhatsApp number khali nahi ho sakta.");
-            return;
-        }
-        localStorage.setItem('ftcf_wa_number', num);
-        alert("WhatsApp number updated successfully!");
-      }
-
-      function saveAdminStats() {
-        var inflow = Number(document.getElementById('admInflow').value);
-        var outflow = Number(document.getElementById('admOutflow').value);
-        var loans = Number(document.getElementById('admLoans').value);
-
-        if(inflow < 0 || outflow < 0 || loans < 0) {
-            alert("Values negative nahi ho sakti!");
-            return;
+            container.innerHTML = html || "<p class='text-center text-slate-500 py-4'>No expenses recorded yet.</p>";
         }
 
-        localStorage.setItem('ftcf_inflow', inflow);
-        localStorage.setItem('ftcf_outflow', outflow);
-        localStorage.setItem('ftcf_loans', loans);
-        loadMetrics();
-        alert("Portal metrics updated successfully!");
-      }
+        function addNewExpense() {
+            const title = document.getElementById('exp-title').value.trim();
+            const amount = parseFloat(document.getElementById('exp-amount').value);
 
-      function saveLoantaker() {
-        var name = document.getElementById('ltName').value.trim();
-        var amount = document.getElementById('ltAmount').value.trim();
-        var duration = document.getElementById('ltDuration').value.trim();
-        var editIndex = parseInt(document.getElementById('editIndex').value);
+            if(!title || isNaN(amount) || amount <= 0) {
+                alert("Theek title aur amount darj karein!");
+                return;
+            }
 
-        if(!name || !amount) {
-            alert("Name aur Amount lazmi bharein.");
-            return;
+            const password = prompt("Admin Password darj karein:");
+            if(password !== ADMIN_SECRET) {
+                alert("Ghalat Password! Aapko naya kharcha add karne ki ijazat nahi hai.");
+                return;
+            }
+
+            customExpenses.push({ title, amount });
+            localStorage.setItem('ftcf_custom_expenses', JSON.stringify(customExpenses));
+
+            document.getElementById('exp-title').value = '';
+            document.getElementById('exp-amount').vallue = '';
+
+            alert("Kharcha kamyaabi se add ho gaya!");
+            toggleModal('expenses-modal', false);
+            loadDashboardData();
         }
 
-        var loantakers = JSON.parse(localStorage.getItem('ftcf_loantakers') || '[]');
+        function loadDashboardData() {
+            fetch(CSV_URL)
+                .then(res => res.text())
+                .then(data => {
+                    const rows = data.split('\n');
+                    const list = document.getElementById('monthly-list');
+                    let totalB = 0, totalE = 0;
+                    let htmlContent = "";
+                    sheetExpenses = [];
 
-        if(editIndex === -1) {
-            loantakers.push({ id: Date.now(), name: name, amount: amount, duration: duration || 'Flexible' });
-            alert("Loantaker added successfully!");
-        } else {
-            loantakers[editIndex].name = name;
-            loantakers[editIndex].amount = amount;
-            loantakers[editIndex].duration = duration || 'Flexible';
-            alert("Loantaker u
+                    for(let i = 1; i < rows.length; i++) {
+                        const row = rows[i];
+                        if(!row.trim()) continue;
+                        
+                        const cols = row.split(',').map(c => c.replace(/"/g, '').trim());
+                        if(cols[0]) {
+                            const b = parseFloat(cols[1]?.replace(/,/g, '')) || 0;
+                            const e = parseFloat(cols[2]?.replace(/,/g, '')) || 0;
+                            totalB += b;
+                            totalE += e;
+
+                            if(e > 0) {
+                                sheetExpenses.push({ month: cols[0], amount: e });
+                            }
+
+                            htmlContent += `
+                            <div class="glass-card p-3.5 rounded-2xl border border-slate-800/80 flex justify-between items-center hover:border-emerald-500/40 transition-all">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center text-xs font-bold font-mono text-emerald-400 shadow-md">
+                                        ${i.toString().padStart(2, '0')}
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-slate-100 text-xs uppercase tracking-wide">${cols[0]}</h4>
+                                        <span class="text-[9px] text-slate-500 font-mono font-bold tracking-wider uppercase">LOGGED</span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-emerald-400 font-extrabold text-xs tracking-tight">+Rs. ${b.toLocaleString()}</p>
+                                    <p class="text-rose-400 font-bold text-[10px] mt-0.5 tracking-tight">-Rs. ${e.toLocaleString()}</p>
+                                </div>
+                            </div>`;
+                        }
+                    }
+
+                    // Add custom admin expenses to total outflow
+                    let customTotalExpense = customExpenses.reduce((acc, curr) => acc + curr.amount, 0);
+                    let finalTotalExpenses = totalE + customTotalExpense;
+
+                    list.innerHTML = htmlContent || "<p class='text-center text-xs text-slate-500 py-4'>No data found.</p>";
+                    
+                    const netSavings = totalB - finalTotalExpenses;
+                    document.getElementById('total-balance').innerText = "Rs. " + totalB.toLocaleString();
+                    document.getElementById('total-expenses').innerText = "Rs. " + finalTotalExpenses.toLocaleString();
+                    document.getElementById('net-savings').innerText = "Rs. " + netSavings.toLocaleString();
+
+                    const expPercentage = totalB > 0 ? Math.min(Math.round((finalTotalExpenses / totalB) * 100), 100) : 0;
+                    document.getElementById('expense-percentage').innerText = expPercentage + "%";
+                    document.getElementById('expense-progress-bar').style.width = expPercentage + "%";
+
+                    if (netSavings < 0) {
+                        document.getElementById('savings-box').className = "bank-gradient bank-gradient-deficit p-5 rounded-3xl shadow-2xl transition-all duration-300";
+                        document.getElementById('expense-progress-bar').className = "h-full bg-rose-500 rounded-full transition-all duration-500";
+                    }
+                })
+                .catch(err => {
+                    document.getElementById('monthly-list').innerHTML = `<p class="text-center text-xs text-rose-400 font-bold py-6">Failed to load live data.</p>`;
+                });
+        }
+
+        loadDashboardData();
+
+        fetch(RAMZAN_CSV_URL)
+            .then(res => res.text())
+            .then(data => {
+                const rows = data.split('\n');
+                let html = "";
+                for(let i = 1; i < rows.length; i++) {
+                    const row = rows[i];
+                    if(!row.trim()) continue;
+                    const cols = row.split(',').map(c => c.replace(/"/g, '').trim());
+                    
+                    if(cols[0]) {
+                        let badgeStyle = 'text-emerald-400 border-emerald-800/80 bg-emerald-950/80';
+                        if (cols[0].toLowerCase().includes('balance')) badgeStyle = 'text-sky-400 border-sky-800/80 bg-sky-950/80';
+                        if (cols[0].toLowerCase().includes('expense') || cols[0].toLowerCase().includes('donate')) badgeStyle = 'text-rose-400 border-rose-800/80 bg-rose-950/80';
+
+                        html += `
+                        <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 flex justify-between items-center">
+                            <div>
+                                <p class="text-[10px] text-slate-400 uppercase tracking-wider font-extrabold">${cols[0]}</p>
+                            </div>
+                            <span class="text-xs font-black px-2.5 py-1 rounded-lg border ${badgeStyle}">
+                                ${cols[1] || '0'}
+                            </span>
+                        </div>`;
+                    }
+                }
+                document.getElementById('ramzan-content').innerHTML = html || "<p class='text-center text-slate-500 py-4'>No details recorded yet.</p>";
+            });
+    </script>
+</body>
+</html>
