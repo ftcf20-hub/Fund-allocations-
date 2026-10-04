@@ -1,12 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ur" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FTCF | Monthly collection</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>FTCF | Family Trust Dashboard 2026</title>
+    
+    <!-- Google Fonts: Plus Jakarta Sans & Noto Sans Urdu -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Urdu:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        urdu: ['Noto Sans Urdu', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
@@ -17,7 +35,7 @@
             transition: background-color 0.8s ease;
         }
 
-        /* Ambient Lighting Mesh Glows */
+        /* Ambient Glow Background Filters */
         .ambient-glow-1 {
             position: fixed;
             top: -100px;
@@ -42,6 +60,7 @@
             z-index: 0;
         }
 
+        /* Executive Gradient Hero Card */
         .bank-gradient { 
             background: linear-gradient(135deg, rgba(6, 78, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
             border: 1px solid rgba(16, 185, 129, 0.35);
@@ -59,7 +78,14 @@
             background: linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.8), transparent);
         }
 
-        /* Executive Glassmorphism Dark Card */
+        /* Deficit State Style for Negative Reserve Balance */
+        .bank-gradient-deficit {
+            background: linear-gradient(135deg, rgba(136, 19, 55, 0.6) 0%, rgba(15, 23, 42, 0.85) 100%) !important;
+            border: 1.5px solid rgba(244, 63, 94, 0.8) !important;
+            box-shadow: 0 10px 30px -5px rgba(244, 63, 94, 0.3) !important;
+        }
+
+        /* Glass Cards */
         .glass-card { 
             background: rgba(15, 23, 42, 0.85); 
             backdrop-filter: blur(24px); 
@@ -69,40 +95,8 @@
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .glass-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.5);
-            border-color: rgba(16, 185, 129, 0.4);
-        }
-
-        /* Split 2-Tier Glass Card Style for Members */
-        .split-tier-card {
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 1.25rem;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .split-tier-card:hover {
-            transform: translateY(-2px);
-            border-color: rgba(52, 211, 153, 0.5);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(16, 185, 129, 0.2);
-        }
-
-        .split-tier-card .bottom-tier {
-            background: rgba(15, 23, 42, 0.85);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        /* Progress Bar Animation */
-        .progress-fill {
-            transition: width 1s ease-in-out;
-        }
-
         /* Dark Shimmer Skeleton Loader */
-        .skeleton {
+        .shimmer-box {
             background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
             background-size: 200% 100%;
             animation: shimmer 1.5s infinite;
@@ -113,7 +107,7 @@
             100% { background-position: -200% 0; }
         }
 
-        /* Live Pulse Dot */
+        /* Live Pulse Indicator Dot */
         .pulse-dot {
             width: 7px;
             height: 7px;
@@ -130,232 +124,256 @@
         }
 
         /* Scrollbar Styling */
-        #member-list::-webkit-scrollbar { width: 4px; }
-        #member-list::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        #monthly-list::-webkit-scrollbar,
+        #ramzan-content::-webkit-scrollbar { width: 4px; }
+        #monthly-list::-webkit-scrollbar-thumb,
+        #ramzan-content::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
     </style>
 </head>
-<body class="pb-8 relative antialiased selection:bg-emerald-900 selection:text-emerald-200">
+<body class="pb-12 relative antialiased selection:bg-emerald-900 selection:text-emerald-200">
 
+    <!-- Background Ambient Glows -->
     <div class="ambient-glow-1"></div>
     <div class="ambient-glow-2"></div>
 
-    <main class="w-full max-w-md mx-auto px-4 pt-5 space-y-5 relative z-20">
-
-        <!-- Top App Bar -->
-        <header class="flex justify-between items-center px-1">
-            <div class="flex items-center gap-2">
-                <div class="w-9 h-9 rounded-xl bg-slate-900 text-emerald-400 flex items-center justify-center font-black text-xs shadow-md border border-slate-700/80">
-                    FT
+    <!-- Header Section -->
+    <header class="bg-gradient-to-b from-slate-900 via-slate-900/90 to-transparent pt-6 pb-8 px-4 relative z-10">
+        <div class="max-w-md mx-auto flex flex-col items-center text-center space-y-3">
+            
+            <!-- Top Controls Row -->
+            <div class="w-full flex items-center justify-between">
+                <button onclick="toggleModal('ramzan-modal', true)" class="flex items-center gap-1.5 bg-emerald-950/80 hover:bg-emerald-900/90 border border-emerald-500/30 text-emerald-300 px-3.5 py-1.5 rounded-full backdrop-blur-md transition-all text-xs font-bold active:scale-95 shadow-md shadow-emerald-950/40">
+                    <span>🌙</span>
+                    <span>Ramzan Vision 2027</span>
+                </button>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-700/80 text-[10px] font-bold text-slate-300 shadow-sm backdrop-blur-md">
+                    <span class="pulse-dot"></span> <span>FTCF LIVE</span>
                 </div>
+            </div>
+
+            <div>
+                <h1 class="text-lg font-black tracking-tight text-slate-100 flex items-center justify-center gap-2 uppercase">
+                    Family Trust & Care Foundation
+                </h1>
+                <p class="text-xs text-emerald-400/90 font-urdu mt-1 font-semibold">مستقبل کی بہتری اور باہمی تعاون کا شفاف ڈیش بورڈ</p>
+            </div>
+
+            <div class="inline-flex items-center px-3.5 py-1 rounded-full bg-slate-950/80 border border-slate-800 text-emerald-400 text-[10px] font-mono tracking-widest font-bold uppercase shadow-inner">
+                FISCAL YEAR 2026 - 2027
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-md mx-auto px-4 space-y-4 relative z-20 -mt-2">
+
+        <!-- Net Reserve Balance Card (Executive Dark Hero Card) -->
+        <div id="savings-box" class="bank-gradient p-5 rounded-3xl shadow-2xl transition-all duration-300">
+            <div class="flex justify-between items-start mb-1">
                 <div>
-                    <h1 class="text-xs font-black uppercase tracking-wider text-slate-100">Family Trust</h1>
-                    <p class="text-[9px] font-bold text-slate-400">Secure Ledger</p>
+                    <p class="text-[10px] font-black tracking-[0.2em] text-slate-300 uppercase">Net Reserve Balance</p>
+                    <p class="text-xs text-emerald-300/90 font-urdu font-semibold mt-0.5">کل دستیاب فنڈز</p>
                 </div>
-            </div>
-            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/80 border border-slate-700/80 shadow-sm text-[10px] font-bold text-slate-300 backdrop-blur-md">
-                <span class="pulse-dot"></span> <span>Live Sync</span>
-            </div>
-        </header>
-
-        <!-- Executive Hero Banner -->
-        <div class="bank-gradient text-white p-6 rounded-3xl relative">
-            <div class="flex justify-between items-start mb-4">
-                <span class="text-[9px] font-black uppercase tracking-[0.25em] text-emerald-300 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 backdrop-blur-md">
-                    Rs. 500 / Member
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 backdrop-blur-md">
+                    Active
                 </span>
-                <i class="fas fa-shield-halved text-slate-400 text-sm"></i>
             </div>
             
-            <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Monthly Collection</p>
-            
-            <div class="mt-4 bg-slate-950/40 p-4 rounded-2xl border border-white/10 backdrop-blur-lg space-y-3">
-                <div class="flex justify-between items-end">
-                    <div>
-                        <p class="text-[9px] uppercase font-bold tracking-widest text-slate-400">Current Period</p>
-                        <p id="month-display" class="font-extrabold text-sm text-slate-100 mt-0.5">
-                            <span class="inline-block h-4 w-20 skeleton rounded"></span>
-                        </p>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-[9px] uppercase font-bold tracking-widest text-slate-400">Total Fund</p>
-                        <p id="total-collection" class="font-black text-2xl text-emerald-400 tracking-tight mt-0.5">Rs. 0</p>
-                    </div>
-                </div>
+            <h2 id="net-savings" class="text-3xl font-black tracking-tight text-emerald-400 my-2">
+                <span class="inline-block w-36 h-8 shimmer-box rounded-lg"></span>
+            </h2>
 
-                <!-- Target Progress Bar -->
-                <div class="pt-2 border-t border-white/10">
-                    <div class="flex justify-between items-center text-[10px] font-bold mb-1.5">
-                        <span class="text-slate-400 uppercase tracking-wider">Target Goal</span>
-                        <span id="target-percent" class="text-emerald-400">0%</span>
-                    </div>
-                    <div class="w-full h-2 bg-slate-950 rounded-full overflow-hidden p-0.5 border border-white/10">
-                        <div id="progress-bar-fill" class="progress-fill h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full w-0"></div>
-                    </div>
+            <!-- Expense Ratio Progress Bar -->
+            <div class="mt-4 pt-3 border-t border-white/10">
+                <div class="flex justify-between text-[10px] font-bold mb-1.5">
+                    <span class="text-slate-300 uppercase tracking-wider">Expense Ratio</span>
+                    <span id="expense-percentage" class="text-emerald-400 font-mono">0%</span>
+                </div>
+                <div class="w-full h-2 bg-slate-950 rounded-full overflow-hidden p-0.5 border border-white/10">
+                    <div id="expense-progress-bar" class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-500" style="width: 0%"></div>
                 </div>
             </div>
         </div>
 
-        <!-- KPI Metrics Grid -->
+        <!-- Quick Summary Stats Grid -->
         <div class="grid grid-cols-2 gap-3">
-            <div class="glass-card p-3.5 rounded-2xl flex items-center gap-3 border border-slate-800">
-                <div class="w-9 h-9 rounded-xl bg-emerald-950/80 text-emerald-400 flex items-center justify-center font-bold text-xs border border-emerald-800/60 shrink-0">
-                    <i class="fas fa-check-circle"></i>
+            <!-- Total Income Card -->
+            <div class="glass-card p-3.5 rounded-2xl flex flex-col justify-between border-l-4 border-l-emerald-500">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider">Total Income</span>
+                    <span class="w-5 h-5 rounded-md bg-emerald-950 text-emerald-400 font-black text-xs flex items-center justify-center border border-emerald-800">↓</span>
                 </div>
-                <div>
-                    <p class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Paid Members</p>
-                    <p id="paid-count" class="text-sm font-extrabold text-slate-100">0</p>
-                </div>
+                <h3 id="total-balance" class="text-base font-extrabold text-slate-100 tracking-tight my-1">
+                    <span class="inline-block w-20 h-5 shimmer-box rounded"></span>
+                </h3>
+                <p class="text-[10px] text-slate-400 font-urdu font-semibold">کل آمدن</p>
             </div>
 
-            <div class="glass-card p-3.5 rounded-2xl flex items-center gap-3 border border-slate-800">
-                <div class="w-9 h-9 rounded-xl bg-rose-950/80 text-rose-400 flex items-center justify-center font-bold text-xs border border-rose-800/60 shrink-0">
-                    <i class="fas fa-clock"></i>
+            <!-- Total Expenses Card -->
+            <div class="glass-card p-3.5 rounded-2xl flex flex-col justify-between border-l-4 border-l-rose-500">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider">Total Outflow</span>
+                    <span class="w-5 h-5 rounded-md bg-rose-950 text-rose-400 font-black text-xs flex items-center justify-center border border-rose-800">↑</span>
                 </div>
-                <div>
-                    <p class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Pending</p>
-                    <p id="unpaid-count" class="text-sm font-extrabold text-slate-100">0</p>
-                </div>
+                <h3 id="total-expenses" class="text-base font-extrabold text-slate-100 tracking-tight my-1">
+                    <span class="inline-block w-20 h-5 shimmer-box rounded"></span>
+                </h3>
+                <p class="text-[10px] text-slate-400 font-urdu font-semibold">کل اخراجات</p>
             </div>
         </div>
 
-        <!-- Search & Filters -->
-        <section class="space-y-3">
-            <div class="flex justify-between items-center px-1">
-                <h3 class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Members Directory</h3>
-                <span class="text-[9px] font-bold text-emerald-400/80 uppercase tracking-wider">Live Status</span>
+        <!-- Monthly Overview Section -->
+        <div class="pt-2">
+            <div class="flex items-center justify-between mb-3 px-1">
+                <div>
+                    <h3 class="text-xs font-black uppercase tracking-[0.2em] text-slate-200">Monthly Overview</h3>
+                    <p class="text-[10px] text-slate-400 font-urdu font-semibold mt-0.5">ماہانہ وصولی و اخراجات کا تفصیلی ریکارڈ</p>
+                </div>
+                <span class="text-[9px] font-bold text-emerald-400 bg-slate-900 px-2.5 py-1 rounded-md border border-slate-800 font-mono">2026 LOG</span>
             </div>
 
-            <div class="relative">
-                <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                <input type="text" id="searchInput" placeholder="Search member name..." 
-                       class="w-full pl-9 pr-4 py-2.5 rounded-2xl bg-slate-900/90 border border-slate-800 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500/80 shadow-inner transition-all">
-            </div>
-
-            <!-- Members List -->
-            <div id="member-list" class="space-y-2.5 max-h-[380px] overflow-y-auto pr-1">
-                <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full skeleton shrink-0"></div>
-                        <div class="space-y-1">
-                            <div class="h-3.5 w-28 skeleton rounded"></div>
-                            <div class="h-2.5 w-16 skeleton rounded"></div>
-                        </div>
-                    </div>
-                    <div class="space-y-1 text-right">
-                        <div class="h-3.5 w-16 skeleton rounded"></div>
-                        <div class="h-3 w-12 skeleton rounded ml-auto"></div>
-                    </div>
+            <div id="monthly-list" class="space-y-2.5">
+                <!-- Skeleton Shimmers -->
+                <div class="glass-card p-4 rounded-2xl flex justify-between items-center border border-slate-800">
+                    <div class="w-24 h-4 shimmer-box rounded"></div>
+                    <div class="w-16 h-4 shimmer-box rounded"></div>
+                </div>
+                <div class="glass-card p-4 rounded-2xl flex justify-between items-center border border-slate-800">
+                    <div class="w-24 h-4 shimmer-box rounded"></div>
+                    <div class="w-16 h-4 shimmer-box rounded"></div>
                 </div>
             </div>
-        </section>
+        </div>
 
         <!-- Footer -->
-        <div class="text-center opacity-40 text-[9px] font-black uppercase tracking-[0.25em] pt-2 text-slate-500">
+        <div class="text-center opacity-40 text-[9px] font-black uppercase tracking-[0.25em] pt-4 text-slate-500">
             @FTCF2026 Founder Mughal Brothers
         </div>
     </main>
 
+    <!-- Ramzan Modal -->
+    <div id="ramzan-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="glass-card rounded-3xl p-6 w-full max-w-sm border border-slate-700/80 shadow-2xl relative overflow-hidden">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-800">
+                <div>
+                    <h3 class="text-sm font-black text-slate-100 flex items-center gap-2 uppercase tracking-wide">
+                        <span>🌙</span> Ramzan Vision 2027
+                    </h3>
+                    <p class="text-[11px] text-emerald-400 font-urdu font-semibold mt-0.5">رمضان فنڈ اور منصوبہ بندی کی تفصیلات</p>
+                </div>
+                <button onclick="toggleModal('ramzan-modal', false)" class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white flex items-center justify-center text-sm font-bold transition-all">✕</button>
+            </div>
+            
+            <div id="ramzan-content" class="space-y-2.5 max-h-72 overflow-y-auto pr-1 text-xs">
+                <div class="p-4 text-center space-y-2">
+                    <div class="w-full h-8 shimmer-box rounded-lg"></div>
+                    <div class="w-full h-8 shimmer-box rounded-lg"></div>
+                </div>
+            </div>
+
+            <button onclick="toggleModal('ramzan-modal', false)" class="mt-5 w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black py-2.5 rounded-xl text-xs uppercase tracking-wider transition-all shadow-lg shadow-emerald-950/50 active:scale-95">
+                Close Panel
+            </button>
+        </div>
+    </div>
+
+    <!-- Script Engine -->
     <script>
-        const SHEET_ID = "1hUEigyVt9FcLdeT-2G44mcUMo-r3gSb7AN0XcXilMVw";
-        const BASE_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+        const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6wLoB92RkkkAwO_IC6Bx-8Si5lYfpMpdtRo_e_9RB1DnceQ4aG-5_Cs9QWENrY_ZP9L7MF6psgGwD/pub?output=csv";
+        const RAMZAN_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRZ93s9o0iygZgHmzA0Z2JG7Wb_efFRi7AdifVoYjv3_nsNM_4OdvnUTyRzn9BdKskJzi43lCYDI4eW/pub?gid=0&single=true&output=csv";
 
-        async function loadDashboardData() {
-            try {
-                // Fetch Month
-                const monthRes = await fetch(`${BASE_URL}&range=H1`);
-                const monthTxt = await monthRes.text();
-                const monthJson = JSON.parse(monthTxt.substring(47).slice(0, -2));
-                document.getElementById('month-display').innerText = monthJson.table.rows[0]?.c[0]?.v || "N/A";
-
-                // Fetch Members
-                const dataRes = await fetch(`${BASE_URL}&range=A2:E100`);
-                const dataTxt = await dataRes.text();
-                const dataJson = JSON.parse(dataTxt.substring(47).slice(0, -2));
-                renderMembers(dataJson.table.rows);
-            } catch (err) {
-                document.getElementById('member-list').innerHTML = "<p class='text-center text-xs text-rose-500 font-bold py-6'>Error: Sheet access denied.</p>";
-            }
+        function toggleModal(modalId, show) {
+            const modal = document.getElementById(modalId);
+            if (show) modal.classList.remove('hidden');
+            else modal.classList.add('hidden');
         }
 
-        function renderMembers(rows) {
-            const list = document.getElementById('member-list');
-            list.innerHTML = '';
-            let total = 0;
-            let paidNum = 0;
-            let unpaidNum = 0;
-            let totalMembers = 0;
+        fetch(CSV_URL)
+            .then(res => res.text())
+            .then(data => {
+                const rows = data.split('\n');
+                const list = document.getElementById('monthly-list');
+                let totalB = 0, totalE = 0;
+                let htmlContent = "";
 
-            rows.forEach((row, idx) => {
-                if(!row.c[0]) return;
-                totalMembers++;
-                const name = row.c[0].v;
-                const amount = row.c[1]?.v || 0;
-                const status = row.c[2]?.v || "UNPAID";
-                
-                const isPaid = status.toUpperCase() === 'PAID';
-                if(isPaid) {
-                    total += amount;
-                    paidNum++;
-                } else {
-                    unpaidNum++;
+                for(let i = 1; i < rows.length; i++) {
+                    const row = rows[i];
+                    if(!row.trim()) continue;
+                    
+                    const cols = row.split(',').map(c => c.replace(/"/g, '').trim());
+                    if(cols[0]) {
+                        const b = parseFloat(cols[1]?.replace(/,/g, '')) || 0;
+                        const e = parseFloat(cols[2]?.replace(/,/g, '')) || 0;
+                        totalB += b;
+                        totalE += e;
+
+                        htmlContent += `
+                        <div class="glass-card p-3.5 rounded-2xl border border-slate-800/80 flex justify-between items-center hover:border-emerald-500/40 transition-all">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center text-xs font-bold font-mono text-emerald-400 shadow-md">
+                                    ${i.toString().padStart(2, '0')}
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-100 text-xs uppercase tracking-wide">${cols[0]}</h4>
+                                    <span class="text-[9px] text-slate-500 font-mono font-bold tracking-wider uppercase">LOGGED</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-emerald-400 font-extrabold text-xs tracking-tight">+Rs. ${b.toLocaleString()}</p>
+                                <p class="text-rose-400 font-bold text-[10px] mt-0.5 tracking-tight">-Rs. ${e.toLocaleString()}</p>
+                            </div>
+                        </div>`;
+                    }
                 }
 
-                const card = document.createElement('div');
-                card.className = "split-tier-card cursor-pointer group";
-                card.innerHTML = `
-                    <!-- Top Tier: Photo & Member Identity -->
-                    <div class="p-3 flex items-center justify-between">
-                        <div class="flex items-center gap-3 min-w-0 pr-2">
-                            <div class="relative shrink-0">
-                                <div class="w-10 h-10 rounded-xl bg-slate-900 text-emerald-400 flex items-center justify-center font-extrabold text-xs border border-slate-700 group-hover:border-emerald-400/80 transition-all shadow-md">
-                                    ${name.charAt(0)}
-                                </div>
-                                <span class="absolute -bottom-1 -right-1 text-[8px] font-black bg-slate-950 text-emerald-400 border border-emerald-500/30 px-1 rounded-md">
-                                    #${idx + 1}
-                                </span>
-                            </div>
-                            <div class="min-w-0">
-                                <h4 class="font-bold text-slate-100 text-xs truncate uppercase tracking-wide group-hover:text-emerald-300 transition-colors">${name}</h4>
-                                <p class="text-[9px] font-semibold text-slate-400 uppercase tracking-wider">Trust Member</p>
-                            </div>
-                        </div>
-                        <span class="inline-block text-[9px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider shrink-0 ${isPaid ? 'bg-emerald-950/80 text-emerald-400 border border-emerald-800/60' : 'bg-rose-950/80 text-rose-400 border border-rose-800/60'}">
-                            ${status}
-                        </span>
-                    </div>
+                list.innerHTML = htmlContent || "<p class='text-center text-xs text-slate-500 py-4'>No data found.</p>";
+                
+                const netSavings = totalB - totalE;
+                document.getElementById('total-balance').innerText = "Rs. " + totalB.toLocaleString();
+                document.getElementById('total-expenses').innerText = "Rs. " + totalE.toLocaleString();
+                document.getElementById('net-savings').innerText = "Rs. " + netSavings.toLocaleString();
 
-                    <!-- Bottom Tier: Amount & Details -->
-                    <div class="bottom-tier px-3.5 py-2 flex items-center justify-between">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Monthly Amount</span>
-                        <span class="text-[12px] font-black text-emerald-400 tracking-tight">
-                            Rs. ${amount.toLocaleString()}
-                        </span>
-                    </div>
-                `;
-                list.appendChild(card);
+                const expPercentage = totalB > 0 ? Math.min(Math.round((totalE / totalB) * 100), 100) : 0;
+                document.getElementById('expense-percentage').innerText = expPercentage + "%";
+                document.getElementById('expense-progress-bar').style.width = expPercentage + "%";
+
+                if (netSavings < 0) {
+                    document.getElementById('savings-box').className = "bank-gradient bank-gradient-deficit p-5 rounded-3xl shadow-2xl transition-all duration-300";
+                    document.getElementById('expense-progress-bar').className = "h-full bg-rose-500 rounded-full transition-all duration-500";
+                }
+            })
+            .catch(err => {
+                document.getElementById('monthly-list').innerHTML = `<p class="text-center text-xs text-rose-400 font-bold py-6">Failed to load live data.</p>`;
             });
 
-            document.getElementById('total-collection').innerText = `Rs. ${total.toLocaleString()}`;
-            document.getElementById('paid-count').innerText = paidNum;
-            document.getElementById('unpaid-count').innerText = unpaidNum;
+        fetch(RAMZAN_CSV_URL)
+            .then(res => res.text())
+            .then(data => {
+                const rows = data.split('\n');
+                let html = "";
+                for(let i = 1; i < rows.length; i++) {
+                    const row = rows[i];
+                    if(!row.trim()) continue;
+                    const cols = row.split(',').map(c => c.replace(/"/g, '').trim());
+                    
+                    if(cols[0]) {
+                        let badgeStyle = 'text-emerald-400 border-emerald-800/80 bg-emerald-950/80';
+                        if (cols[0].toLowerCase().includes('balance')) badgeStyle = 'text-sky-400 border-sky-800/80 bg-sky-950/80';
+                        if (cols[0].toLowerCase().includes('expense') || cols[0].toLowerCase().includes('donate')) badgeStyle = 'text-rose-400 border-rose-800/80 bg-rose-950/80';
 
-            // Target Progress Calculation (Target = Total Members * Rs. 500)
-            const targetAmount = totalMembers > 0 ? totalMembers * 500 : 10000;
-            const percentage = Math.min(Math.round((total / targetAmount) * 100), 100);
-            
-            document.getElementById('target-percent').innerText = `${percentage}% (${total.toLocaleString()}/${targetAmount.toLocaleString()})`;
-            document.getElementById('progress-bar-fill').style.width = `${percentage}%`;
-        }
-
-        loadDashboardData();
-
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            document.querySelectorAll('#member-list > div').forEach(card => {
-                const name = card.querySelector('h4').innerText.toLowerCase();
-                card.style.display = name.includes(term) ? 'block' : 'none';
+                        html += `
+                        <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 flex justify-between items-center">
+                            <div>
+                                <p class="text-[10px] text-slate-400 uppercase tracking-wider font-extrabold">${cols[0]}</p>
+                            </div>
+                            <span class="text-xs font-black px-2.5 py-1 rounded-lg border ${badgeStyle}">
+                                ${cols[1] || '0'}
+                            </span>
+                        </div>`;
+                    }
+                }
+                document.getElementById('ramzan-content').innerHTML = html || "<p class='text-center text-slate-500 py-4'>No details recorded yet.</p>";
             });
-        });
     </script>
 </body>
 </html>
