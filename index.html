@@ -1,138 +1,395 @@
 <!DOCTYPE html>
-<html lang="ur" dir="rtl">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>(FTCF) Family Trust - Rules & Dashboard</title>
-    <!-- Tailwind CSS CDN -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    
+    <link rel="manifest" href="manifest.json">
+    <title>FTCF | Professional Portal</title>
+    
+    <!-- Tailwind CSS & Lucide Icons -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Urdu Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Vazirmatn:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
     <style>
-        body {
-            font-family: 'Vazirmatn', 'Noto Nastaliq Urdu', serif;
-            background-color: #0f172a;
-            color: #f8fafc;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        body { 
+            background-color: #030712; 
+            font-family: 'Inter', sans-serif; 
+            overflow: hidden; 
+            margin: 0; 
+            -webkit-tap-highlight-color: transparent;
         }
-        .nastaliq {
-            font-family: 'Noto Nastaliq Urdu', serif;
-            line-height: 2.2;
+        
+        /* Glassmorphism Styles */
+        .glass-panel { 
+            background: rgba(17, 24, 39, 0.75); 
+            backdrop-filter: blur(20px); 
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08); 
         }
-        .glass-card {
-            background: rgba(30, 41, 59, 0.75);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+
+        .tab-content { display: none; height: 100vh; width: 100vw; position: relative; }
+        .tab-content.active { display: block; }
+        iframe { width: 100%; height: 100%; border: none; }
+
+        /* Shimmer Loading Animation */
+        .shimmer {
+            background: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+        /* --- LIGHT BLUE TRANSPARENT SPLASH SCREEN & DOUBLE CIRCLE ANIMATION --- */
+        #splash {
+            background: rgba(14, 116, 144, 0.25); /* Light Blue Glass Accent */
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+        }
+
+        .splash-circle-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Outer Blue Rotating Circle */
+        .outer-blue-circle {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top-color: #38bdf8;
+            border-right-color: #0284c7;
+            animation: spinClockwise 2.5s linear infinite;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+        }
+
+        /* Inner White Rotating Circle */
+        .inner-white-circle {
+            position: absolute;
+            inset: 12px;
+            border-radius: 50%;
+            border: 2px dashed #ffffff;
+            animation: spinCounterClockwise 1.8s linear infinite;
+            opacity: 0.9;
+        }
+
+        @keyframes spinClockwise {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes spinCounterClockwise {
+            0% { transform: rotate(360deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        .pulse-subtext {
+            animation: pulseSubtext 1.8s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseSubtext {
+            from { opacity: 0.6; letter-spacing: 0.25em; }
+            to { opacity: 1; letter-spacing: 0.35em; }
+        }
+
+        /* Pin Dot Indicator Animations */
+        .pin-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid rgba(245, 158, 11, 0.5);
+            transition: all 0.2s ease;
+        }
+        .pin-dot.filled {
+            background-color: #f59e0b;
+            border-color: #f59e0b;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
         }
     </style>
 </head>
-<body class="min-h-screen pb-12">
+<body class="text-slate-100 antialiased selection:bg-amber-500 selection:text-black">
 
-    <!-- Header -->
-    <header class="border-b border-slate-800 bg-slate-900/90 sticky top-0 z-50 backdrop-blur-md">
-        <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 flex items-center justify-center text-xl font-bold text-white shadow-lg">
-                    FTCF
-                </div>
-                <div class="text-right sm:text-left">
-                    <h1 class="text-xl font-bold text-emerald-400">فیملی ٹرسٹ اینڈ ویلفیئر فاؤنڈیشن</h1>
-                    <p class="text-xs text-slate-400">شیروان، ایبٹ آباد — پالیسی و آگاہی سند ۲۰۲۶</p>
-                </div>
-            </div>
-            <div class="bg-slate-800 px-4 py-1.5 rounded-full border border-slate-700 text-xs text-emerald-400 font-medium">
-                شعبہ جات کی بحالی کا ہدف (اپریل 2027)
-            </div>
+    <!-- Offline Status Indicator -->
+    <div id="offline-banner" class="hidden fixed top-0 left-0 right-0 z-[1000] bg-red-600/90 backdrop-blur-md text-white text-xs font-semibold py-1 px-4 text-center border-b border-red-500/30">
+        <i data-lucide="wifi-off" class="w-3.5 h-3.5 inline mr-1 -mt-0.5"></i> Offline Mode: Pre-loaded cache available
+    </div>
+
+    <!-- Light Blue Transparent Splash Screen with Blue/White Rotating Circles -->
+    <div id="splash" class="fixed inset-0 z-[9999] flex flex-col justify-center items-center transition-opacity duration-500">
+        <!-- Ambient Blue Light Glow -->
+        <div class="absolute w-64 h-64 bg-sky-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="splash-circle-container mb-6">
+            <!-- Outer Blue Circle -->
+            <div class="outer-blue-circle"></div>
+            <!-- Inner White Circle -->
+            <div class="inner-white-circle"></div>
+            
+            <!-- Center Bold Text -->
+            <span class="text-3xl font-black tracking-wider text-white drop-shadow-[0_2px_8px_rgba(56,189,248,0.5)] z-10">
+                FTCF
+            </span>
         </div>
+
+        <!-- Subtitle Under Circle -->
+        <p class="text-sky-300 font-mono text-xs font-bold uppercase tracking-[0.3em] pulse-subtext">
+            Secure Portal
+        </p>
+    </div>
+
+    <!-- PASSCODE LOCK SCREEN MODAL -->
+    <div id="lock-screen" class="hidden fixed inset-0 z-[9000] bg-black/90 backdrop-blur-2xl flex flex-col justify-center items-center p-6">
+        <div class="w-14 h-14 bg-amber-500/10 border border-amber-500/30 text-amber-500 rounded-3xl flex items-center justify-center mb-4 shadow-lg shadow-amber-500/10">
+            <i data-lucide="lock" class="w-7 h-7"></i>
+        </div>
+        <h2 id="lock-title" class="text-white text-lg font-bold mb-1">Enter Security PIN</h2>
+        <p id="lock-subtitle" class="text-slate-400 text-xs mb-6 font-mono">Enter your 4-digit passcode to proceed</p>
+
+        <!-- PIN Dots Indicator -->
+        <div class="flex gap-4 mb-8">
+            <div class="pin-dot" id="dot-0"></div>
+            <div class="pin-dot" id="dot-1"></div>
+            <div class="pin-dot" id="dot-2"></div>
+            <div class="pin-dot" id="dot-3"></div>
+        </div>
+
+        <!-- Numeric Keypad -->
+        <div class="grid grid-cols-3 gap-4 max-w-xs w-full mb-6">
+            <button onclick="pressPin('1')" class="h-14 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">1</button>
+            <button onclick="pressPin('2')" class="h-14 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">2</button>
+            <button onclick="pressPin('3')" class="h-14 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">3</button>
+            <button onclick="pressPin('4')" class="h-14 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">4</button>
+            <button onclick="pressPin('5')" class="h-14 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">5</button>
+            <button onclick="pressPin('6')" class="h-14 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">6</button>
+            <button onclick="pressPin('7')" class="h-14 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">7</button>
+            <button onclick="pressPin('8')" class="h-14 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">8</button>
+            <button onclick="pressPin('9')" class="h-14 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">9</button>
+            <button onclick="resetPinPrompt()" class="h-14 glass-panel rounded-2xl text-xs font-semibold text-slate-400 hover:text-amber-400 active:scale-90 transition-all">Reset</button>
+            <button onclick="pressPin('0')" class="h-14 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">0</button>
+            <button onclick="deletePin()" class="h-14 glass-panel rounded-2xl text-white hover:bg-white/10 active:scale-90 transition-all flex items-center justify-center">
+                <i data-lucide="delete" class="w-5 h-5"></i>
+            </button>
+        </div>
+        
+        <p id="lock-error" class="text-red-400 text-xs font-semibold h-4 text-center"></p>
+    </div>
+
+    <!-- Header Controls -->
+    <header class="fixed top-4 right-4 z-[60] flex gap-2 pointer-events-auto">
+        <button id="installBtn" class="hidden w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500 active:scale-95 transition-all">
+            <i data-lucide="download" class="w-4 h-4"></i>
+        </button>
+        <button onclick="promptChangePin()" title="Change PIN" class="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500 active:scale-95 transition-all">
+            <i data-lucide="key-round" class="w-4 h-4"></i>
+        </button>
+        <button onclick="toggleModal('bank-popup', true)" class="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500 active:scale-95 transition-all">
+            <i data-lucide="building-2" class="w-4 h-4"></i>
+        </button>
+        <button onclick="toggleModal('notice-popup', true)" class="relative w-10 h-10 rounded-2xl glass-panel flex items-center justify-center text-slate-300 hover:text-amber-500 active:scale-95 transition-all">
+            <i data-lucide="bell" class="w-4 h-4"></i>
+            <span class="absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-black"></span>
+        </button>
     </header>
 
-    <main class="max-w-5xl mx-auto px-4 mt-8 space-y-8">
-
-        <!-- Top Highlights / Rules -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="glass-card p-5 rounded-2xl border-r-4 border-r-emerald-500 text-right">
-                <h3 class="text-base font-bold text-emerald-300 mb-1">بینک بیلنس و مہنگائی کا قانون</h3>
-                <p class="text-sm text-slate-300 leading-relaxed">
-                    بینک بیلنس کے استحکام کے ساتھ فنڈز کی فعال سازی اور مہنگائی کو مدِ نظر رکھتے ہوئے امدادی و قرضہ جات کی رقم میں **اضافہ کیا جا سکتا ہے**۔
-                </p>
+    <!-- Bank Modal -->
+    <div id="bank-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md transition-all">
+        <div class="glass-panel p-6 rounded-3xl w-full max-w-sm text-center shadow-2xl border border-white/10">
+            <div class="w-12 h-12 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <i data-lucide="building-2" class="w-6 h-6"></i>
             </div>
-
-            <div class="glass-card p-5 rounded-2xl border-r-4 border-r-amber-500 text-right">
-                <h3 class="text-base font-bold text-amber-300 mb-1">کیٹیگریز انلاک کا وقت</h3>
-                <p class="text-sm text-slate-300 leading-relaxed">
-                    تمام کیٹیگریز اور فنڈز کو مکمل فعال (Unlock) کرنے کا ممکنہ وقت **ڈھائی سے تین سال (2.5 - 3 سال)** ہے۔
-                </p>
+            <h2 class="text-white text-base font-bold mb-4">HBL Konnect Details</h2>
+            <div class="bg-black/40 p-4 rounded-2xl text-left border border-white/5 space-y-3 mb-6">
+                <div>
+                    <span class="text-[10px] uppercase font-mono tracking-wider text-slate-400 block">Account Title</span>
+                    <span class="text-sm text-white font-semibold">Afzaal Ahmed</span>
+                </div>
+                <div class="pt-2 border-t border-white/5 flex justify-between items-center">
+                    <div>
+                        <span class="text-[10px] uppercase font-mono tracking-wider text-slate-400 block">Account / Mobile</span>
+                        <span class="text-sm text-amber-400 font-mono font-bold">0342-2735966</span>
+                    </div>
+                    <button onclick="copyAccount('03422735966')" class="p-2 text-slate-400 hover:text-amber-400 active:scale-90 transition-all">
+                        <i data-lucide="copy" class="w-4 h-4"></i>
+                    </button>
+                </div>
             </div>
+            <button onclick="toggleModal('bank-popup', false)" class="w-full py-3 bg-white/10 hover:bg-white/20 active:scale-95 rounded-xl text-white font-medium transition-all text-sm">Close</button>
         </div>
+    </div>
 
-        <!-- Loan & Relief Categories -->
-        <div class="glass-card rounded-2xl p-6">
-            <h2 class="text-lg font-bold text-emerald-400 mb-6 border-b border-slate-800 pb-3 text-right">
-                ۱. امدادی و ہنگامی قرضہ جات کے ضوابط
-            </h2>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-right">
-                
-                <!-- Death Assistance -->
-                <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-800">
-                    <span class="text-xs text-rose-400 bg-rose-500/10 px-2.5 py-1 rounded-md border border-rose-500/20">بلا معاوضہ / ناقابلِ واپسی</span>
-                    <h3 class="text-lg font-bold text-slate-100 mt-2">معاونت برائے تدفین (Death Assistance)</h3>
-                    <p class="text-2xl font-bold text-rose-400 mt-3">30,000 روپے</p>
-                </div>
-
-                <!-- Medical Loan -->
-                <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-800">
-                    <span class="text-xs text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-md border border-blue-500/20">بلا سود آسان اقساط</span>
-                    <h3 class="text-lg font-bold text-slate-100 mt-2">طبی معاونت / حادثات (Medical & Accident Loan)</h3>
-                    <p class="text-sm text-slate-400 mt-1">بڑا آپریشن یا شدید بیماری:</p>
-                    <p class="text-xl font-bold text-blue-400">15,000 سے 20,000 روپے</p>
-                    <p class="text-sm text-slate-400 mt-2">درمیانی بیماری / حادثہ:</p>
-                    <p class="text-lg font-bold text-cyan-400">8,000 سے 12,000 روپے</p>
-                </div>
-
-                <!-- Marriage Loan -->
-                <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-800">
-                    <span class="text-xs text-purple-400 bg-purple-500/10 px-2.5 py-1 rounded-md border border-purple-500/20">بلا سود آسان اقساط</span>
-                    <h3 class="text-lg font-bold text-slate-100 mt-2">معاونتِ شادی (Marriage Loan)</h3>
-                    <p class="text-2xl font-bold text-purple-400 mt-3">40,000 سے 50,000 روپے</p>
-                </div>
-
-                <!-- Emergency Loan -->
-                <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-800">
-                    <span class="text-xs text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-md border border-amber-500/20">جائزے کے بعد منظوری</span>
-                    <h3 class="text-lg font-bold text-slate-100 mt-2">ناگہانی ہنگامی ضرورت (General Emergency)</h3>
-                    <p class="text-2xl font-bold text-amber-400 mt-3">5,000 سے 10,000 روپے</p>
-                </div>
-
+    <!-- Notice Modal -->
+    <div id="notice-popup" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md transition-all">
+        <div class="glass-panel p-6 rounded-3xl w-full max-w-sm shadow-2xl border border-white/10">
+            <div class="w-12 h-12 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mb-4">
+                <i data-lucide="megaphone" class="w-6 h-6"></i>
             </div>
+            <h2 class="text-white text-base font-bold mb-2">System Notice</h2>
+            <p class="text-slate-400 text-xs leading-relaxed mb-6">
+    مصروفیت کی وجہ سے میٹنگ نہیں ہو سکی، انشاء اللہ آئندہ کا لائحہ عمل آپ کو واٹس ایپ گروپ کے ذریعے بتا دیا جائے گا۔           </p>
+            <button onclick="closeNoticeManual()" class="w-full py-3 bg-amber-500 text-black hover:bg-amber-400 active:scale-95 rounded-xl font-semibold transition-all text-sm">Acknowledge</button>
         </div>
+    </div>
 
-        <!-- Vision & Program -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-right">
-            
-            <div class="glass-card p-6 rounded-2xl">
-                <h2 class="text-lg font-bold text-emerald-400 mb-3 border-b border-slate-800 pb-2">۲. فیملی روزگار اسکیم (خود انحصار پروگرام)</h2>
-                <ul class="space-y-2 text-sm text-slate-300 leading-relaxed">
-                    <li>• فنڈ کے مستحکم ہونے پر خاندان کے بے روزگار افراد کو نیا کاروبار قائم کر کے دیا جائے گا۔</li>
-                    <li>• اصل قرض کی ادائیگی اور کاروبار کے کامیاب ہونے پر، رکن اپنے منافع کا 10٪ (روزانہ یا ماہانہ بنیاد پر) فاؤنڈیشن کو دے گا تا کہ دیگر افراد کو بھی روزگار مل سکے۔</li>
-                </ul>
-            </div>
+    <!-- Tab Contents (Lazy Loaded + Shimmer Placeholder) -->
+    <div id="ledger" class="tab-content" data-src="https://ftcf20-hub.github.io/FTCF.com/"></div>
+    <div id="monthly" class="tab-content" data-src="https://ftcf20-hub.github.io/Monthly-Status/"></div>
+    <div id="yearly" class="tab-content" data-src="https://ftcf20-hub.github.io/Yearly-Record/"></div>
+    <div id="rules" class="tab-content" data-src="https://ftcf20-hub.github.io/Loneportal/"></div>
 
-            <div class="glass-card p-6 rounded-2xl">
-                <h2 class="text-lg font-bold text-emerald-400 mb-3 border-b border-slate-800 pb-2">۳. خصوصی رمضان المبارک ویژن (Ramadan Special Vision)</h2>
-                <ul class="space-y-2 text-sm text-slate-300 leading-relaxed">
-                    <li>• آنے والے رمضان المبارک میں مستحق اور ضرورت مند خاندانوں کو راشن اور مالی امداد کی فراہمی۔</li>
-                    <li>• فاؤنڈیشن کے صدقات و زکوۃ فنڈ کے ذریعہ شفاف اور باوقار طریقے سے راشن پیکیج کی تقسیم۔</li>
-                </ul>
-            </div>
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[99] glass-panel rounded-3xl p-1.5 flex items-center shadow-2xl border border-white/10 max-w-xs w-full justify-between">
+        <button data-target="ledger" onclick="switchTab('ledger', this)" class="tab-btn flex-1 py-3 flex flex-col items-center justify-center text-slate-400 hover:text-white transition-all rounded-2xl active:scale-95">
+            <i data-lucide="wallet" class="w-5 h-5"></i>
+        </button>
+        <button data-target="monthly" onclick="switchTab('monthly', this)" class="tab-btn flex-1 py-3 flex flex-col items-center justify-center text-slate-400 hover:text-white transition-all rounded-2xl active:scale-95">
+            <i data-lucide="calendar-check-2" class="w-5 h-5"></i>
+        </button>
+        
+        <a href="https://chat.whatsapp.com/KuEfcgvGkOQHFY03h4IuHV?s=cl&p=a&ilr=1&amv=3" target="_blank" class="bg-amber-500 text-black w-11 h-11 flex items-center justify-center rounded-2xl font-bold shadow-lg shadow-amber-500/20 hover:bg-amber-400 active:scale-90 transition-all mx-1">
+            <i data-lucide="message-circle" class="w-5 h-5"></i>
+        </a>
 
-        </div>
+        <button data-target="yearly" onclick="switchTab('yearly', this)" class="tab-btn flex-1 py-3 flex flex-col items-center justify-center text-slate-400 hover:text-white transition-all rounded-2xl active:scale-95">
+            <i data-lucide="trending-up" class="w-5 h-5"></i>
+        </button>
+        <button data-target="rules" onclick="switchTab('rules', this)" class="tab-btn flex-1 py-3 flex flex-col items-center justify-center text-slate-400 hover:text-white transition-all rounded-2xl active:scale-95">
+            <i data-lucide="scale" class="w-5 h-5"></i>
+        </button>
+    </nav>
 
-    </main>
+    <script>
+        const CURRENT_ANNOUNCEMENT_ID = "announcement_11_sep_v2";
 
-    <footer class="text-center text-slate-500 text-xs mt-12">
-        <p>فیملی ٹرسٹ — اتحاد، شفافیت اور خود انحصاری</p>
-    </footer>
+        // Initialize Lucide Icons
+        lucide.createIcons();
 
-</body>
-              </html>
-              
+        /* --- LOCAL PASSCODE LOCK SYSTEM --- */
+        let enteredPin = "";
+        let tempFirstPin = "";
+        let isSettingPin = false;
+
+        function checkPasscodeFlow() {
+            const savedPin = localStorage.getItem('user_portal_pin');
+            const lockModal = document.getElementById('lock-screen');
+            const title = document.getElementById('lock-title');
+            const subtitle = document.getElementById('lock-subtitle');
+
+            enteredPin = "";
+            updatePinDots();
+
+            if (!savedPin) {
+                // First time user - Setup PIN
+                isSettingPin = true;
+                title.innerText = "Set Security PIN";
+                subtitle.innerText = "Choose a 4-digit PIN for portal protection";
+                lockModal.classList.remove('hidden');
+            } else {
+                // Regular Unlock
+                isSettingPin = false;
+                title.innerText = "Enter Security PIN";
+                subtitle.innerText = "Enter your 4-digit passcode to proceed";
+                lockModal.classList.remove('hidden');
+            }
+        }
+
+        function pressPin(num) {
+            if (enteredPin.length < 4) {
+                enteredPin += num;
+                updatePinDots();
+                if (enteredPin.length === 4) {
+                    setTimeout(validatePin, 150);
+                }
+            }
+        }
+
+        function deletePin() {
+            if (enteredPin.length > 0) {
+                enteredPin = enteredPin.slice(0, -1);
+                updatePinDots();
+            }
+        }
+
+        function updatePinDots() {
+            for (let i = 0; i < 4; i++) {
+                const dot = document.getElementById(`dot-${i}`);
+                if (i < enteredPin.length) {
+                    dot.classList.add('filled');
+                } else {
+                    dot.classList.remove('filled');
+                }
+            }
+        }
+
+        function validatePin() {
+            const savedPin = localStorage.getItem('user_portal_pin');
+            const errorElement = document.getElementById('lock-error');
+            const title = document.getElementById('lock-title');
+            const subtitle = document.getElementById('lock-subtitle');
+
+            if (isSettingPin) {
+                if (!tempFirstPin) {
+                    // First entry complete, ask to confirm
+                    tempFirstPin = enteredPin;
+                    enteredPin = "";
+                    updatePinDots();
+                    title.innerText = "Confirm Security PIN";
+                    subtitle.innerText = "Re-enter your 4-digit PIN to confirm";
+                } else {
+                    // Confirming entry
+                    if (enteredPin === tempFirstPin) {
+                        localStorage.setItem('user_portal_pin', enteredPin);
+                        document.getElementById('lock-screen').classList.add('hidden');
+                        tempFirstPin = "";
+                        isSettingPin = false;
+                        checkAutoNotice();
+                    } else {
+                        errorElement.innerText = "PINs do not match. Try again.";
+                        tempFirstPin = "";
+                        enteredPin = "";
+                        updatePinDots();
+                        title.innerText = "Set Security PIN";
+                        subtitle.innerText = "Choose a 4-digit PIN for portal protection";
+                        setTimeout(() => errorElement.innerText = "", 2000);
+                    }
+                }
+            } else {
+                // Verify Existing PIN
+                if (enteredPin === savedPin) {
+                    document.getElementById('lock-screen').classList.add('hidden');
+                    enteredPin = "";
+                    checkAutoNotice();
+                } else {
+                    errorElement.innerText = "Incorrect PIN. Please try again.";
+                    enteredPin = "";
+                    updatePinDots();
+                    setTimeout(() => errorElement.innerText = "", 2000);
+                }
+            }
+        }
