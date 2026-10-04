@@ -191,7 +191,7 @@
         </div>
     </div>
 
-    <!-- ADMIN DASHBOARD MODAL -->
+    <!-- ADMIN DASHBOARD MODAL (Clean & Fully Visible Layout) -->
     <div id="adminDashboardModal" class="modal hidden" style="align-items: flex-start; overflow-y: auto; padding: 20px 10px;">
         <div style="width: 100%; max-width: 400px; margin: auto; background: #0f172a; border: 1px solid #334155; border-radius: 24px; padding: 20px;">
             <div class="flex-row" style="margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 12px;">
@@ -224,21 +224,16 @@
 
             <!-- Add Loantaker -->
             <div class="glass-card" style="margin-bottom: 14px;">
-                <p style="font-size: 11px; font-weight: 900; color: #38bdf8; margin-bottom: 10px; text-transform: uppercase;"><i class="fas fa-user-plus mr-1"></i> Add Active Loantaker</p>
+                <p style="font-size: 11px; font-weight: 900; color: #38bdf8; margin-bottom: 10px; text-transform: uppercase;"><i class="fas fa-user-plus mr-1"></i> Add / Manage Loantakers</p>
                 <input type="text" id="ltName" placeholder="Loantaker Name" class="input-field">
                 <div class="grid-2">
                     <input type="number" id="ltAmount" placeholder="Amount (PKR)" class="input-field" style="margin-bottom: 0;">
                     <input type="text" id="ltDuration" placeholder="Duration (e.g. 6 Months)" class="input-field" style="margin-bottom: 0;">
                 </div>
                 <button onclick="addLoantaker()" class="btn btn-slate" style="margin-top: 10px; padding: 10px; font-size: 11px; background: #0369a1; color: #fff;">Add Loantaker to List</button>
-            </div>
-
-            <!-- Manage / Delete Loantakers List -->
-            <div class="glass-card" style="margin-bottom: 14px;">
-                <p style="font-size: 11px; font-weight: 900; color: #fb7185; margin-bottom: 10px; text-transform: uppercase;"><i class="fas fa-trash-alt mr-1"></i> Manage / Delete Loantakers</p>
-                <div id="adminLoantakersList" style="max-height: 160px; overflow-y: auto;">
-                    <!-- Dynamically populated list with delete buttons -->
-                </div>
+                
+                <!-- Container for listing and deleting loantakers inside admin panel -->
+                <div id="adminLoantakersListContainer" style="margin-top: 12px;"></div>
             </div>
             
             <button onclick="closeAdminDashboard()" class="btn btn-slate" style="padding: 12px;">Exit Dashboard</button>
@@ -279,7 +274,6 @@
         }
 
         var refId = "FTCF-" + Math.floor(1000 + Math.random() * 9000);
-        var currentDate = new Date().toLocaleDateString();
 
         document.getElementById('rcptRef').innerText = "#" + refId;
         document.getElementById('rcptName').innerText = n;
@@ -313,7 +307,7 @@
             closePinModal();
             document.getElementById('adminDashboardModal').classList.remove('hidden');
             loadMetrics();
-            renderAdminLoantakers();
+            renderAdminLoantakersList();
         } else {
             document.getElementById('pinErrorMsg').style.display = 'block';
         }
@@ -346,7 +340,7 @@
         }
 
         var loantakers = JSON.parse(localStorage.getItem('ftcf_loantakers') || '[]');
-        loantakers.push({ id: Date.now(), name: name, amount: amount, duration: duration || 'Flexible' });
+        loantakers.push({ name: name, amount: amount, duration: duration || 'Flexible' });
 
         localStorage.setItem('ftcf_loantakers', JSON.stringify(loantakers));
         localStorage.setItem('ftcf_loans', loantakers.length);
@@ -357,37 +351,51 @@
 
         loadMetrics();
         renderMainLoantakers();
-        renderAdminLoantakers();
+        renderAdminLoantakersList();
         alert("Loantaker added successfully!");
       }
 
-      function deleteLoantaker(id) {
-        var loantakers = JSON.parse(localStorage.getItem('ftcf_loantakers') || '[]');
-        loantakers = loantakers.filter(function(item) { return item.id !== id; });
-        
-        localStorage.setItem('ftcf_loantakers', JSON.stringify(loantakers));
-        localStorage.setItem('ftcf_loans', loantakers.length);
+      function deleteLoantaker(index) {
+        if(confirm("Kya aap waqai is loantaker ko delete karna chahte hain?")) {
+            var loantakers = JSON.parse(localStorage.getItem('ftcf_loantakers') || '[]');
+            loantakers.splice(index, 1);
 
-        loadMetrics();
-        renderMainLoantakers();
-        renderAdminLoantakers();
+            localStorage.setItem('ftcf_loantakers', JSON.stringify(loantakers));
+            localStorage.setItem('ftcf_loans', loantakers.length);
+
+            loadMetrics();
+            renderMainLoantakers();
+            renderAdminLoantakersList();
+        }
       }
 
-      function renderAdminLoantakers() {
+      function renderMainLoantakers() {
         var loantakers = JSON.parse(localStorage.getItem('ftcf_loantakers') || '[]');
-        var container = document.getElementById('adminLoantakersList');
+        var container = document.getElementById('mainLoantakersContainer');
+        var badge = document.getElementById('loantakersCountBadge');
+
+        badge.innerText = loantakers.length + " Active";
 
         if(loantakers.length === 0) {
-            container.innerHTML = '<p style="font-size: 10px; color: #94a3b8; text-align: center; padding: 8px;">No active loantakers found.</p>';
+            container.innerHTML = '<div class="glass-card" style="text-align: center; padding: 12px;"><p style="font-size: 11px; color: #94a3b8;">No active loantakers listed.</p></div>';
             return;
         }
 
         var html = '';
         loantakers.forEach(function(item) {
-            html += '<div class="flex-row" style="background: #090d16; padding: 8px 10px; border-radius: 10px; margin-bottom: 6px; border: 1px solid #1e293b;">' +
+            html += '<div class="glass-card flex-row" style="padding: 12px; margin-bottom: 8px;">' +
                         '<div>' +
-                            '<p style="font-size: 11px; font-weight: bold; color: #f8fafc;">' + item.name + '</p>' +
-                            '<p style="font-size: 9px; color: #34d399;">Rs. ' + Number(item.amount).toLocaleString() + '</p>' +
+                            '<p style="font-size: 12px; font-weight: bold;">' + item.name + '</p>' +
+                            '<p style="font-size: 9px; color: #94a3b8;">Duration: ' + item.duration + '</p>' +
                         '</div>' +
-                        '<button onclick="deleteLoantaker(' + item.id + ')" style="background: rgba(244, 63, 94, 0.15); color: #fb7185; border: none; padding: 6px 10px; border-radius: 8px; font-size: 11px; cursor: pointer;"><i class="fas fa-trash-alt"></i></button>' +
-     
+                        '<span style="font-weight: 900; font-size: 12px; color: #34d399;">Rs. ' + Number(item.amount).toLocaleString() + '</span>' +
+                    '</div>';
+        });
+        container.innerHTML = html;
+      }
+
+      function renderAdminLoantakersList() {
+        var loantakers = JSON.parse(localStorage.getItem('ftcf_loantakers') || '[]');
+        var adminContainer = document.getElementById('adminLoantakersListContainer');
+        
+        if(!adminContainer) 
