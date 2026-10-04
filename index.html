@@ -67,6 +67,7 @@
             background: rgba(14, 116, 144, 0.25); /* Light Blue Glass Accent */
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
+            pointer-events: none;
         }
 
         .splash-circle-container {
@@ -390,6 +391,4 @@
                     enteredPin = "";
                     updatePinDots();
                     setTimeout(() => errorElement.innerText = "", 2000);
-                }
-            }
-        }
+       
