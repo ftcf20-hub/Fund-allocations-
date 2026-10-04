@@ -7,6 +7,8 @@
   
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Receipt capture/download support ke liye -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   
   <script>
     tailwind.config = {
@@ -149,20 +151,98 @@
         
         <div class="space-y-3">
             <div>
-              <input type="text" id="uName" placeholder="Full Name" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900 border border-slate-800 text-slate-100 outline-none">
+              <input type="text" id="uName" placeholder="Full Name" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900 border border-slate-800 text-slate-100 outline-none focus:border-emerald-500/50 transition">
             </div>
             
             <div>
-              <input type="number" id="uAmount" placeholder="Loan Amount (PKR)" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900 border border-slate-800 text-slate-100 outline-none">
+              <input type="number" id="uAmount" placeholder="Loan Amount (PKR)" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900 border border-slate-800 text-slate-100 outline-none focus:border-emerald-500/50 transition">
             </div>
 
             <div>
-              <textarea id="uReason" placeholder="Reason for Request" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900 border border-slate-800 text-slate-100 outline-none" rows="3"></textarea>
+              <textarea id="uReason" placeholder="Reason for Request" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900 border border-slate-800 text-slate-100 outline-none focus:border-emerald-500/50 transition" rows="3"></textarea>
             </div>
             
-            <a id="waAnchor" href="https://wa.me/923433052346" onclick="sendToWA(event)" target="_blank" class="w-full bg-emerald-600 text-slate-950 p-3.5 rounded-2xl font-black text-xs uppercase tracking-wider transition flex items-center justify-center gap-2 text-center block">
-              <i class="fab fa-whatsapp text-base"></i> Submit via WhatsApp
-            </a>
+            <button onclick="handleApplication(event)" type="button" class="w-full bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98] text-slate-950 p-3.5 rounded-2xl font-black text-xs uppercase tracking-wider transition flex items-center justify-center gap-2 text-center">
+              <i class="fab fa-whatsapp text-base"></i> Submit & Generate Receipt
+            </button>
+        </div>
+    </div>
+
+    <!-- DIGITAL RECEIPT MODAL -->
+    <div id="receiptModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="w-full max-w-sm space-y-4">
+            
+            <!-- Printable/Downloadable Receipt Container -->
+            <div id="receiptCard" class="bg-slate-900 border border-slate-700/80 rounded-3xl p-6 text-slate-100 space-y-4 shadow-2xl relative overflow-hidden">
+                
+                <!-- Background Watermark -->
+                <div class="absolute -right-6 -bottom-6 text-slate-800/30 text-8xl font-black pointer-events-none select-none">FTCF</div>
+                
+                <!-- Header -->
+                <div class="flex justify-between items-start border-b border-slate-800 pb-4">
+                    <div>
+                        <div class="flex items-center gap-1.5 text-emerald-400 font-black text-xs uppercase tracking-wider">
+                            <i class="fas fa-check-circle"></i> FTCF Official
+                        </div>
+                        <h4 class="font-extrabold text-base text-white tracking-tight mt-0.5">Loan Application Receipt</h4>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[9px] text-slate-400 uppercase tracking-widest">Status</p>
+                        <span class="inline-block bg-amber-500/10 text-amber-400 text-[9px] font-extrabold uppercase px-2 py-0.5 rounded-full border border-amber-500/20">Pending</span>
+                    </div>
+                </div>
+
+                <!-- Receipt Metadata -->
+                <div class="grid grid-cols-2 gap-3 text-xs bg-slate-950/50 p-3 rounded-2xl border border-slate-800/60">
+                    <div>
+                        <p class="text-[9px] text-slate-400 uppercase">Ref ID</p>
+                        <p id="rcptRef" class="font-mono font-bold text-slate-200">#FTCF-0000</p>
+                    </div>
+                    <div>
+                        <p class="text-[9px] text-slate-400 uppercase">Date & Time</p>
+                        <p id="rcptDate" class="font-mono font-bold text-slate-200">00/00/0000</p>
+                    </div>
+                </div>
+
+                <!-- Application Details -->
+                <div class="space-y-2.5 text-xs">
+                    <div class="flex justify-between py-1 border-b border-slate-800/40">
+                        <span class="text-slate-400">Applicant Name</span>
+                        <span id="rcptName" class="font-bold text-slate-100">---</span>
+                    </div>
+                    <div class="flex justify-between py-1 border-b border-slate-800/40">
+                        <span class="text-slate-400">Requested Amount</span>
+                        <span id="rcptAmount" class="font-black text-emerald-400 text-sm">Rs. 0</span>
+                    </div>
+                    <div class="pt-1">
+                        <span class="text-slate-400 block mb-1">Reason / Notes</span>
+                        <p id="rcptReason" class="text-slate-300 italic text-[11px] bg-slate-950/30 p-2.5 rounded-xl border border-slate-800/40 leading-snug">---</p>
+                    </div>
+                </div>
+
+                <!-- Footer Sign -->
+                <div class="pt-3 border-t border-slate-800 flex justify-between items-center text-[9px] text-slate-500 uppercase tracking-widest font-bold">
+                    <span>Mughal Brothers</span>
+                    <span>Fiscal Scheme 2026-2027</span>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="space-y-2">
+                <a id="modalWaBtn" href="#" target="_blank" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 py-3 rounded-2xl font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition">
+                    <i class="fab fa-whatsapp text-base"></i> Send on WhatsApp Now
+                </a>
+                
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="downloadReceipt()" type="button" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 py-2.5 rounded-xl font-bold text-[11px] uppercase tracking-wider flex items-center justify-center gap-1.5 border border-slate-700">
+                        <i class="fas fa-download text-xs text-emerald-400"></i> Save PNG
+                    </button>
+                    <button onclick="closeReceiptModal()" type="button" class="w-full bg-slate-900 hover:bg-slate-800 text-slate-400 py-2.5 rounded-xl font-bold text-[11px] uppercase tracking-wider border border-slate-800">
+                        Close
+                    </button>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -171,23 +251,74 @@
     </footer>
 
     <script>
-      function sendToWA(e) {
+      let waUrlGlobal = "";
+
+      function handleApplication(e) {
         var n = document.getElementById('uName').value.trim();
         var a = document.getElementById('uAmount').value.trim();
         var r = document.getElementById('uReason').value.trim();
 
         if(!n || !a || !r) {
-          e.preventDefault();
           alert("Pehle tamam khane (Name, Amount, Reason) pur karein.");
           return;
         }
 
-        var text = "*FTCF Loan Application*\n*Name:* " + n + "\n*Amount:* Rs. " + a + "\n*Reason:* " + r;
-        var url = "https://api.whatsapp.com/send?phone=923433052346&text=" + encodeURIComponent(text);
-        
-        document.getElementById('waAnchor').href = url;
+        // Random Ref ID & Date Generate
+        var refId = "FTCF-" + Math.floor(1000 + Math.random() * 9000);
+        var currentDate = new Date().toLocaleString('en-US', { 
+            day: '2-digit', 
+            month: 'short', 
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+
+        // Fill Data into Receipt Modal
+        document.getElementById('rcptRef').innerText = "#" + refId;
+        document.getElementById('rcptDate').innerText = currentDate;
+        document.getElementById('rcptName').innerText = n;
+        document.getElementById('rcptAmount').innerText = "Rs. " + Number(a).toLocaleString();
+        document.getElementById('rcptReason').innerText = r;
+
+        // WhatsApp Message Text & Link
+        var waText = "*FTCF Loan Application Receipt*\n" +
+                     "-------------------------------\n" +
+                     "*Ref ID:* #" + refId + "\n" +
+                     "*Name:* " + n + "\n" +
+                     "*Amount:* Rs. " + Number(a).toLocaleString() + "\n" +
+                     "*Reason:* " + r + "\n" +
+                     "*Date:* " + currentDate + "\n" +
+                     "-------------------------------\n" +
+                     "_Status: Pending Approval_";
+                     
+        waUrlGlobal = "https://api.whatsapp.com/send?phone=923433052346&text=" + encodeURIComponent(waText);
+        document.getElementById('modalWaBtn').href = waUrlGlobal;
+
+        // Show Modal
+        document.getElementById('receiptModal').classList.remove('hidden');
+
+        // Auto open WhatsApp after 1.5 seconds delay (user visual experience ke liye)
+        setTimeout(function() {
+            window.open(waUrlGlobal, '_blank');
+        }, 1500);
+      }
+
+      function closeReceiptModal() {
+        document.getElementById('receiptModal').classList.add('hidden');
+      }
+
+      function downloadReceipt() {
+        var receiptNode = document.getElementById('receiptCard');
+        html2canvas(receiptNode, {
+            backgroundColor: '#090d16',
+            scale: 2
+        }).then(function(canvas) {
+            var link = document.createElement('a');
+            link.download = 'FTCF-Loan-Receipt.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
       }
     </script>
 </body>
 </html>
-
