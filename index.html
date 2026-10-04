@@ -62,18 +62,11 @@
         }
         @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 
-        /* --- LIGHT BLUE TRANSPARENT SPLASH SCREEN & DOUBLE CIRCLE ANIMATION --- */
-        #splash {
-            background: rgba(14, 116, 144, 0.25); /* Light Blue Glass Accent */
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            pointer-events: none;
-        }
-
+        /* --- DOUBLE CIRCLE ANIMATION (NOW INTEGRATED IN LOCK SCREEN) --- */
         .splash-circle-container {
             position: relative;
-            width: 150px;
-            height: 150px;
+            width: 120px;
+            height: 120px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -94,7 +87,7 @@
         /* Inner White Rotating Circle */
         .inner-white-circle {
             position: absolute;
-            inset: 12px;
+            inset: 10px;
             border-radius: 50%;
             border: 2px dashed #ffffff;
             animation: spinCounterClockwise 1.8s linear infinite;
@@ -116,8 +109,8 @@
         }
 
         @keyframes pulseSubtext {
-            from { opacity: 0.6; letter-spacing: 0.25em; }
-            to { opacity: 1; letter-spacing: 0.35em; }
+            from { opacity: 0.6; letter-spacing: 0.2em; }
+            to { opacity: 1; letter-spacing: 0.3em; }
         }
 
         /* Pin Dot Indicator Animations */
@@ -142,39 +135,30 @@
         <i data-lucide="wifi-off" class="w-3.5 h-3.5 inline mr-1 -mt-0.5"></i> Offline Mode: Pre-loaded cache available
     </div>
 
-    <!-- Light Blue Transparent Splash Screen with Blue/White Rotating Circles -->
-    <div id="splash" class="fixed inset-0 z-[9999] flex flex-col justify-center items-center transition-opacity duration-500">
-        <!-- Ambient Blue Light Glow -->
-        <div class="absolute w-64 h-64 bg-sky-500/20 rounded-full blur-3xl pointer-events-none"></div>
+    <!-- PASSCODE LOCK SCREEN MODAL (WITH TOP CIRCLE ANIMATION) -->
+    <div id="lock-screen" class="fixed inset-0 z-[9000] bg-black/95 backdrop-blur-2xl flex flex-col justify-center items-center p-6 overflow-y-auto">
+        <!-- Ambient Blue Glow -->
+        <div class="absolute w-64 h-64 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-        <div class="splash-circle-container mb-6">
-            <!-- Outer Blue Circle -->
+        <!-- TOP DOUBLE CIRCLE ANIMATION -->
+        <div class="splash-circle-container mb-3 relative z-10">
             <div class="outer-blue-circle"></div>
-            <!-- Inner White Circle -->
             <div class="inner-white-circle"></div>
-            
-            <!-- Center Bold Text -->
-            <span class="text-3xl font-black tracking-wider text-white drop-shadow-[0_2px_8px_rgba(56,189,248,0.5)] z-10">
+            <span class="text-2xl font-black tracking-wider text-white drop-shadow-[0_2px_8px_rgba(56,189,248,0.5)] z-10">
                 FTCF
             </span>
         </div>
 
         <!-- Subtitle Under Circle -->
-        <p class="text-sky-300 font-mono text-xs font-bold uppercase tracking-[0.3em] pulse-subtext">
+        <p class="text-sky-300 font-mono text-[10px] font-bold uppercase tracking-[0.25em] pulse-subtext mb-6 relative z-10">
             Secure Portal
         </p>
-    </div>
 
-    <!-- PASSCODE LOCK SCREEN MODAL -->
-    <div id="lock-screen" class="hidden fixed inset-0 z-[9000] bg-black/90 backdrop-blur-2xl flex flex-col justify-center items-center p-6">
-        <div class="w-14 h-14 bg-amber-500/10 border border-amber-500/30 text-amber-500 rounded-3xl flex items-center justify-center mb-4 shadow-lg shadow-amber-500/10">
-            <i data-lucide="lock" class="w-7 h-7"></i>
-        </div>
-        <h2 id="lock-title" class="text-white text-lg font-bold mb-1">Enter Security PIN</h2>
-        <p id="lock-subtitle" class="text-slate-400 text-xs mb-6 font-mono">Enter your 4-digit passcode to proceed</p>
+        <h2 id="lock-title" class="text-white text-base font-bold mb-1 relative z-10">Enter Security PIN</h2>
+        <p id="lock-subtitle" class="text-slate-400 text-xs mb-5 font-mono relative z-10">Enter your 4-digit passcode to proceed</p>
 
         <!-- PIN Dots Indicator -->
-        <div class="flex gap-4 mb-8">
+        <div class="flex gap-4 mb-6 relative z-10">
             <div class="pin-dot" id="dot-0"></div>
             <div class="pin-dot" id="dot-1"></div>
             <div class="pin-dot" id="dot-2"></div>
@@ -182,24 +166,24 @@
         </div>
 
         <!-- Numeric Keypad -->
-        <div class="grid grid-cols-3 gap-4 max-w-xs w-full mb-6">
-            <button onclick="pressPin('1')" class="h-14 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">1</button>
-            <button onclick="pressPin('2')" class="h-14 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">2</button>
-            <button onclick="pressPin('3')" class="h-14 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">3</button>
-            <button onclick="pressPin('4')" class="h-14 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">4</button>
-            <button onclick="pressPin('5')" class="h-14 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">5</button>
-            <button onclick="pressPin('6')" class="h-14 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">6</button>
-            <button onclick="pressPin('7')" class="h-14 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">7</button>
-            <button onclick="pressPin('8')" class="h-14 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">8</button>
-            <button onclick="pressPin('9')" class="h-14 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">9</button>
-            <button onclick="resetPinPrompt()" class="h-14 glass-panel rounded-2xl text-xs font-semibold text-slate-400 hover:text-amber-400 active:scale-90 transition-all">Reset</button>
-            <button onclick="pressPin('0')" class="h-14 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">0</button>
-            <button onclick="deletePin()" class="h-14 glass-panel rounded-2xl text-white hover:bg-white/10 active:scale-90 transition-all flex items-center justify-center">
+        <div class="grid grid-cols-3 gap-3 max-w-xs w-full mb-4 relative z-10">
+            <button onclick="pressPin('1')" class="h-13 py-3 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">1</button>
+            <button onclick="pressPin('2')" class="h-13 py-3 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">2</button>
+            <button onclick="pressPin('3')" class="h-13 py-3 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">3</button>
+            <button onclick="pressPin('4')" class="h-13 py-3 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">4</button>
+            <button onclick="pressPin('5')" class="h-13 py-3 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">5</button>
+            <button onclick="pressPin('6')" class="h-13 py-3 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">6</button>
+            <button onclick="pressPin('7')" class="h-13 py-3 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">7</button>
+            <button onclick="pressPin('8')" class="h-13 py-3 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">8</button>
+            <button onclick="pressPin('9')" class="h-13 py-3 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">9</button>
+            <button onclick="resetPinPrompt()" class="h-13 py-3 glass-panel rounded-2xl text-xs font-semibold text-slate-400 hover:text-amber-400 active:scale-90 transition-all">Reset</button>
+            <button onclick="pressPin('0')" class="h-13 py-3 glass-panel rounded-2xl text-xl font-bold text-white hover:bg-white/10 active:scale-90 transition-all">0</button>
+            <button onclick="deletePin()" class="h-13 py-3 glass-panel rounded-2xl text-white hover:bg-white/10 active:scale-90 transition-all flex items-center justify-center">
                 <i data-lucide="delete" class="w-5 h-5"></i>
             </button>
         </div>
         
-        <p id="lock-error" class="text-red-400 text-xs font-semibold h-4 text-center"></p>
+        <p id="lock-error" class="text-red-400 text-xs font-semibold h-4 text-center relative z-10"></p>
     </div>
 
     <!-- Header Controls -->
@@ -391,4 +375,25 @@
                     enteredPin = "";
                     updatePinDots();
                     setTimeout(() => errorElement.innerText = "", 2000);
-       
+                }
+            }
+        }
+
+        function promptChangePin() {
+            if (confirm("Do you want to reset your Security PIN?")) {
+                localStorage.removeItem('user_portal_pin');
+                tempFirstPin = "";
+                checkPasscodeFlow();
+            }
+        }
+
+        function resetPinPrompt() {
+            if (confirm("Reset current PIN and set a new one?")) {
+                localStorage.removeItem('user_portal_pin');
+                tempFirstPin = "";
+                checkPasscodeFlow();
+            }
+        }
+
+        // Tab Switcher
+   
