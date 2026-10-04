@@ -44,7 +44,6 @@
         line-height: 2.2; 
     }
 
-    /* Ambient Lighting Mesh Glows */
     .ambient-glow-1 {
         position: fixed;
         top: -100px;
@@ -69,7 +68,6 @@
         z-index: 0;
     }
 
-    /* Executive Hero Card */
     .bank-gradient { 
         background: linear-gradient(135deg, rgba(6, 78, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
         border: 1px solid rgba(16, 185, 129, 0.35);
@@ -87,7 +85,6 @@
         background: linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.8), transparent);
     }
 
-    /* Glass Cards */
     .glass-card {
         background: rgba(15, 23, 42, 0.85); 
         backdrop-filter: blur(24px); 
@@ -101,7 +98,6 @@
         border-color: rgba(16, 185, 129, 0.4);
     }
 
-    /* Live Pulse Dot */
     .pulse-dot {
         width: 7px;
         height: 7px;
@@ -117,7 +113,6 @@
         100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
     }
 
-    /* Range Slider Accent */
     input[type=range]::-webkit-slider-thumb {
       -webkit-appearance: none;
       height: 18px;
@@ -128,14 +123,12 @@
       box-shadow: 0 0 10px rgba(16, 185, 129, 0.8);
     }
 
-    /* Scrollbar Styling */
     #missionBox::-webkit-scrollbar { width: 4px; }
     #missionBox::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
   </style>
 </head>
 <body class="pb-12 relative antialiased selection:bg-emerald-900 selection:text-emerald-200">
 
-  <!-- Background Ambient Glows -->
   <div class="ambient-glow-1"></div>
   <div class="ambient-glow-2"></div>
 
@@ -152,9 +145,8 @@
         </div>
     </header>
 
-    <!-- Stat Highlights (Glass Cards) -->
+    <!-- Stat Highlights -->
     <section class="grid grid-cols-2 gap-3">
-        <!-- Hero Card -->
         <div class="col-span-2 bank-gradient p-6 rounded-3xl text-white shadow-2xl relative overflow-hidden">
             <div class="flex justify-between items-start">
               <div>
@@ -178,7 +170,7 @@
         </div>
     </section>
 
-    <!-- Fund Allocations 2026 Layout with Dynamic Glowing Progress Bars -->
+    <!-- Fund Allocations 2026 Layout -->
     <section class="space-y-3">
       <div class="flex justify-between items-center px-1">
         <h3 class="font-black text-xs text-slate-300 tracking-[0.2em] uppercase">Fund Allocation Framework</h3>
@@ -262,7 +254,7 @@
         </div>
     </div>
 
-    <!-- Loan List (Interactive Ledger Table Visual) -->
+    <!-- Loan List -->
     <div class="glass-card p-5 rounded-3xl border border-slate-800">
         <div class="flex justify-between items-center mb-4">
           <h3 class="font-extrabold text-slate-100 flex items-center gap-2 text-xs uppercase tracking-wide"><i class="fas fa-list-check text-emerald-400"></i> Loan Ledger Records</h3>
@@ -288,14 +280,13 @@
         </div>
     </div>
 
-    <!-- Loan Rules (Urdu Accordion Rules with Interactive Tooltips) -->
+    <!-- Loan Rules -->
     <div class="space-y-2.5 urdu-text text-right">
         <div class="glass-card p-4 rounded-2xl border border-slate-800">
             <h3 class="font-extrabold text-slate-100 mb-1 text-sm">قواعد و ضوابط (Loan Rules)</h3>
             <p class="text-xs text-emerald-400/90 font-semibold">امانت میں خیانت نہیں، ہمارا سب سے پہلا اصول ہے۔ بہترین نظام ہی اصل کامیابی ہے۔</p>
         </div>
         
-        <!-- Interactive Tooltip Rule Items -->
         <div onclick="toggleRuleTip('rule1')" class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 text-xs text-slate-300 cursor-pointer hover:border-emerald-500/50 transition">
             <div class="flex justify-between items-center">
                 <i class="fas fa-chevron-down text-[10px] text-emerald-400"></i>
@@ -327,7 +318,7 @@
         </div>
     </div>
 
-    <!-- Loan Application Form with Interactive Slider & Live Calculator -->
+    <!-- Loan Application Form -->
     <div class="glass-card p-5 rounded-3xl border border-slate-800 shadow-2xl">
         <h3 class="font-black text-slate-100 uppercase tracking-wide text-sm text-center">Request Financial Assistance</h3>
         <p class="text-[10px] text-slate-400 text-center mb-4 uppercase tracking-wider font-semibold">Fill in details to submit application via WhatsApp</p>
@@ -341,7 +332,7 @@
               <input type="number" id="a" oninput="syncAmountInput(this.value)" placeholder="Loan Amount (PKR)" class="w-full p-3.5 text-xs rounded-2xl bg-slate-900/90 border border-slate-800 text-slate-100 placeholder-slate-500 focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition" required>
             </div>
 
-            <!-- Quick Interactive Amount Slider -->
+            <!-- Interactive Slider -->
             <div class="p-3 bg-slate-900/60 rounded-2xl border border-slate-800/80 space-y-1.5">
                <div class="flex justify-between text-[10px] text-slate-400 font-bold uppercase">
                  <span>Quick Selector</span>
@@ -382,4 +373,12 @@
   <!-- Digital Shareable Receipt Modal -->
   <div id="receiptModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
       <div class="glass-card max-w-sm w-full p-6 rounded-3xl border border-emerald-500/40 text-center space-y-4 shadow-2xl relative">
-          <div class="w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-cent
+          <div class="w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto text-xl border border-emerald-500/40">
+              <i class="fas fa-check-circle"></i>
+          </div>
+          <div>
+            <h3 class="font-black text-white text-base uppercase tracking-wider">Application Submitted</h3>
+            <p class="text-[10px] text-slate-400 uppercase tracking-widest mt-0.5">Digital Receipt Generated</p>
+          </div>
+
+          <div class="bg-slate-900/90 p-4 rounded-2xl border border-slate-800 text-left space-y-2 t
