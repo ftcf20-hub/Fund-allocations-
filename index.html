@@ -488,5 +488,94 @@
             document.getElementById('report-modal').classList.remove('hidden');
         }
 
-        function updateReport
+        function updateReportTable() {
+            const fromMonth = document.getElementById('filter-from-month').value;
+            const toMonth = document.getElementById('filter-to-month').value;
+
+            const fromIdx = availableMonths.indexOf(fromMonth);
+            const toIdx = availableMonths.indexOf(toMonth);
+
+            let selectedMonths = [];
+            if (fromIdx !== -1 && toIdx !== -1 && fromIdx <= toIdx) {
+                selectedMonths = availableMonths.slice(fromIdx, toIdx + 1);
+            } else if (fromIdx !== -1 && toIdx !== -1 && fromIdx > toIdx) {
+                selectedMonths = [fromMonth];
+            } else {
+                selectedMonths = availableMonths.length > 0 ? availableMonths : ['Current Month'];
+            }
+
+            const durationText = selectedMonths.length > 1 ? `${selectedMonths[0]} - ${selectedMonths[selectedMonths.length - 1]}` : selectedMonths[0];
+            document.getElementById('report-duration').innerText = durationText;
+
+            let tableHTML = `
+                <table class="w-full text-left border-collapse border border-slate-300 text-[10px]">
+                    <thead>
+                        <tr class="bg-emerald-800 text-white border-b border-slate-300">
+                            <th class="p-2 border-r border-slate-300 font-bold uppercase">Member Name</th>
+            `;
+            selectedMonths.forEach(m => {
+                tableHTML += `<th class="p-2 border-r border-slate-300 text-center font-bold uppercase">${m}</th>`;
+            });
+            tableHTML += `<th class="p-2 text-center font-bold uppercase">Total</th></tr></thead><tbody>`;
+
+            let overallRangeTotal = 0;
+            globalMainData.forEach((member, index) => {
+                let rowTotal = 0;
+                tableHTML += `<tr class="${index % 2 === 0 ? 'bg-slate-50' : 'bg-white'} border-b border-slate-200">`;
+                tableHTML += `<td class="p-2 border-r border-slate-300 font-bold text-slate-900 uppercase truncate max-w-[100px]">${member.name}</td>`;
+
+                selectedMonths.forEach(month => {
+                    const match = historyData.find(r => {
+                        const vals = Object.values(r);
+                        return vals[0] && vals[0].toString().trim() === member.name.trim() && vals[1] && vals[1].toString().trim() === month;
+                    });
+                    const amt = match ? (parseInt(Object.values(match)[2]) || 0) : 0;
+                    rowTotal += amt;
+                    tableHTML += `<td class="p-2 border-r border-slate-300 text-center text-slate-700 font-medium">${amt > 0 ? amt.toLocaleString() : '-'}</td>`;
+                });
+
+                overallRangeTotal += rowTotal;
+                tableHTML += `<td class="p-2 text-center font-black text-emerald-800 bg-emerald-50">${rowTotal.toLocaleString()}</td></tr>`;
+            });
+
+            tableHTML += `</tbody></table>`;
+            document.getElementById('report-table-container').innerHTML = tableHTML;
+            document.getElementById('report-badge-total').innerText = "Rs. " + overallRangeTotal.toLocaleString();
+            document.getElementById('report-modal-total').innerText = "Total: Rs. " + overallRangeTotal.toLocaleString();
+        }
+
+        function generateAndDownloadReportCard() {
+            const originalCard = document.getElementById('printable-card');
+            
+            const clone = originalCard.cloneNode(true);
+            clone.style.position = 'absolute';
+            clone.style.left = '-9999px';
+            clone.style.top = '0';
+            clone.style.width = '620px';
+            clone.style.maxHeight = 'none';
+            clone.style.overflow = 'visible';
+            clone.style.boxShadow = 'none';
+            
+            document.body.appendChild(clone);
+
+            html2canvas(clone, { 
+                scale: 3, 
+                backgroundColor: '#ffffff',
+                useCORS: true,
+                windowWidth: 800
+            }).then(canvas => {
+                document.body.removeChild(clone);
+
+                const link = document.createElement('a');
+                link.download = `FTCF_Report_Card_${Date.now()}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }).catch(err => {
+                if(document.body.contains(clone)) document.body.removeChild(clone);
+                alert('Image generation failed. Please try again.');
+            });
+        }
+    </script>
+</body>
+</html>
                             
