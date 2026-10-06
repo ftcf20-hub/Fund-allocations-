@@ -145,9 +145,40 @@
             70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
         }
+
+        /* Toast Notification Styling */
+        #toast-notification {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 380px;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(52, 211, 153, 0.4);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(16, 185, 129, 0.25);
+            border-radius: 1.25rem;
+            z-index: 100;
+            transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        #toast-notification.show {
+            top: 20px;
+        }
     </style>
 </head>
 <body class="pb-8 relative antialiased selection:bg-emerald-900 selection:text-emerald-200">
+
+    <!-- Toast Notification Popup Banner -->
+    <div id="toast-notification" class="p-4 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center shrink-0 text-emerald-400">
+            <i class="fas fa-bell text-base animate-bounce"></i>
+        </div>
+        <div class="overflow-hidden">
+            <p class="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400">Latest Payment Update</p>
+            <p id="toast-message" class="text-xs font-bold text-slate-100 truncate mt-0.5">Loading last payment...</p>
+        </div>
+    </div>
 
     <div class="ambient-glow-1"></div>
     <div class="ambient-glow-2"></div>
@@ -186,7 +217,7 @@
             <div id="members-list" class="scroll-container space-y-3 max-h-[380px] sm:max-h-[440px] overflow-y-auto p-2.5 sm:p-3 rounded-2xl sm:rounded-3xl backdrop-blur-xl"></div>
         </section>
 
-        !-- Member Profile Modal -->
+         <!-- Member Profile Modal -->
         <div id="modal" class="fixed inset-0 bg-black/75 backdrop-blur-md hidden flex items-center justify-center p-4 z-50 transition-all duration-300">
             <div class="glass-card p-5 sm:p-6 rounded-3xl w-full max-w-sm max-h-[90vh] flex flex-col border border-slate-700 shadow-2xl relative">
                 <!-- Close Button -->
@@ -369,6 +400,27 @@
                 }
             });
             availableMonths = monthsSet;
+
+            // Trigger Last Payment Toast Notification after 5 seconds
+            if(historyData.length > 0) {
+                const lastRow = historyData[historyData.length - 1];
+                const vals = Object.values(lastRow);
+                const lastMember = vals[0] || 'Member';
+                const lastMonth = vals[1] || 'Current Month';
+                const lastAmount = vals[2] ? parseInt(vals[2]).toLocaleString() : 0;
+
+                setTimeout(() => {
+                    triggerVibrate(60); // Haptic feedback
+                    const toast = document.getElementById('toast-notification');
+                    document.getElementById('toast-message').innerText = `${lastMember} paid Rs. ${lastAmount} (${lastMonth})`;
+                    toast.classList.add('show');
+
+                    // Hide after 3 seconds (Total visible time)
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 3000);
+                }, 5000);
+            }
 
             const list = document.getElementById('members-list');
             globalMainData.forEach((m, idx) => {
