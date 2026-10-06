@@ -6,6 +6,8 @@
     <title>FTCF | Member Ledger</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <!-- html2canvas for generating report card as image -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
@@ -19,7 +21,6 @@
             transition: background-color 0.8s ease;
         }
 
-        /* Dynamic Weather Overlays for Dark Theme */
         .theme-sunny .ambient-glow-1 {
             background: radial-gradient(circle, rgba(245, 158, 11, 0.25) 0%, rgba(0,0,0,0) 70%) !important;
         }
@@ -28,7 +29,6 @@
             background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, rgba(0,0,0,0) 70%) !important;
         }
 
-        /* Neon Glow Accents */
         .ambient-glow-1 {
             position: absolute;
             top: -100px;
@@ -53,16 +53,14 @@
             z-index: 0;
         }
 
-        /* Glassmorphism Dark Modal */
         .glass-card {
-            background: rgba(15, 23, 42, 0.85);
+            background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
-        /* Total Card Neon Gradient */
         .total-card {
             background: linear-gradient(135deg, rgba(6, 78, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
             border: 1px solid rgba(16, 185, 129, 0.35);
@@ -79,7 +77,6 @@
             background: linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.8), transparent);
         }
 
-        /* Dark Amber Notice Card */
         .notice-card {
             background: linear-gradient(145deg, rgba(120, 53, 15, 0.4) 0%, rgba(30, 27, 75, 0.4) 100%);
             border: 1px solid rgba(245, 158, 11, 0.3);
@@ -95,7 +92,6 @@
             background: #f59e0b;
         }
 
-        /* Custom Scrollbar */
         .scroll-container {
             background: rgba(15, 23, 42, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -104,7 +100,6 @@
         #members-list::-webkit-scrollbar { width: 4px; }
         #members-list::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
 
-        /* Split 2-Tier Glass Card Style */
         .split-tier-card {
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             background: rgba(30, 41, 59, 0.6);
@@ -125,7 +120,6 @@
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Neon Pulse Dot */
         .pulse-dot {
             width: 6px;
             height: 6px;
@@ -155,7 +149,7 @@
             Family Trust & Care Foundation
         </h1>
         <p class="inline-block mt-3 px-3.5 py-1.5 rounded-full text-amber-300 font-medium text-[11px] sm:text-xs tracking-wide bg-amber-500/10 border border-amber-400/20 backdrop-blur-xl max-w-[90%]">
-            "Amanat me khiyanat nahi,Behtreen Nizam Asal Kamyabi"
+            "Amanat me khiyanat nahi, Behtreen Nizam Asal Kamyabi"
         </p>
     </header>
 
@@ -168,9 +162,8 @@
             <h2 id="grand-total" class="text-3xl sm:text-4xl font-black mt-2 text-emerald-400 tracking-tight drop-shadow-md">Rs. 0</h2>
             <p id="last-updated" class="text-[9px] font-bold uppercase tracking-[0.15em] text-slate-400 opacity-80 mt-2"></p>
             
-            <!-- Auto Report Card Button Added Here -->
             <button onclick="triggerVibrate(40); openReportCardModal()" class="mt-4 w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-emerald-900/40 hover:from-emerald-500 hover:to-teal-500 transition-all flex items-center justify-center gap-2 border border-emerald-400/30">
-                <i class="fas fa-file-invoice-dollar"></i> Generate Monthly Report Card
+                <i class="fas fa-file-invoice-dollar"></i> Generate Report Card
             </button>
         </div>
 
@@ -195,32 +188,36 @@
             </div>
         </div>
 
-        <!-- Monthly Report Card Modal -->
-        <div id="report-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 z-50 transition-all duration-300">
-            <div class="glass-card p-5 sm:p-6 rounded-2xl sm:rounded-3xl w-full max-w-md max-h-[85vh] flex flex-col border border-emerald-500/30 shadow-2xl relative">
-                <div class="flex justify-between items-center mb-3 pb-2.5 border-b border-slate-800">
+        <!-- Professional Table Report Card Modal -->
+        <div id="report-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-2 z-50 transition-all duration-300">
+            <div class="glass-card p-3 sm:p-5 rounded-2xl w-full max-w-2xl max-h-[92vh] flex flex-col border border-emerald-500/40 shadow-2xl relative">
+                <div class="flex justify-between items-center mb-2 pb-2 border-b border-slate-800">
                     <div>
-                        <h3 class="font-black text-emerald-400 text-xs sm:text-sm tracking-wide uppercase">FTCF Official Report Card</h3>
-                        <p id="report-datetime" class="text-[10px] text-slate-400 font-semibold"></p>
+                        <h3 class="font-black text-emerald-400 text-xs sm:text-sm uppercase tracking-wide">FTCF Official Table Report</h3>
+                        <p id="report-datetime" class="text-[9px] text-slate-400 font-semibold"></p>
                     </div>
-                    <button onclick="triggerVibrate(20); document.getElementById('report-modal').classList.add('hidden')" class="w-7 h-7 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center shrink-0 transition-all hover:bg-slate-700">
+                    <button onclick="triggerVibrate(20); document.getElementById('report-modal').classList.add('hidden')" class="w-7 h-7 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center shrink-0 transition-all">
                         <i class="fas fa-times text-xs"></i>
                     </button>
                 </div>
                 
-                <!-- Report Card Scrollable Body -->
-                <div id="report-card-content" class="space-y-3 overflow-y-auto pr-1 flex-1 text-xs">
-                    <!-- Dynamic Member breakdown will load here -->
+                <!-- Printable Card Container (styled like Google Sheet Table in dark neon theme) -->
+                <div id="printable-card" class="bg-slate-950 p-3 rounded-xl border border-slate-800 overflow-x-auto flex-1 text-[11px]">
+                    <div class="text-center mb-3 pb-2 border-b border-slate-800">
+                        <h2 class="text-sm font-black text-white uppercase tracking-wider">Family Trust & Care Foundation</h2>
+                        <p class="text-[10px] text-emerald-400 font-bold mt-0.5">Contribution Ledger & Summary Report</p>
+                    </div>
+                    
+                    <div id="report-table-container" class="min-w-[450px]">
+                        <!-- Dynamic table generated via script matching history & main sheets -->
+                    </div>
                 </div>
 
-                <!-- Footer Total & Actions -->
-                <div class="pt-3 mt-3 border-t border-slate-800 flex items-center justify-between">
-                    <div>
-                        <span class="text-[9px] text-slate-400 uppercase tracking-widest block">Grand Total</span>
-                        <span id="report-grand-total" class="text-sm font-black text-emerald-400">Rs. 0</span>
-                    </div>
-                    <button onclick="triggerVibrate(30); alert('Report Card text copied / ready to share on WhatsApp Group!')" class="px-4 py-2 rounded-xl bg-emerald-600 text-white font-bold text-[11px] tracking-wide hover:bg-emerald-500 transition-all shadow-md">
-                        <i class="fas fa-share-alt mr-1"></i> Share Report
+                <!-- Action Controls with "Generate Report Card" Button -->
+                <div class="pt-3 mt-2 border-t border-slate-800 flex items-center justify-between gap-2">
+                    <span id="report-modal-total" class="text-xs font-black text-emerald-400">Total: Rs. 0</span>
+                    <button onclick="triggerVibrate(30); generateAndDownloadReportCard()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs uppercase tracking-wide shadow-lg hover:from-emerald-500 hover:to-teal-500 transition-all flex items-center gap-1.5">
+                        <i class="fas fa-file-invoice-dollar"></i> Generate Report Card
                     </button>
                 </div>
             </div>
@@ -244,7 +241,6 @@
     </main>
 
     <script>
-        // Automatic Weather Detection & Theme Switcher Mode
         async function autoWeatherTheme() {
             if ("geolocation" in navigator) {
                 navigator.geolocation.getCurrentPosition(async (position) => {
@@ -253,7 +249,6 @@
                         const lon = position.coords.longitude;
                         const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
                         const data = await res.json();
-                        
                         const code = data.current_weather.weathercode;
                         const weatherStatusEl = document.getElementById('weather-status');
 
@@ -263,22 +258,15 @@
                         } else if ([51, 53, 55, 61, 63, 65, 80, 81].includes(code)) {
                             document.body.classList.add('theme-rainy');
                             if (weatherStatusEl) weatherStatusEl.innerText = 'Rainy Mode';
-                        } else {
-                            if (weatherStatusEl) weatherStatusEl.innerText = 'Live Portal';
                         }
-                    } catch (e) {
-                        console.log('Weather sync bypassed');
-                    }
+                    } catch (e) {}
                 }, () => {});
             }
         }
         autoWeatherTheme();
 
-        // Haptic feedback function
         function triggerVibrate(ms) {
-            if (window.navigator.vibrate) {
-                window.navigator.vibrate(ms);
-            }
+            if (window.navigator.vibrate) window.navigator.vibrate(ms);
         }
 
         const mainSheet = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTtsZyNI2Ss1ACTIO7X1zAND4Q-mGhFdKSVcvx8amNxfGsFQfA2A7kBLHJgTJ9DGECqNNZ40iHW7zDc/pub?output=csv';
@@ -296,7 +284,6 @@
 
             let grandTotal = globalMainData.reduce((sum, m) => sum + (m.fund || 0), 0);
             document.getElementById('grand-total').innerText = "Rs. " + grandTotal.toLocaleString();
-            
             document.getElementById('last-updated').innerText = "Last Updated: " + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
             const list = document.getElementById('members-list');
@@ -322,13 +309,10 @@
                                 Active
                             </span>
                         </div>
-                        
                         <div class="bottom-tier px-3.5 py-2 flex items-center justify-between">
                             <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Fund Contributed</span>
                             <div class="flex items-center gap-2">
-                                <span class="text-[12px] font-black text-emerald-400 tracking-tight">
-                                    Rs. ${m.fund.toLocaleString()}
-                                </span>
+                                <span class="text-[12px] font-black text-emerald-400 tracking-tight">Rs. ${m.fund.toLocaleString()}</span>
                                 <i class="fas fa-chevron-right text-[10px] text-slate-500 group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-all"></i>
                             </div>
                         </div>
@@ -362,39 +346,68 @@
             document.getElementById('modal').classList.remove('hidden');
         }
 
-        // Auto Report Card Generator Function with Current Date & Time
+        // Generate Table Report Card matching Google Sheets layout
         function openReportCardModal() {
             const now = new Date();
             const dateStr = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
             const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            
-            document.getElementById('report-datetime').innerText = `Generated on: ${dateStr} | ${timeStr}`;
-            
-            const container = document.getElementById('report-card-content');
-            let grandTotal = 0;
+            document.getElementById('report-datetime').innerText = `Generated: ${dateStr} | ${timeStr}`;
 
-            if (globalMainData.length > 0) {
-                container.innerHTML = globalMainData.map((m, idx) => {
-                    const fundAmount = m.fund || 0;
-                    grandTotal += fundAmount;
-                    return `
-                        <div class="bg-slate-900/80 p-2.5 rounded-xl border border-slate-800 flex items-center justify-between">
-                            <div>
-                                <span class="text-[9px] font-bold text-emerald-400 block">#${idx + 1}</span>
-                                <span class="font-bold text-slate-200 uppercase">${m.name}</span>
-                            </div>
-                            <div class="text-right">
-                                <span class="text-xs font-black text-emerald-400">Rs. ${fundAmount.toLocaleString()}</span>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            } else {
-                container.innerHTML = '<p class="text-xs text-center text-slate-500 py-6">Loading data...</p>';
-            }
+            let monthsSet = [];
+            historyData.forEach(row => {
+                const vals = Object.values(row);
+                if(vals[1] && !monthsSet.includes(vals[1].toString().trim())) {
+                    monthsSet.push(vals[1].toString().trim());
+                }
+            });
+            if(monthsSet.length === 0) monthsSet = ['Current Month'];
 
-            document.getElementById('report-grand-total').innerText = "Rs. " + grandTotal.toLocaleString();
+            let tableHTML = `
+                <table class="w-full text-left border-collapse border border-slate-800 text-[10px]">
+                    <thead>
+                        <tr class="bg-emerald-950/90 text-emerald-300 border-b border-slate-700">
+                            <th class="p-2 border-r border-slate-800 font-bold uppercase">Member Name</th>
+            `;
+            monthsSet.forEach(m => {
+                tableHTML += `<th class="p-2 border-r border-slate-800 text-center font-bold uppercase">${m}</th>`;
+            });
+            tableHTML += `<th class="p-2 text-center font-bold uppercase">Total</th></tr></thead><tbody>`;
+
+            let grandTotalSum = 0;
+            globalMainData.forEach((member, index) => {
+                let rowTotal = 0;
+                tableHTML += `<tr class="${index % 2 === 0 ? 'bg-slate-900/50' : 'bg-slate-900/20'} border-b border-slate-800/80">`;
+                tableHTML += `<td class="p-2 border-r border-slate-800 font-bold text-slate-200 uppercase truncate max-w-[100px]">${member.name}</td>`;
+
+                monthsSet.forEach(month => {
+                    const match = historyData.find(r => {
+                        const vals = Object.values(r);
+                        return vals[0] && vals[0].toString().trim() === member.name.trim() && vals[1] && vals[1].toString().trim() === month;
+                    });
+                    const amt = match ? (parseInt(Object.values(match)[2]) || 0) : 0;
+                    rowTotal += amt;
+                    tableHTML += `<td class="p-2 border-r border-slate-800 text-center text-slate-300">${amt > 0 ? amt.toLocaleString() : '-'}</td>`;
+                });
+
+                grandTotalSum += rowTotal;
+                tableHTML += `<td class="p-2 text-center font-black text-emerald-400 bg-emerald-950/30">${rowTotal.toLocaleString()}</td></tr>`;
+            });
+
+            tableHTML += `</tbody></table>`;
+            document.getElementById('report-table-container').innerHTML = tableHTML;
+            document.getElementById('report-modal-total').innerText = "Total: Rs. " + grandTotalSum.toLocaleString();
             document.getElementById('report-modal').classList.remove('hidden');
+        }
+
+        // Generate and download report card image on clicking "Generate Report Card"
+        function generateAndDownloadReportCard() {
+            const cardElement = document.getElementById('printable-card');
+            html2canvas(cardElement, { scale: 2, backgroundColor: '#020617' }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `FTCF_Report_Card_${Date.now()}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
         }
     </script>
 </body>
