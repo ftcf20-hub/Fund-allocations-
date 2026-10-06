@@ -18,7 +18,6 @@
             transition: background-color 0.8s ease;
         }
 
-        /* Ambient Lighting Mesh Glows */
         .ambient-glow-1 {
             position: fixed;
             top: -100px;
@@ -60,7 +59,6 @@
             background: linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.8), transparent);
         }
 
-        /* Executive Glassmorphism Dark Card */
         .glass-card { 
             background: rgba(15, 23, 42, 0.85); 
             backdrop-filter: blur(24px); 
@@ -76,7 +74,6 @@
             border-color: rgba(16, 185, 129, 0.4);
         }
 
-        /* Split 2-Tier Glass Card Style for Members */
         .split-tier-card {
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             background: rgba(30, 41, 59, 0.6);
@@ -97,12 +94,10 @@
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Progress Bar Animation */
         .progress-fill {
             transition: width 1s ease-in-out;
         }
 
-        /* Dark Shimmer Skeleton Loader */
         .skeleton {
             background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
             background-size: 200% 100%;
@@ -114,7 +109,6 @@
             100% { background-position: -200% 0; }
         }
 
-        /* Live Pulse Dot */
         .pulse-dot {
             width: 7px;
             height: 7px;
@@ -130,7 +124,6 @@
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
         }
 
-        /* Scrollbar Styling */
         #member-list::-webkit-scrollbar { width: 4px; }
         #member-list::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
     </style>
@@ -261,45 +254,54 @@
         </div>
     </main>
 
-    <!-- Hidden White-Theme Report Card Template for HD Download (All 22+ Members) -->
-    <div id="downloadReportModal" style="position: fixed; left: -9999px; top: 0; width: 480px; background: #ffffff; color: #1e293b; font-family: 'Plus Jakarta Sans', sans-serif; padding: 28px; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 16px; margin-bottom: 20px;">
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <div style="width: 42px; height: 42px; background: #059669; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; border-radius: 12px;">FT</div>
+    <!-- New Premium Executive Modern White-Theme Report Card Template -->
+    <div id="downloadReportModal" style="position: fixed; left: -9999px; top: 0; width: 500px; background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); color: #0f172a; font-family: 'Plus Jakarta Sans', sans-serif; padding: 32px; border-radius: 28px; border: 1px solid #cbd5e1; box-shadow: 0 25px 50px rgba(0,0,0,0.15);">
+        
+        <!-- Header Banner Design -->
+        <div style="background: linear-gradient(135deg, #064e3b 0%, #0f172a 100%); color: #ffffff; padding: 20px; border-radius: 20px; margin-bottom: 20px; position: relative; overflow: hidden;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 38px; height: 38px; background: #10b981; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 13px; border-radius: 10px;">FT</div>
+                    <div>
+                        <h2 style="font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin: 0;">Family Trust & Care Foundation</h2>
+                        <p style="font-size: 9px; font-weight: 700; color: #34d399; margin: 0; text-transform: uppercase; letter-spacing: 0.1em;">Official Executive Report Card</p>
+                    </div>
+                </div>
+                <span id="reportModalMonth" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); font-size: 10px; font-weight: 800; padding: 4px 12px; border-radius: 20px; text-transform: uppercase;">--</span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 12px; margin-top: 8px;">
                 <div>
-                    <h2 style="font-size: 15px; font-weight: 800; text-transform: uppercase; color: #0f172a; margin: 0;">Family Trust & Care Foundation</h2>
-                    <p style="font-size: 10px; font-weight: 700; color: #64748b; margin: 0; text-transform: uppercase;">Monthly Collection Report Card</p>
+                    <span style="font-size: 8px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em;">Total Collection Fund</span>
+                    <h3 id="reportModalTotal" style="font-size: 20px; font-weight: 900; color: #34d399; margin: 2px 0 0 0;">Rs. 0</h3>
+                </div>
+                <div style="display: flex; gap: 12px; text-align: right;">
+                    <div>
+                        <span style="font-size: 8px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Paid</span>
+                        <p id="reportModalPaid" style="font-size: 13px; font-weight: 800; color: #ffffff; margin: 0;">0</p>
+                    </div>
+                    <div>
+                        <span style="font-size: 8px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Pending</span>
+                        <p id="reportModalUnpaid" style="font-size: 13px; font-weight: 800; color: #f43f5e; margin: 0;">0</p>
+                    </div>
                 </div>
             </div>
-            <div style="text-align: right;">
-                <span id="reportModalMonth" style="background: #ecfdf5; color: #059669; border: 1px solid #10b981; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase;">--</span>
-            </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; background: #f8fafc; padding: 14px; border-radius: 16px; border: 1px solid #e2e8f0;">
-            <div>
-                <p style="font-size: 9px; font-weight: 700; color: #64748b; text-transform: uppercase; margin: 0 0 2px 0;">Total Fund</p>
-                <p id="reportModalTotal" style="font-size: 14px; font-weight: 900; color: #059669; margin: 0;">Rs. 0</p>
-            </div>
-            <div>
-                <p style="font-size: 9px; font-weight: 700; color: #64748b; text-transform: uppercase; margin: 0 0 2px 0;">Paid Members</p>
-                <p id="reportModalPaid" style="font-size: 14px; font-weight: 900; color: #0f172a; margin: 0;">0</p>
-            </div>
-            <div>
-                <p style="font-size: 9px; font-weight: 700; color: #64748b; text-transform: uppercase; margin: 0 0 2px 0;">Pending</p>
-                <p id="reportModalUnpaid" style="font-size: 14px; font-weight: 900; color: #e11d48; margin: 0;">0</p>
-            </div>
+        <!-- Members Table Style Header -->
+        <div style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; padding: 0 4px;">
+            <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: #475569; letter-spacing: 0.05em;">Complete Members Directory (<span id="reportModalTotalCount">0</span>)</span>
+            <span style="font-size: 9px; font-weight: 700; color: #059669; text-transform: uppercase;">Verified Ledger</span>
         </div>
 
-        <div style="margin-bottom: 16px;">
-            <p style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: #64748b; margin-bottom: 8px; letter-spacing: 0.05em;">Complete Members Directory (<span id="reportModalTotalCount">0</span>)</p>
-            <div id="reportModalList" style="display: flex; flex-direction: column; gap: 6px;">
-                <!-- All members populated dynamically without height restriction -->
-            </div>
+        <!-- Clean Grid List for Members -->
+        <div id="reportModalList" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px;">
+            <!-- Members populated dynamically in 2 neat columns -->
         </div>
 
-        <div style="border-top: 1px dashed #cbd5e1; padding-top: 12px; display: flex; justify-content: space-between; align-items: center; font-size: 9px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">
-            <span>Generated via FTCF Digital Portal</span>
+        <!-- Footer Note -->
+        <div style="border-top: 1px solid #cbd5e1; padding-top: 12px; display: flex; justify-content: space-between; align-items: center; font-size: 9px; font-weight: 800; color: #64748b; text-transform: uppercase;">
+            <span>Portal: FTCF Digital System</span>
             <span>@FTCF2026 Mughal Brothers</span>
         </div>
     </div>
@@ -313,14 +315,12 @@
 
         async function loadDashboardData() {
             try {
-                // Fetch Month
                 const monthRes = await fetch(`${BASE_URL}&range=H1`);
                 const monthTxt = await monthRes.text();
                 const monthJson = JSON.parse(monthTxt.substring(47).slice(0, -2));
                 currentMonthText = monthJson.table.rows[0]?.c[0]?.v || "N/A";
                 document.getElementById('month-display').innerText = currentMonthText;
 
-                // Fetch Members (Range expanded to A2:E50 to cover all members securely)
                 const dataRes = await fetch(`${BASE_URL}&range=A2:E50`);
                 const dataTxt = await dataRes.text();
                 const dataJson = JSON.parse(dataTxt.substring(47).slice(0, -2));
@@ -357,7 +357,6 @@
                 const card = document.createElement('div');
                 card.className = "split-tier-card cursor-pointer group";
                 card.innerHTML = `
-                    <!-- Top Tier: Photo & Member Identity -->
                     <div class="p-3 flex items-center justify-between">
                         <div class="flex items-center gap-3 min-w-0 pr-2">
                             <div class="relative shrink-0">
@@ -377,8 +376,6 @@
                             ${status}
                         </span>
                     </div>
-
-                    <!-- Bottom Tier: Amount & Details -->
                     <div class="bottom-tier px-3.5 py-2 flex items-center justify-between">
                         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Monthly Amount</span>
                         <span class="text-[12px] font-black text-emerald-400 tracking-tight">
@@ -393,7 +390,6 @@
             document.getElementById('paid-count').innerText = paidNum;
             document.getElementById('unpaid-count').innerText = unpaidNum;
 
-            // Target Progress Calculation (Target = Total Members * Rs. 500)
             const targetAmount = totalMembers > 0 ? totalMembers * 500 : 10000;
             const percentage = Math.min(Math.round((total / targetAmount) * 100), 100);
             
@@ -411,7 +407,6 @@
             });
         });
 
-        // HD Report Card Download Function with All Members Included
         function downloadReportCard() {
             const btn = document.getElementById('downloadBtn');
             const modal = document.getElementById('downloadReportModal');
@@ -441,15 +436,16 @@
                     unpaidNum++;
                 }
 
+                // 2-Column Clean Modern Card Rows Design
                 modalListHtml += `
-                    <div style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 7px 12px; border-radius: 8px; border: 1px solid #e2e8f0;">
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <span style="font-size: 9px; font-weight: 800; color: #64748b;">#${idx + 1}</span>
-                            <span style="font-size: 11px; font-weight: 700; color: #0f172a; text-transform: uppercase;">${name}</span>
+                    <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; padding: 8px 10px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                        <div style="display: flex; align-items: center; gap: 6px; min-width: 0;">
+                            <span style="font-size: 8px; font-weight: 800; color: #64748b; background: #f1f5f9; padding: 2px 5px; border-radius: 4px;">#${idx + 1}</span>
+                            <span style="font-size: 10px; font-weight: 700; color: #0f172a; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90px;">${name}</span>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <span style="font-size: 11px; font-weight: 800; color: #059669;">Rs. ${amount.toLocaleString()}</span>
-                            <span style="font-size: 9px; font-weight: 800; padding: 2px 8px; border-radius: 6px; text-transform: uppercase; ${isPaid ? 'background: #d1fae5; color: #065f46;' : 'background: #ffe4e6; color: #9f1239;'}">${status}</span>
+                        <div style="display: flex; align-items: center; gap: 6px; shrink: 0;">
+                            <span style="font-size: 10px; font-weight: 800; color: #059669;">Rs.${amount}</span>
+                            <span style="font-size: 8px; font-weight: 800; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; ${isPaid ? 'background: #d1fae5; color: #065f46;' : 'background: #ffe4e6; color: #9f1239;'}">${status}</span>
                         </div>
                     </div>
                 `;
@@ -461,11 +457,10 @@
             document.getElementById('reportModalTotalCount').innerText = validMemberCount;
             document.getElementById('reportModalList').innerHTML = modalListHtml;
 
-            // Generate Screenshot of Complete List
             html2canvas(modal, {
                 scale: 3,
                 useCORS: true,
-                backgroundColor: '#ffffff'
+                backgroundColor: '#f8fafc'
             }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = `FTCF_Report_Card_${currentMonthText}.png`;
@@ -474,7 +469,7 @@
                 
                 btn.innerHTML = `<i class="fas fa-download text-[9px]"></i> <span>Report Card</span>`;
             }).catch(err => {
-                console.eror(err);
+                console.error(err);
                 btn.innerHTML = `<i class="fas fa-download text-[9px]"></i> <span>Report Card</span>`;
                 alert('Download failed, please try again.');
             });
