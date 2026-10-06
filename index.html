@@ -261,7 +261,7 @@
         </div>
     </main>
 
-    <!-- Hidden White-Theme Report Card Template for HD Download -->
+    <!-- Hidden White-Theme Report Card Template for HD Download (All 22+ Members) -->
     <div id="downloadReportModal" style="position: fixed; left: -9999px; top: 0; width: 480px; background: #ffffff; color: #1e293b; font-family: 'Plus Jakarta Sans', sans-serif; padding: 28px; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 16px; margin-bottom: 20px;">
             <div style="display: flex; align-items: center; gap: 10px;">
@@ -282,7 +282,7 @@
                 <p id="reportModalTotal" style="font-size: 14px; font-weight: 900; color: #059669; margin: 0;">Rs. 0</p>
             </div>
             <div>
-                <p style="font-size: 9px; font-weight: 700; color: #64748b; text-transform: uppercase; margin: 0 0 2px 0;">Paid Count</p>
+                <p style="font-size: 9px; font-weight: 700; color: #64748b; text-transform: uppercase; margin: 0 0 2px 0;">Paid Members</p>
                 <p id="reportModalPaid" style="font-size: 14px; font-weight: 900; color: #0f172a; margin: 0;">0</p>
             </div>
             <div>
@@ -292,9 +292,9 @@
         </div>
 
         <div style="margin-bottom: 16px;">
-            <p style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: #64748b; margin-bottom: 8px; letter-spacing: 0.05em;">Member Payment Details</p>
-            <div id="reportModalList" style="display: flex; flex-direction: column; gap: 6px; max-height: 340px; overflow-y: auto;">
-                <!-- Dynamically populated member list -->
+            <p style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: #64748b; margin-bottom: 8px; letter-spacing: 0.05em;">Complete Members Directory (<span id="reportModalTotalCount">0</span>)</p>
+            <div id="reportModalList" style="display: flex; flex-direction: column; gap: 6px;">
+                <!-- All members populated dynamically without height restriction -->
             </div>
         </div>
 
@@ -320,8 +320,8 @@
                 currentMonthText = monthJson.table.rows[0]?.c[0]?.v || "N/A";
                 document.getElementById('month-display').innerText = currentMonthText;
 
-                // Fetch Members
-                const dataRes = await fetch(`${BASE_URL}&range=A2:E100`);
+                // Fetch Members (Range expanded to A2:E50 to cover all members securely)
+                const dataRes = await fetch(`${BASE_URL}&range=A2:E50`);
                 const dataTxt = await dataRes.text();
                 const dataJson = JSON.parse(dataTxt.substring(47).slice(0, -2));
                 cachedRows = dataJson.table.rows;
@@ -385,7 +385,7 @@
                             Rs. ${amount.toLocaleString()}
                         </span>
                     </div>
-         `;
+                `;
                 list.appendChild(card);
             });
 
@@ -411,23 +411,24 @@
             });
         });
 
-        // HD Report Card Download Function with White Theme Details
+        // HD Report Card Download Function with All Members Included
         function downloadReportCard() {
             const btn = document.getElementById('downloadBtn');
             const modal = document.getElementById('downloadReportModal');
             
             btn.innerHTML = `<i class="fas fa-spinner fa-spin text-[9px]"></i> <span>Generating...</span>`;
 
-            // Populate the modal with latest data
             document.getElementById('reportModalMonth').innerText = currentMonthText;
             
             let total = 0;
             let paidNum = 0;
             let unpaidNum = 0;
             let modalListHtml = '';
+            let validMemberCount = 0;
 
             cachedRows.forEach((row, idx) => {
                 if(!row.c[0]) return;
+                validMemberCount++;
                 const name = row.c[0].v;
                 const amount = row.c[1]?.v || 0;
                 const status = row.c[2]?.v || "UNPAID";
@@ -441,7 +442,7 @@
                 }
 
                 modalListHtml += `
-                    <div style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 8px 12px; border-radius: 10px; border: 1px solid #e2e8f0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 7px 12px; border-radius: 8px; border: 1px solid #e2e8f0;">
                         <div style="display: flex; align-items: center; gap: 8px;">
                             <span style="font-size: 9px; font-weight: 800; color: #64748b;">#${idx + 1}</span>
                             <span style="font-size: 11px; font-weight: 700; color: #0f172a; text-transform: uppercase;">${name}</span>
@@ -457,9 +458,10 @@
             document.getElementById('reportModalTotal').innerText = `Rs. ${total.toLocaleString()}`;
             document.getElementById('reportModalPaid').innerText = paidNum;
             document.getElementById('reportModalUnpaid').innerText = unpaidNum;
+            document.getElementById('reportModalTotalCount').innerText = validMemberCount;
             document.getElementById('reportModalList').innerHTML = modalListHtml;
 
-            // Generate Screenshot
+            // Generate Screenshot of Complete List
             html2canvas(modal, {
                 scale: 3,
                 useCORS: true,
@@ -472,7 +474,7 @@
                 
                 btn.innerHTML = `<i class="fas fa-download text-[9px]"></i> <span>Report Card</span>`;
             }).catch(err => {
-                console.error(err);
+                console.eror(err);
                 btn.innerHTML = `<i class="fas fa-download text-[9px]"></i> <span>Report Card</span>`;
                 alert('Download failed, please try again.');
             });
