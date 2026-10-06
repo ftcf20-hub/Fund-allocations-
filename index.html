@@ -199,21 +199,40 @@
         <section>
             <div class="flex justify-between items-center mb-2.5 ml-1">
                 <h3 class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Members Directory</h3>
-                <span class="text-[9px] font-semibold text-emerald-400/80 uppercase tracking-wider"><i class="fas fa-hand-pointer text-[8px] mr-1"></i>Tap for history</span>
+                <span class="text-[9px] font-semibold text-emerald-400/80 uppercase tracking-wider"><i class="fas fa-hand-pointer text-[8px] mr-1"></i>Tap for profile</span>
             </div>
             <div id="members-list" class="scroll-container space-y-3 max-h-[340px] sm:max-h-[400px] overflow-y-auto p-2.5 sm:p-3 rounded-2xl sm:rounded-3xl backdrop-blur-xl"></div>
         </section>
 
-        <!-- History Modal (Scrollable Enabled) -->
-        <div id="modal" class="fixed inset-0 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4 z-50 transition-all duration-300">
-            <div class="glass-card p-5 sm:p-6 rounded-2xl sm:rounded-3xl w-full max-w-xs sm:max-w-sm max-h-[80vh] flex flex-col border border-slate-700 shadow-2xl relative">
-                <div class="flex justify-between items-center mb-3 pb-2.5 border-b border-slate-800 shrink-0">
-                    <h3 id="modal-name" class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate pr-2"></h3>
-                    <button onclick="triggerVibrate(20); document.getElementById('modal').classList.add('hidden')" class="w-7 h-7 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center shrink-0 transition-all hover:bg-slate-700">
-                        <i class="fas fa-times text-xs"></i>
-                    </button>
+        <!-- Member Profile Modal (Replaced old history popup) -->
+        <div id="modal" class="fixed inset-0 bg-black/75 backdrop-blur-md hidden flex items-center justify-center p-4 z-50 transition-all duration-300">
+            <div class="glass-card p-5 sm:p-6 rounded-3xl w-full max-w-sm max-h-[85vh] flex flex-col border border-slate-700 shadow-2xl relative">
+                <!-- Close Button -->
+                <button onclick="triggerVibrate(20); document.getElementById('modal').classList.add('hidden')" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center shrink-0 transition-all hover:bg-slate-700 z-10">
+                    <i class="fas fa-times text-xs"></i>
+                </button>
+
+                <!-- Profile Header Info -->
+                <div class="text-center pb-4 border-b border-slate-800">
+                    <div class="relative w-20 h-20 mx-auto mb-3">
+                        <img id="profile-modal-img" src="" class="w-20 h-20 rounded-2xl object-cover ring-2 ring-emerald-500/50 shadow-lg">
+                        <span id="profile-modal-id" class="absolute -bottom-2 left-1/2 -translate-x-1/2 text-[9px] font-black bg-slate-900 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded-full uppercase tracking-wider">
+                            FT-00
+                        </span>
+                    </div>
+                    <h3 id="profile-modal-name" class="font-black text-slate-100 text-sm sm:text-base uppercase tracking-wide mt-1">--</h3>
+                    <p id="profile-modal-phone" class="text-[11px] font-semibold text-emerald-400 mt-0.5"><i class="fas fa-phone-alt text-[9px] mr-1.5"></i>--</p>
                 </div>
-                <div id="history-data" class="space-y-2 overflow-y-auto pr-1 flex-1 max-h-[50vh]"></div>
+
+                <!-- Profile Summary Fund Box -->
+                <div class="py-3 my-2 bg-slate-900/60 rounded-xl px-4 flex justify-between items-center border border-slate-800 shrink-0">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Fund</span>
+                    <span id="profile-modal-fund" class="text-xs sm:text-sm font-black text-emerald-400">Rs. 0</span>
+                </div>
+
+                <!-- Monthly History Section inside Profile -->
+                <div class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2 mt-1">Monthly Payment History</div>
+                <div id="history-data" class="space-y-2 overflow-y-auto pr-1 flex-1 max-h-[35vh]"></div>
             </div>
         </div>
 
@@ -235,13 +254,11 @@
                     <div>
                         <label class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">From Month:</label>
                         <select id="filter-from-month" onchange="updateReportTable()" class="w-full bg-slate-950 text-slate-200 border border-slate-700 rounded-lg p-1.5 text-xs focus:outline-none focus:border-emerald-500">
-                            <!-- Dynamic Options -->
                         </select>
                     </div>
                     <div>
                         <label class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">To Month:</label>
                         <select id="filter-to-month" onchange="updateReportTable()" class="w-full bg-slate-950 text-slate-200 border border-slate-700 rounded-lg p-1.5 text-xs focus:outline-none focus:border-emerald-500">
-                            <!-- Dynamic Options -->
                         </select>
                     </div>
                 </div>
@@ -259,7 +276,6 @@
                     </div>
                     
                     <div id="report-table-container" class="min-w-[450px]">
-                        <!-- Dynamic table generated via script -->
                     </div>
                 </div>
 
@@ -351,30 +367,31 @@
             const list = document.getElementById('members-list');
             globalMainData.forEach((m, idx) => {
                 const profilePic = m.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(m.name)}&background=0f172a&color=34d399`;
+                const memberId = m["Member ID"] || `FT-${idx + 1}`;
                 
                 list.innerHTML += `
-                    <div onclick="triggerVibrate(30); showHistory('${m.name}')" class="split-tier-card cursor-pointer group">
+                    <div onclick="triggerVibrate(30); showMemberProfile('${m.name}')" class="split-tier-card cursor-pointer group">
                         <div class="p-3 flex items-center justify-between">
                             <div class="flex items-center gap-3 min-w-0">
                                 <div class="relative shrink-0">
                                     <img src="${profilePic}" class="w-10 h-10 rounded-xl object-cover ring-1 ring-slate-700 group-hover:ring-emerald-400/85 transition-all">
                                     <span class="absolute -bottom-1 -right-1 text-[8px] font-black bg-slate-900 text-emerald-400 border border-emerald-500/30 px-1 rounded-md">
-                                        #${idx + 1}
+                                        ${memberId}
                                     </span>
                                 </div>
                                 <div class="overflow-hidden min-w-0">
                                     <p class="text-[12px] font-bold text-slate-100 uppercase tracking-wide truncate group-hover:text-emerald-300 transition-colors">${m.name}</p>
-                                    <span class="text-[9px] font-medium text-slate-400 uppercase tracking-wider block">Member</span>
+                                    <span class="text-[9px] font-medium text-slate-400 uppercase tracking-wider block">${m.phone || 'Member'}</span>
                                 </div>
                             </div>
                             <span class="px-2 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-800/50 text-emerald-400 text-[9px] font-bold uppercase tracking-wider shrink-0">
-                                Active
+                                ${m.status || 'Active'}
                             </span>
                         </div>
                         <div class="bottom-tier px-3.5 py-2 flex items-center justify-between">
                             <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Fund Contributed</span>
                             <div class="flex items-center gap-2">
-                                <span class="text-[12px] font-black text-emerald-400 tracking-tight">Rs. ${m.fund.toLocaleString()}</span>
+                                <span class="text-[12px] font-black text-emerald-400 tracking-tight">Rs. ${(m.fund || 0).toLocaleString()}</span>
                                 <i class="fas fa-chevron-right text-[10px] text-slate-500 group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-all"></i>
                             </div>
                         </div>
@@ -383,14 +400,25 @@
             });
         });
 
-        function showHistory(name) {
+        function showMemberProfile(name) {
+            const memberInfo = globalMainData.find(m => m.name && m.name.toString().trim() === name.trim());
             const memberHistory = historyData.filter(row => {
                 const values = Object.values(row);
                 return values[0] && values[0].toString().trim() === name.trim();
             });
+
+            if(!memberInfo) return;
+
+            // Populate profile modal details
+            document.getElementById('profile-modal-name').innerText = memberInfo.name;
+            document.getElementById('profile-modal-id').innerText = memberInfo["Member ID"] || 'FT-00';
+            document.getElementById('profile-modal-phone').innerHTML = `<i class="fas fa-phone-alt text-[9px] mr-1.5"></i>${memberInfo.phone || 'No Phone'}`;
+            document.getElementById('profile-modal-fund').innerText = "Rs. " + (memberInfo.fund || 0).toLocaleString();
+            
+            const profilePic = memberInfo.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(memberInfo.name)}&background=0f172a&color=34d399`;
+            document.getElementById('profile-modal-img').src = profilePic;
             
             const container = document.getElementById('history-data');
-            document.getElementById('modal-name').innerText = name + "'s Record";
             
             if(memberHistory.length > 0) {
                 container.innerHTML = memberHistory.map(row => {
@@ -403,7 +431,7 @@
                     `;
                 }).join('');
             } else {
-                container.innerHTML = '<p class="text-xs text-center text-slate-500 py-6">No records found.</p>';
+                container.innerHTML = '<p class="text-xs text-center text-slate-500 py-6">No history records found.</p>';
             }
             document.getElementById('modal').classList.remove('hidden');
         }
@@ -417,14 +445,12 @@
             let monthsSet = [...availableMonths];
             if(monthsSet.length === 0) monthsSet = ['Current Month'];
 
-            // Populate From and To Dropdowns
             const fromSelect = document.getElementById('filter-from-month');
             const toSelect = document.getElementById('filter-to-month');
             
             fromSelect.innerHTML = monthsSet.map(m => `<option value="${m}">${m}</option>`).join('');
             toSelect.innerHTML = monthsSet.map(m => `<option value="${m}">${m}</option>`).join('');
 
-            // Set default: From = first month, To = last month
             fromSelect.value = monthsSet[0];
             toSelect.value = monthsSet[monthsSet.length - 1];
 
@@ -436,7 +462,6 @@
             const fromMonth = document.getElementById('filter-from-month').value;
             const toMonth = document.getElementById('filter-to-month').value;
 
-            // Determine index range of months
             const fromIdx = availableMonths.indexOf(fromMonth);
             const toIdx = availableMonths.indexOf(toMonth);
 
@@ -444,7 +469,7 @@
             if (fromIdx !== -1 && toIdx !== -1 && fromIdx <= toIdx) {
                 selectedMonths = availableMonths.slice(fromIdx, toIdx + 1);
             } else if (fromIdx !== -1 && toIdx !== -1 && fromIdx > toIdx) {
-                selectedMonths = [fromMonth]; // fallback if invalid range
+                selectedMonths = [fromMonth];
             } else {
                 selectedMonths = availableMonths.length > 0 ? availableMonths : ['Current Month'];
             }
@@ -452,7 +477,6 @@
             const durationText = selectedMonths.length > 1 ? `${selectedMonths[0]} - ${selectedMonths[selectedMonths.length - 1]}` : selectedMonths[0];
             document.getElementById('report-duration').innerText = durationText;
 
-            // Build Light Theme Table Layout
             let tableHTML = `
                 <table class="w-full text-left border-collapse border border-slate-300 text-[10px]">
                     <thead>
@@ -490,7 +514,6 @@
             document.getElementById('report-modal-total').innerText = "Total: Rs. " + overallRangeTotal.toLocaleString();
         }
 
-        // HD Export Handler for Light Theme Card
         function generateAndDownloadReportCard() {
             const originalCard = document.getElementById('printable-card');
             
