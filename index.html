@@ -224,67 +224,67 @@
                        class="w-full pl-9 pr-4 py-2.5 rounded-2xl bg-slate-900/90 border border-slate-800 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500/80 shadow-inner transition-all">
             </div>
 
-            <!-- Members List (Single Column - App View with Serial Numbers & Card Look) -->
+            <!-- Members List (Single Column - App View) -->
             <div id="member-list" class="space-y-2.5 max-h-[420px] overflow-y-auto pr-1">
                 <!-- Populated Dynamically -->
             </div>
         </section>
 
-          <!-- Footer -->
+        <!-- Footer -->
         <div class="text-center opacity-40 text-[9px] font-black uppercase tracking-[0.25em] pt-2 text-slate-500">
             @FTCF2026 Founder Mughal Brothers
         </div>
     </main>
 
-    <!-- Professional Report Card (Double Column Layout for Image Download - No Serial Numbers) -->
-    <div id="downloadReportModal" style="position: fixed; left: -9999px; top: 0; width: 500px; background: #ffffff; color: #0f172a; font-family: 'Plus Jakarta Sans', sans-serif; padding: 28px; border-radius: 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.2);">
+    <!-- Professional Report Card (Compact Header & Double Column List for Image Download) -->
+    <div id="downloadReportModal" style="position: fixed; left: -9999px; top: 0; width: 500px; background: #ffffff; color: #0f172a; font-family: 'Plus Jakarta Sans', sans-serif; padding: 18px; border-radius: 20px; box-shadow: 0 25px 50px rgba(0,0,0,0.2);">
         
-        <!-- Header Banner -->
-        <div style="background: linear-gradient(135deg, #064e3b 0%, #022c22 100%); color: #ffffff; padding: 22px; border-radius: 16px; margin-bottom: 20px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <div style="width: 36px; height: 36px; background: #10b981; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 13px; border-radius: 8px;">FT</div>
+        <!-- Compact Header Banner -->
+        <div style="background: linear-gradient(135deg, #064e3b 0%, #022c22 100%); color: #ffffff; padding: 14px 16px; border-radius: 14px; margin-bottom: 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style="width: 28px; height: 28px; background: #10b981; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 11px; border-radius: 6px;">FT</div>
                     <div>
-                        <h2 style="font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin: 0;">Family Trust & Care Foundation</h2>
-                        <p style="font-size: 9px; font-weight: 700; color: #34d399; margin: 0; text-transform: uppercase; letter-spacing: 0.1em;">Official Financial Report</p>
+                        <h2 style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin: 0;">Family Trust & Care Foundation</h2>
+                        <p style="font-size: 8px; font-weight: 700; color: #34d399; margin: 0; text-transform: uppercase; letter-spacing: 0.08em;">Official Financial Report</p>
                     </div>
                 </div>
-                <span id="reportModalMonth" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); font-size: 9px; font-weight: 800; padding: 4px 12px; border-radius: 20px; text-transform: uppercase;">--</span>
+                <span id="reportModalMonth" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); font-size: 8px; font-weight: 800; padding: 3px 10px; border-radius: 16px; text-transform: uppercase;">--</span>
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 8px;">
                 <div>
-                    <span style="font-size: 8px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em;">Total Collection Fund</span>
-                    <h3 id="reportModalTotal" style="font-size: 20px; font-weight: 900; color: #34d399; margin: 2px 0 0 0;">Rs. 0</h3>
+                    <span style="font-size: 7px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em;">Total Collection Fund</span>
+                    <h3 id="reportModalTotal" style="font-size: 16px; font-weight: 900; color: #34d399; margin: 1px 0 0 0;">Rs. 0</h3>
                 </div>
-                <div style="display: flex; gap: 14px; text-align: right;">
+                <div style="display: flex; gap: 12px; text-align: right;">
                     <div>
-                        <span style="font-size: 8px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Paid</span>
-                        <p id="reportModalPaid" style="font-size: 13px; font-weight: 800; color: #ffffff; margin: 0;">0</p>
+                        <span style="font-size: 7px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Paid</span>
+                        <p id="reportModalPaid" style="font-size: 11px; font-weight: 800; color: #ffffff; margin: 0;">0</p>
                     </div>
                     <div>
-                        <span style="font-size: 8px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Pending</span>
-                        <p id="reportModalUnpaid" style="font-size: 13px; font-weight: 800; color: #f43f5e; margin: 0;">0</p>
+                        <span style="font-size: 7px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Pending</span>
+                        <p id="reportModalUnpaid" style="font-size: 11px; font-weight: 800; color: #f43f5e; margin: 0;">0</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Directory Header -->
-        <div style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px;">
-            <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: #334155; letter-spacing: 0.05em;">Members Directory (<span id="reportModalTotalCount">0</span>)</span>
-            <span style="font-size: 9px; font-weight: 700; color: #059669; text-transform: uppercase;">Name / Amount / Status</span>
+        <div style="margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 4px;">
+            <span style="font-size: 9px; font-weight: 800; text-transform: uppercase; color: #334155; letter-spacing: 0.05em;">Members Directory (<span id="reportModalTotalCount">0</span>)</span>
+            <span style="font-size: 8px; font-weight: 700; color: #059669; text-transform: uppercase;">Name / Amount / Status</span>
         </div>
 
-        <!-- Clean Double Column List for Report Modal (No Serial Numbers) -->
-        <div id="reportModalList" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; row-gap: 8px; margin-bottom: 20px;">
+        <!-- Clean Double Column List for Report Modal -->
+        <div id="reportModalList" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 16px; row-gap: 6px; margin-bottom: 14px;">
             <!-- Populated dynamically -->
         </div>
 
-        <!-- Footer -->
-        <div style="border-top: 1px solid #e2e8f0; padding-top: 12px; display: flex; justify-content: space-between; align-items: center; font-size: 9px; font-weight: 800; color: #64748b; text-transform: uppercase;">
+          <!-- Footer -->
+        <div style="border-top: 1px solid #e2e8f0; padding-top: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 8px; font-weight: 800; color: #64748b; text-transform: uppercase;">
             <span>Portal: FTCF Digital System</span>
-            <span>@FTCF2026 Mughal Brothers</span>
+            <span>@FTCF2026 Founder Mughal Brothers</span>
         </div>
     </div>
 
@@ -409,13 +409,13 @@
 
                 // Report Modal View: Double Column Clean List (No Serial Numbers)
                 modalListHtml += `
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0; border-bottom: 1px solid #f1f5f9;">
-                        <div style="overflow: hidden; padding-right: 6px;">
-                            <span style="font-size: 10px; font-weight: 800; color: #0f172a; text-transform: uppercase; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${name}">${name}</span>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 3px 0; border-bottom: 1px solid #f1f5f9;">
+                        <div style="overflow: hidden; padding-right: 4px;">
+                            <span style="font-size: 9px; font-weight: 800; color: #0f172a; text-transform: uppercase; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${name}">${name}</span>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
-                            <span style="font-size: 10px; font-weight: 800; color: #059669;">Rs. ${amount}</span>
-                            <span style="font-size: 8px; font-weight: 800; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; ${isPaid ? 'background: #d1fae5; color: #065f46;' : 'background: #ffe4e6; color: #9f1239;'}">${status}</span>
+                        <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
+                            <span style="font-size: 9px; font-weight: 800; color: #059669;">Rs. ${amount}</span>
+                            <span style="font-size: 7px; font-weight: 800; padding: 2px 5px; border-radius: 4px; text-transform: uppercase; ${isPaid ? 'background: #d1fae5; color: #065f46;' : 'background: #ffe4e6; color: #9f1239;'}">${status}</span>
                         </div>
                     </div>
                 `;
