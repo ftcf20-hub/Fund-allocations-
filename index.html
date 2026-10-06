@@ -68,6 +68,26 @@
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
+        .split-tier-card {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .split-tier-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(52, 211, 153, 0.5);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(16, 185, 129, 0.2);
+        }
+
+        .split-tier-card .bottom-tier {
+            background: rgba(15, 23, 42, 0.85);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
         .progress-fill {
             transition: width 1s ease-in-out;
         }
@@ -204,19 +224,19 @@
                        class="w-full pl-9 pr-4 py-2.5 rounded-2xl bg-slate-900/90 border border-slate-800 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500/80 shadow-inner transition-all">
             </div>
 
-            <!-- Members List (Double Columns - No Numbers, Clear Name, Amount & Status) -->
-            <div id="member-list" class="grid grid-cols-2 gap-x-4 gap-y-2.5 bg-slate-900/40 p-3.5 rounded-2xl border border-slate-800 max-h-[420px] overflow-y-auto">
+            <!-- Members List (Single Column - App View with Serial Numbers & Card Look) -->
+            <div id="member-list" class="space-y-2.5 max-h-[420px] overflow-y-auto pr-1">
                 <!-- Populated Dynamically -->
             </div>
         </section>
 
-        <!-- Footer -->
+          <!-- Footer -->
         <div class="text-center opacity-40 text-[9px] font-black uppercase tracking-[0.25em] pt-2 text-slate-500">
             @FTCF2026 Founder Mughal Brothers
         </div>
     </main>
 
-    <!-- Professional Report Card (Double Column, No Numbers, Clear Names/Amounts/Status) -->
+    <!-- Professional Report Card (Double Column Layout for Image Download - No Serial Numbers) -->
     <div id="downloadReportModal" style="position: fixed; left: -9999px; top: 0; width: 500px; background: #ffffff; color: #0f172a; font-family: 'Plus Jakarta Sans', sans-serif; padding: 28px; border-radius: 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.2);">
         
         <!-- Header Banner -->
@@ -256,7 +276,7 @@
             <span style="font-size: 9px; font-weight: 700; color: #059669; text-transform: uppercase;">Name / Amount / Status</span>
         </div>
 
-        <!-- Clean Double Column List (No Numbers, Clear Layout) -->
+        <!-- Clean Double Column List for Report Modal (No Serial Numbers) -->
         <div id="reportModalList" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; row-gap: 8px; margin-bottom: 20px;">
             <!-- Populated dynamically -->
         </div>
@@ -289,7 +309,7 @@
                 cachedRows = dataJson.table.rows;
                 renderMembers(cachedRows);
             } catch (err) {
-                document.getElementById('member-list').innerHTML = "<p class='col-span-2 text-center text-xs text-rose-500 font-bold py-6'>Error: Sheet access denied.</p>";
+                document.getElementById('member-list').innerHTML = "<p class='text-center text-xs text-rose-500 font-bold py-6'>Error: Sheet access denied.</p>";
             }
         }
 
@@ -301,7 +321,7 @@
             let unpaidNum = 0;
             let totalMembers = 0;
 
-            rows.forEach((row) => {
+            rows.forEach((row, idx) => {
                 if(!row.c[0]) return;
                 totalMembers++;
                 const name = row.c[0].v;
@@ -316,20 +336,25 @@
                     unpaidNum++;
                 }
 
-                const item = document.createElement('div');
-                item.className = "flex items-center justify-between py-1.5 border-b border-slate-800/60 min-w-0";
-                item.innerHTML = `
-                    <div class="min-w-0 pr-2">
-                        <span class="font-bold text-slate-100 text-[11px] truncate uppercase tracking-wide block" title="${name}">${name}</span>
-                    </div>
-                    <div class="flex items-center gap-2 shrink-0">
-                        <span class="text-[10px] font-extrabold text-emerald-400">Rs. ${amount}</span>
-                        <span class="text-[8px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider ${isPaid ? 'bg-emerald-950 text-emerald-400 border border-emerald-800/50' : 'bg-rose-950 text-rose-400 border border-rose-800/50'}">
+                // App View: Single Column Card Layout with Serial Numbers
+                const card = document.createElement('div');
+                card.className = "split-tier-card p-2.5 flex flex-col justify-between group";
+                card.innerHTML = `
+                    <div class="flex items-center justify-between mb-1.5">
+                        <span class="text-[9px] font-black text-slate-400 bg-slate-950/60 px-1.5 py-0.5 rounded border border-slate-800">#${idx + 1}</span>
+                        <span class="text-[8px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider ${isPaid ? 'bg-emerald-950/80 text-emerald-400 border border-emerald-800/60' : 'bg-rose-950/80 text-rose-400 border border-rose-800/60'}">
                             ${status}
                         </span>
                     </div>
+                    <div class="mb-2 min-w-0">
+                        <h4 class="font-bold text-slate-100 text-[11px] truncate uppercase tracking-wide group-hover:text-emerald-300 transition-colors" title="${name}">${name}</h4>
+                    </div>
+                    <div class="bottom-tier -mx-2.5 -mb-2.5 px-2.5 py-1.5 flex items-center justify-between mt-auto">
+                        <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Amount</span>
+                        <span class="text-[10px] font-black text-emerald-400">Rs. ${amount.toLocaleString()}</span>
+                    </div>
                 `;
-                list.appendChild(item);
+                list.appendChild(card);
             });
 
             document.getElementById('total-collection').innerText = `Rs. ${total.toLocaleString()}`;
@@ -347,9 +372,9 @@
 
         document.getElementById('searchInput').addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
-            document.querySelectorAll('#member-list > div').forEach(item => {
-                const name = item.querySelector('span.truncate').innerText.toLowerCase();
-                item.style.display = name.includes(term) ? 'flex' : 'none';
+            document.querySelectorAll('#member-list > div').forEach(card => {
+                const name = card.querySelector('h4').innerText.toLowerCase();
+                card.style.display = name.includes(term) ? 'flex' : 'none';
             });
         });
 
@@ -382,7 +407,7 @@
                     unpaidNum++;
                 }
 
-                // Clean Double Column Item for Report Modal (No Numbers, Prominent Names)
+                // Report Modal View: Double Column Clean List (No Serial Numbers)
                 modalListHtml += `
                     <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0; border-bottom: 1px solid #f1f5f9;">
                         <div style="overflow: hidden; padding-right: 6px;">
