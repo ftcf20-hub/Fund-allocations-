@@ -186,7 +186,7 @@
             <div id="members-list" class="scroll-container space-y-3 max-h-[380px] sm:max-h-[440px] overflow-y-auto p-2.5 sm:p-3 rounded-2xl sm:rounded-3xl backdrop-blur-xl"></div>
         </section>
 
-        <!-- Member Profile Modal with Next-Level Digital ID Card Button -->
+        !-- Member Profile Modal -->
         <div id="modal" class="fixed inset-0 bg-black/75 backdrop-blur-md hidden flex items-center justify-center p-4 z-50 transition-all duration-300">
             <div class="glass-card p-5 sm:p-6 rounded-3xl w-full max-w-sm max-h-[90vh] flex flex-col border border-slate-700 shadow-2xl relative">
                 <!-- Close Button -->
@@ -223,30 +223,34 @@
             </div>
         </div>
 
-        <!-- Hidden Next-Level Elegant Digital ID Card Template for Rendering -->
-        <div id="digital-id-card-template" style="position: absolute; left: -9999px; top: 0; width: 400px; background: linear-gradient(135deg, #090d16 0%, #0f172a 100%); border: 2px solid rgba(52, 211, 153, 0.4); border-radius: 24px; padding: 28px; color: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif; box-shadow: 0 25px 50px rgba(0,0,0,0.8);">
-            <div style="text-center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px; margin-bottom: 20px;">
-                <div style="font-size: 10px; font-weight: 800; letter-spacing: 3px; color: #34d399; text-transform: uppercase; margin-bottom: 4px;">Family Trust & Care Foundation</div>
-                <div style="font-size: 16px; font-weight: 900; color: #ffffff; text-transform: uppercase; letter-spacing: 0.5px;">Official Member ID Card</div>
-            </div>
+        <!-- Next-Level Executive Visiting Card Style ID Template -->
+        <div id="digital-id-card-template" style="position: absolute; left: -9999px; top: 0; width: 600px; background: linear-gradient(135deg, #050b14 0%, #0f172a 100%); border: 2px solid rgba(52, 211, 153, 0.5); border-radius: 20px; padding: 30px; color: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif; box-shadow: 0 25px 50px rgba(0,0,0,0.9);">
             
-            <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px; background: rgba(30, 41, 59, 0.7); padding: 16px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08);">
-                <img id="card-template-img" src="" style="width: 80px; height: 80px; border-radius: 14px; object-fit: cover; border: 2px solid #34d399; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+            <!-- Header: Executive Foundation Title -->
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 16px; margin-bottom: 22px;">
                 <div>
-                    <span id="card-template-id" style="display: inline-block; font-size: 10px; font-weight: 900; background: #064e3b; color: #34d399; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; border: 1px solid rgba(52,211,153,0.3); margin-bottom: 6px;">FT-00</span>
-                    <h3 id="card-template-name" style="font-size: 15px; font-weight: 900; color: #ffffff; text-transform: uppercase; margin: 0; line-height: 1.2;">--</h3>
-                    <p id="card-template-phone" style="font-size: 11px; font-weight: 600; color: #94a3b8; margin: 4px 0 0 0;"><i class="fas fa-phone-alt" style="font-size: 9px; margin-right: 4px; color: #34d399;"></i>--</p>
+                    <div style="font-size: 11px; font-weight: 800; letter-spacing: 3px; color: #34d399; text-transform: uppercase; margin-bottom: 2px;">Family Trust & Care Foundation</div>
+                    <div style="font-size: 18px; font-weight: 900; color: #ffffff; text-transform: uppercase; letter-spacing: 0.5px;">Official Executive Identity Card</div>
+                </div>
+                <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(52, 211, 153, 0.4); padding: 6px 14px; border-radius: 30px; text-align: center;">
+                    <span id="card-template-id" style="font-size: 13px; font-weight: 900; color: #34d399; letter-spacing: 1px;">FT-00</span>
                 </div>
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(6, 78, 59, 0.4); padding: 14px 18px; border-radius: 14px; border: 1px solid rgba(52, 211, 153, 0.25); margin-bottom: 20px;">
-                <span style="font-size: 11px; font-weight: 700; color: #cbd5e1; text-transform: uppercase; letter-spacing: 1px;">Total Contribution</span>
-                <span id="card-template-fund" style="font-size: 15px; font-weight: 900; color: #34d399;">Rs. 0</span>
+            <!-- Body: Photo & Credentials -->
+            <div style="display: flex; align-items: center; gap: 24px; margin-bottom: 24px; background: rgba(30, 41, 59, 0.65); padding: 18px 22px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08);">
+                <img id="card-template-img" crossorigin="anonymous" src="" style="width: 100px; height: 100px; border-radius: 14px; object-fit: cover; border: 2px solid #34d399; box-shadow: 0 6px 16px rgba(0,0,0,0.6); flex-shrink: 0;">
+                <div style="flex-grow: 1;">
+                    <span id="card-template-status" style="display: inline-block; font-size: 10px; font-weight: 800; background: #064e3b; color: #34d399; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; border: 1px solid rgba(52,211,153,0.3); margin-bottom: 8px; letter-spacing: 0.5px;">Executive Member</span>
+                    <h3 id="card-template-name" style="font-size: 18px; font-weight: 900; color: #ffffff; text-transform: uppercase; margin: 0 0 6px 0; letter-spacing: 0.5px; line-height: 1.2;">--</h3>
+                    <p id="card-template-phone" style="font-size: 13px; font-weight: 700; color: #cbd5e1; margin: 0; letter-spacing: 0.5px;"><i class="fas fa-phone-alt" style="font-size: 11px; margin-right: 6px; color: #34d399;"></i>--</p>
+                </div>
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 9px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 1.5px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 14px;">
-                <span>Status: <strong style="color: #34d399;">Active Member</strong></span>
-                <span>@FTCF 2026 Founder Mughal Brothers</span>
+            <!-- Footer: Network Signature & Year -->
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 1.5px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px;">
+                <span>Authorized By: <strong style="color: #34d399; font-weight: 900;">Mughals Brothers Network</strong></span>
+                <span>© 2026 FTCF</span>
             </div>
         </div>
 
@@ -443,11 +447,17 @@
 
             const m = currentActiveMember;
             const profilePic = m.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(m.name)}&background=0f172a&color=34d399`;
+            const memberId = m["Member ID"] || 'FT-00';
             
+            let assignedStatus = 'Executive Member';
+            if (memberId === 'FT-01') assignedStatus = 'Secretary';
+            else if (memberId === 'FT-02') assignedStatus = 'Managing Director';
+            else if (memberId === 'FT-07') assignedStatus = 'General Secretary';
+
             document.getElementById('card-template-name').innerText = m.name;
-            document.getElementById('card-template-id').innerText = m["Member ID"] || 'FT-00';
-            document.getElementById('card-template-phone').innerHTML = `<i class="fas fa-phone-alt" style="font-size: 9px; margin-right: 4px; color: #34d399;"></i>${m.phone || 'No Phone'}`;
-            document.getElementById('card-template-fund').innerText = "Rs. " + (m.fund || 0).toLocaleString();
+            document.getElementById('card-template-id').innerText = memberId;
+            document.getElementById('card-template-status').innerText = assignedStatus;
+            document.getElementById('card-template-phone').innerHTML = `<i class="fas fa-phone-alt" style="font-size: 11px; margin-right: 6px; color: #34d399;"></i>${m.phone || 'No Phone'}`;
             document.getElementById('card-template-img').src = profilePic;
 
             const cardElement = document.getElementById('digital-id-card-template');
@@ -458,7 +468,7 @@
                 useCORS: true
             }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = `FTCF_ID_Card_${m["Member ID"] || 'Member'}.png`;
+                link.download = `FTCF_ID_Card_${memberId}.png`;
                 link.href = canvas.toDataURL('image/png');
                 link.click();
             }).catch(err => {
@@ -578,4 +588,3 @@
     </script>
 </body>
 </html>
-                            
