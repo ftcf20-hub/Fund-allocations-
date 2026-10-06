@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FTCF | Member Ledger</title>
+    <title>FTCF | Monthly collection</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
-        
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
             background-color: #090d16; 
@@ -20,29 +18,21 @@
             transition: background-color 0.8s ease;
         }
 
-        .theme-sunny .ambient-glow-1 {
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.25) 0%, rgba(0,0,0,0) 70%) !important;
-        }
-
-        .theme-rainy .ambient-glow-1 {
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, rgba(0,0,0,0) 70%) !important;
-        }
-
         .ambient-glow-1 {
-            position: absolute;
+            position: fixed;
             top: -100px;
             left: 50%;
             transform: translateX(-50%);
-            width: 380px;
-            height: 380px;
+            width: 400px;
+            height: 400px;
             background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, rgba(0,0,0,0) 70%);
             pointer-events: none;
             z-index: 0;
-            transition: all 0.8s ease;
+            filter: blur(40px);
         }
 
         .ambient-glow-2 {
-            position: absolute;
+            position: fixed;
             top: 250px;
             right: -100px;
             width: 320px;
@@ -52,70 +42,37 @@
             z-index: 0;
         }
 
-        .glass-card {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-
-        .total-card {
+        .bank-gradient { 
             background: linear-gradient(135deg, rgba(6, 78, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
             border: 1px solid rgba(16, 185, 129, 0.35);
             box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.2);
             position: relative;
             overflow: hidden;
-            transition: all 0.8s ease;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
         }
 
-        .total-card::after {
+        .bank-gradient::after {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; height: 1px;
             background: linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.8), transparent);
         }
 
-        .btn-next-level {
-            background: linear-gradient(135deg, #059669 0%, #0d9488 50%, #2563eb 100%);
-            background-size: 200% auto;
-            border: 1px solid rgba(52, 211, 153, 0.4);
-            box-shadow: 0 10px 25px -5px rgba(5, 150, 105, 0.5), 0 0 15px rgba(13, 148, 136, 0.3);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
+        .glass-card { 
+            background: rgba(15, 23, 42, 0.85); 
+            backdrop-filter: blur(24px); 
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
-        .btn-next-level::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: 0.5s;
-        }
-
-        .btn-next-level:hover::before { left: 100%; }
-
-        .btn-next-level:hover {
-            background-position: right center;
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px -5px rgba(5, 150, 105, 0.7), 0 0 20px rgba(37, 99, 235, 0.5);
-            border-color: rgba(52, 211, 153, 0.8);
-        }
-
-        .scroll-container {
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        #members-list::-webkit-scrollbar { width: 4px; }
-        #members-list::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
 
         .split-tier-card {
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             background: rgba(30, 41, 59, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 1.25rem;
+            border-radius: 1rem;
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
@@ -131,9 +88,24 @@
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
+        .progress-fill {
+            transition: width 1s ease-in-out;
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
         .pulse-dot {
-            width: 6px;
-            height: 6px;
+            width: 7px;
+            height: 7px;
             background-color: #34d399;
             border-radius: 50%;
             box-shadow: 0 0 10px #34d399;
@@ -146,530 +118,339 @@
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
         }
 
-        /* Toast Notification Styling */
-        #toast-notification {
-            position: fixed;
-            top: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 380px;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(52, 211, 153, 0.4);
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(16, 185, 129, 0.25);
-            border-radius: 1.25rem;
-            z-index: 100;
-            transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        #toast-notification.show {
-            top: 20px;
-        }
+        #member-list::-webkit-scrollbar { width: 4px; }
+        #member-list::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
     </style>
 </head>
 <body class="pb-8 relative antialiased selection:bg-emerald-900 selection:text-emerald-200">
 
-    <!-- Toast Notification Popup Banner -->
-    <div id="toast-notification" class="p-4 flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center shrink-0 text-emerald-400">
-            <i class="fas fa-bell text-base animate-bounce"></i>
-        </div>
-        <div class="overflow-hidden">
-            <p class="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400">Latest Payment Update</p>
-            <p id="toast-message" class="text-xs font-bold text-slate-100 truncate mt-0.5">Loading last payment...</p>
-        </div>
-    </div>
-
     <div class="ambient-glow-1"></div>
     <div class="ambient-glow-2"></div>
 
-    <header class="p-6 sm:p-8 pb-16 sm:pb-20 bg-slate-950 text-white rounded-b-[2rem] sm:rounded-b-[2.5rem] shadow-2xl text-center relative z-10 border-b border-slate-800">
-        <div class="inline-flex items-center gap-2 mb-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-700/80 text-[10px] font-medium tracking-widest text-emerald-400 uppercase">
-            <span class="pulse-dot"></span> <span id="weather-status">Live Portal</span>
-        </div>
-        <h1 class="text-xl sm:text-2xl font-black tracking-tight text-white leading-tight">
-            Family Trust & Care Foundation
-        </h1>
-        <p class="inline-block mt-3 px-3.5 py-1.5 rounded-full text-amber-300 font-medium text-[11px] sm:text-xs tracking-wide bg-amber-500/10 border border-amber-400/20 backdrop-blur-xl max-w-[90%]">
-            "Amanat me khiyanat nahi, Behtreen Nizam Asal Kamyabi"
-        </p>
-    </header>
+    <main class="w-full max-w-md mx-auto px-4 pt-5 space-y-5 relative z-20">
 
-    <main class="w-full max-w-md mx-auto px-4 -mt-8 sm:-mt-10 space-y-5 sm:space-y-6 relative z-20">
-        
-        <div class="total-card p-5 sm:p-6 rounded-2xl sm:rounded-3xl text-center backdrop-blur-xl">
-            <div class="flex items-center justify-center gap-2">
-                <p class="text-[10px] font-bold uppercase tracking-[0.25em] text-emerald-300 opacity-90">Total Contribution</p>
+        <!-- Top App Bar -->
+        <header class="flex justify-between items-center px-1">
+            <div class="flex items-center gap-2">
+                <div class="w-9 h-9 rounded-xl bg-slate-900 text-emerald-400 flex items-center justify-center font-black text-xs shadow-md border border-slate-700/80">
+                    FT
+                </div>
+                <div>
+                    <h1 class="text-xs font-black uppercase tracking-wider text-slate-100">Family Trust</h1>
+                    <p class="text-[9px] font-bold text-slate-400">Secure Ledger</p>
+                </div>
             </div>
-            <h2 id="grand-total" class="text-3xl sm:text-4xl font-black mt-2 text-emerald-400 tracking-tight drop-shadow-md">Rs. 0</h2>
-            <p id="last-updated" class="text-[9px] font-bold uppercase tracking-[0.15em] text-slate-400 opacity-80 mt-2"></p>
+            <div class="flex items-center gap-2">
+                <button onclick="downloadReportCard()" id="downloadBtn" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[10px] font-extrabold text-emerald-400 hover:bg-emerald-500/20 active:scale-95 transition-all shadow-sm">
+                    <i class="fas fa-download text-[9px]"></i> <span>Report Card</span>
+                </button>
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/80 border border-slate-700/80 shadow-sm text-[10px] font-bold text-slate-300 backdrop-blur-md">
+                    <span class="pulse-dot"></span> <span>Live Sync</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Executive Hero Banner -->
+        <div class="bank-gradient text-white p-6 rounded-3xl relative">
+            <div class="flex justify-between items-start mb-4">
+                <span class="text-[9px] font-black uppercase tracking-[0.25em] text-emerald-300 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 backdrop-blur-md">
+                    Rs. 500 / Member
+                </span>
+                <i class="fas fa-shield-halved text-slate-400 text-sm"></i>
+            </div>
             
-            <button onclick="triggerVibrate(40); openReportCardModal()" class="mt-4 w-full py-3 px-5 rounded-xl btn-next-level text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2.5">
-                <i class="fas fa-file-invoice-dollar text-sm text-emerald-300"></i> Generate Report Card
-            </button>
+            <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Monthly Collection</p>
+            
+            <div class="mt-4 bg-slate-950/40 p-4 rounded-2xl border border-white/10 backdrop-blur-lg space-y-3">
+                <div class="flex justify-between items-end">
+                    <div>
+                        <p class="text-[9px] uppercase font-bold tracking-widest text-slate-400">Current Period</p>
+                        <p id="month-display" class="font-extrabold text-sm text-slate-100 mt-0.5">
+                            <span class="inline-block h-4 w-20 skeleton rounded"></span>
+                        </p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[9px] uppercase font-bold tracking-widest text-slate-400">Total Fund</p>
+                        <p id="total-collection" class="font-black text-2xl text-emerald-400 tracking-tight mt-0.5">Rs. 0</p>
+                    </div>
+                </div>
+
+                <!-- Target Progress Bar -->
+                <div class="pt-2 border-t border-white/10">
+                    <div class="flex justify-between items-center text-[10px] font-bold mb-1.5">
+                        <span class="text-slate-400 uppercase tracking-wider">Target Goal</span>
+                        <span id="target-percent" class="text-emerald-400">0%</span>
+                    </div>
+                    <div class="w-full h-2 bg-slate-950 rounded-full overflow-hidden p-0.5 border border-white/10">
+                        <div id="progress-bar-fill" class="progress-fill h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full w-0"></div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <section>
-            <div class="flex justify-between items-center mb-2.5 ml-1">
-                <h3 class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Members Directory</h3>
-                <span class="text-[9px] font-semibold text-emerald-400/80 uppercase tracking-wider"><i class="fas fa-hand-pointer text-[8px] mr-1"></i>Tap for profile</span>
+        <!-- KPI Metrics Grid -->
+        <div class="grid grid-cols-2 gap-3">
+            <div class="glass-card p-3.5 rounded-2xl flex items-center gap-3 border border-slate-800">
+                <div class="w-9 h-9 rounded-xl bg-emerald-950/80 text-emerald-400 flex items-center justify-center font-bold text-xs border border-emerald-800/60 shrink-0">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div>
+                    <p class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Paid Members</p>
+                    <p id="paid-count" class="text-sm font-extrabold text-slate-100">0</p>
+                </div>
             </div>
-            <div id="members-list" class="scroll-container space-y-3 max-h-[380px] sm:max-h-[440px] overflow-y-auto p-2.5 sm:p-3 rounded-2xl sm:rounded-3xl backdrop-blur-xl"></div>
+
+            <div class="glass-card p-3.5 rounded-2xl flex items-center gap-3 border border-slate-800">
+                <div class="w-9 h-9 rounded-xl bg-rose-950/80 text-rose-400 flex items-center justify-center font-bold text-xs border border-rose-800/60 shrink-0">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div>
+                    <p class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Pending</p>
+                    <p id="unpaid-count" class="text-sm font-extrabold text-slate-100">0</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search & Filters -->
+        <section class="space-y-3">
+            <div class="flex justify-between items-center px-1">
+                <h3 class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Members Directory</h3>
+                <span class="text-[9px] font-bold text-emerald-400/80 uppercase tracking-wider">Live Status</span>
+            </div>
+
+            <div class="relative">
+                <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                <input type="text" id="searchInput" placeholder="Search member name..." 
+                       class="w-full pl-9 pr-4 py-2.5 rounded-2xl bg-slate-900/90 border border-slate-800 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500/80 shadow-inner transition-all">
+            </div>
+
+               <!-- Members List (2 Columns Fixed Grid) -->
+            <div id="member-list" class="grid grid-cols-2 gap-2.5 max-h-[420px] overflow-y-auto pr-1">
+                <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <div class="h-3 w-16 skeleton rounded"></div>
+                        <div class="h-3 w-10 skeleton rounded"></div>
+                    </div>
+                    <div class="h-3.5 w-full skeleton rounded"></div>
+                </div>
+            </div>
         </section>
 
-        <!-- Member Profile Modal -->
-        <div id="modal" class="fixed inset-0 bg-black/75 backdrop-blur-md hidden flex items-center justify-center p-4 z-50 transition-all duration-300">
-            <div class="glass-card p-5 sm:p-6 rounded-3xl w-full max-w-sm max-h-[90vh] flex flex-col border border-slate-700 shadow-2xl relative">
-                <!-- Close Button -->
-                <button onclick="triggerVibrate(20); document.getElementById('modal').classList.add('hidden')" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center shrink-0 transition-all hover:bg-slate-700 z-10">
-                    <i class="fas fa-times text-xs"></i>
-                </button>
-
-                <!-- Profile Header Info -->
-                <div class="text-center pb-3 border-b border-slate-800">
-                    <div class="relative w-20 h-20 mx-auto mb-3">
-                        <img id="profile-modal-img" src="" class="w-20 h-20 rounded-2xl object-cover ring-2 ring-emerald-500/50 shadow-lg">
-                        <span id="profile-modal-id" class="absolute -bottom-2 left-1/2 -translate-x-1/2 text-[9px] font-black bg-slate-900 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded-full uppercase tracking-wider">
-                            FT-00
-                        </span>
-                    </div>
-                    <h3 id="profile-modal-name" class="font-black text-slate-100 text-sm sm:text-base uppercase tracking-wide mt-1">--</h3>
-                    <p id="profile-modal-phone" class="text-[11px] font-semibold text-emerald-400 mt-0.5"><i class="fas fa-phone-alt text-[9px] mr-1.5"></i>--</p>
-                </div>
-
-                <!-- Profile Summary Fund Box -->
-                <div class="py-2.5 my-2 bg-slate-900/60 rounded-xl px-4 flex justify-between items-center border border-slate-800 shrink-0">
-                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Fund</span>
-                    <span id="profile-modal-fund" class="text-xs sm:text-sm font-black text-emerald-400">Rs. 0</span>
-                </div>
-
-                <!-- Download Digital ID Card Button Inside Profile -->
-                <button onclick="triggerVibrate(30); generateDigitalIDCard()" class="mb-3 w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-[11px] uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg border border-emerald-400/30 transition-all shrink-0">
-                    <i class="fas fa-id-card text-xs text-emerald-200"></i> Download Digital ID Card
-                </button>
-
-                <!-- Monthly History Section inside Profile -->
-                <div class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Monthly Payment History</div>
-                <div id="history-data" class="space-y-2 overflow-y-auto pr-1 flex-1 max-h-[30vh]"></div>
-            </div>
-        </div>
-
-           <!-- Next-Level Executive Visiting Card Style ID Template -->
-        <div id="digital-id-card-template" style="position: absolute; left: -9999px; top: 0; width: 600px; background: linear-gradient(135deg, #050b14 0%, #0f172a 100%); border: 2px solid rgba(52, 211, 153, 0.5); border-radius: 20px; padding: 30px; color: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif; box-shadow: 0 25px 50px rgba(0,0,0,0.9);">
-            
-            <!-- Header: Executive Foundation Title -->
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 16px; margin-bottom: 22px;">
-                <div>
-                    <div style="font-size: 11px; font-weight: 800; letter-spacing: 3px; color: #34d399; text-transform: uppercase; margin-bottom: 2px;">Family Trust & Care Foundation</div>
-                    <div style="font-size: 18px; font-weight: 900; color: #ffffff; text-transform: uppercase; letter-spacing: 0.5px;">Official Executive Identity Card</div>
-                </div>
-                <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(52, 211, 153, 0.4); padding: 6px 14px; border-radius: 30px; text-align: center;">
-                    <span id="card-template-id" style="font-size: 13px; font-weight: 900; color: #34d399; letter-spacing: 1px;">FT-00</span>
-                </div>
-            </div>
-
-            <!-- Body: Photo & Credentials -->
-            <div style="display: flex; align-items: center; gap: 24px; margin-bottom: 24px; background: rgba(30, 41, 59, 0.65); padding: 18px 22px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08);">
-                <img id="card-template-img" crossorigin="anonymous" src="" style="width: 100px; height: 100px; border-radius: 14px; object-fit: cover; border: 2px solid #34d399; box-shadow: 0 6px 16px rgba(0,0,0,0.6); flex-shrink: 0;">
-                <div style="flex-grow: 1;">
-                    <span id="card-template-status" style="display: inline-block; font-size: 10px; font-weight: 800; background: #064e3b; color: #34d399; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; border: 1px solid rgba(52,211,153,0.3); margin-bottom: 8px; letter-spacing: 0.5px;">Executive Member</span>
-                    <h3 id="card-template-name" style="font-size: 18px; font-weight: 900; color: #ffffff; text-transform: uppercase; margin: 0 0 6px 0; letter-spacing: 0.5px; line-height: 1.2;">--</h3>
-                    <p id="card-template-phone" style="font-size: 13px; font-weight: 700; color: #cbd5e1; margin: 0; letter-spacing: 0.5px;"><i class="fas fa-phone-alt" style="font-size: 11px; margin-right: 6px; color: #34d399;"></i>--</p>
-                </div>
-            </div>
-
-            <!-- Footer: Network Signature & Year -->
-            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 1.5px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px;">
-                <span>Authorized By: <strong style="color: #34d399; font-weight: 900;">Mughals Brothers Network</strong></span>
-                <span>© 2026 FTCF</span>
-            </div>
-        </div>
-
-        <!-- Professional Table Report Card Modal with Duration Filters -->
-        <div id="report-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-2 z-50 transition-all duration-300">
-            <div class="glass-card p-3 sm:p-5 rounded-2xl w-full max-w-2xl max-h-[95vh] flex flex-col border border-emerald-500/40 shadow-2xl relative">
-                <div class="flex justify-between items-center mb-2 pb-2 border-b border-slate-800 shrink-0">
-                    <div>
-                        <h3 class="font-black text-emerald-400 text-xs sm:text-sm uppercase tracking-wide">FTCF Official Table Report</h3>
-                        <p id="report-datetime" class="text-[9px] text-slate-400 font-semibold"></p>
-                    </div>
-                    <button onclick="triggerVibrate(20); document.getElementById('report-modal').classList.add('hidden')" class="w-7 h-7 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center shrink-0 transition-all">
-                        <i class="fas fa-times text-xs"></i>
-                    </button>
-                </div>
-
-                <!-- Duration Filter Controls -->
-                <div class="grid grid-cols-2 gap-2 mb-3 bg-slate-900/80 p-2.5 rounded-xl border border-slate-800 shrink-0 text-[11px]">
-                    <div>
-                        <label class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">From Month:</label>
-                        <select id="filter-from-month" onchange="updateReportTable()" class="w-full bg-slate-950 text-slate-200 border border-slate-700 rounded-lg p-1.5 text-xs focus:outline-none focus:border-emerald-500">
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">To Month:</label>
-                        <select id="filter-to-month" onchange="updateReportTable()" class="w-full bg-slate-950 text-slate-200 border border-slate-700 rounded-lg p-1.5 text-xs focus:outline-none focus:border-emerald-500">
-                        </select>
-                    </div>
-                </div>
-                
-                <!-- Printable Light Theme Card Container -->
-                <div id="printable-card" class="bg-white text-slate-900 p-5 rounded-xl border border-slate-300 overflow-y-auto flex-1 text-[11px] max-h-[52vh] shadow-inner">
-                    <div class="text-center mb-3 pb-2.5 border-b-2 border-slate-200">
-                        <h2 class="text-base font-black text-slate-900 uppercase tracking-wider">Family Trust & Care Foundation</h2>
-                        <p class="text-[10px] text-emerald-700 font-bold mt-0.5">Contribution Ledger & Summary Report Card</p>
-                        <div class="flex justify-center items-center gap-4 mt-2 text-[10px] font-semibold text-slate-600">
-                            <span><i class="far fa-calendar-alt text-emerald-600 mr-1"></i>Duration: <strong id="report-duration" class="text-slate-800">--</strong></span>
-                            <span>•</span>
-                            <span><i class="fas fa-wallet text-emerald-600 mr-1"></i>Total Fund: <strong id="report-badge-total" class="text-emerald-700 font-bold">Rs. 0</strong></span>
-                        </div>
-                    </div>
-                    
-                    <div id="report-table-container" class="min-w-[450px]">
-                    </div>
-                </div>
-
-                <!-- Action Controls -->
-                <div class="pt-3 mt-2 border-t border-slate-800 flex items-center justify-between gap-2 shrink-0">
-                    <span id="report-modal-total" class="text-xs font-black text-emerald-400">Total: Rs. 0</span>
-                    <button onclick="triggerVibrate(30); generateAndDownloadReportCard()" class="px-4 py-2.5 rounded-xl btn-next-level text-white font-black text-xs uppercase tracking-wide flex items-center gap-2">
-                        <i class="fas fa-download text-emerald-300"></i> Download HD Card
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="text-center opacity-40 text-[9px] font-bold uppercase tracking-[0.25em] pt-4 text-slate-500">
+        <!-- Footer -->
+        <div class="text-center opacity-40 text-[9px] font-black uppercase tracking-[0.25em] pt-2 text-slate-500">
             @FTCF2026 Founder Mughal Brothers
         </div>
     </main>
 
-    <script>
-        async function autoWeatherTheme() {
-            if ("geolocation" in navigator) {
-                navigator.geolocation.getCurrentPosition(async (position) => {
-                    try {
-                        const lat = position.coords.latitude;
-                        const lon = position.coords.longitude;
-                        const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
-                        const data = await res.json();
-                        const code = data.current_weather.weathercode;
-                        const weatherStatusEl = document.getElementById('weather-status');
-
-                        if (code === 0 || code === 1) {
-                            document.body.classList.add('theme-sunny');
-                            if (weatherStatusEl) weatherStatusEl.innerText = 'Sunny Mode';
-                        } else if ([51, 53, 55, 61, 63, 65, 80, 81].includes(code)) {
-                            document.body.classList.add('theme-rainy');
-                            if (weatherStatusEl) weatherStatusEl.innerText = 'Rainy Mode';
-                        }
-                    } catch (e) {}
-                }, () => {});
-            }
-        }
-        autoWeatherTheme();
-
-        function triggerVibrate(ms) {
-            if (window.navigator.vibrate) window.navigator.vibrate(ms);
-        }
-
-        const mainSheet = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTtsZyNI2Ss1ACTIO7X1zAND4Q-mGhFdKSVcvx8amNxfGsFQfA2A7kBLHJgTJ9DGECqNNZ40iHW7zDc/pub?output=csv';
-        const historySheet = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTtsZyNI2Ss1ACTIO7X1zAND4Q-mGhFdKSVcvx8amNxfGsFQfA2A7kBLHJgTJ9DGECqNNZ40iHW7zDc/pub?gid=2038080316&single=true&output=csv';
+    <!-- Report Card Template (2-Column Fixed Grid for Download) -->
+    <div id="downloadReportModal" style="position: fixed; left: -9999px; top: 0; width: 480px; background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); color: #0f172a; font-family: 'Plus Jakarta Sans', sans-serif; padding: 24px; border-radius: 28px; border: 1px solid #cbd5e1; box-shadow: 0 25px 50px rgba(0,0,0,0.15);">
         
-        let historyData = [];
-        let globalMainData = [];
-        let grandTotalGlobal = 0;
-        let availableMonths = [];
-        let currentActiveMember = null;
+        <!-- Header Banner Design -->
+        <div style="background: linear-gradient(135deg, #064e3b 0%, #0f172a 100%); color: #ffffff; padding: 18px; border-radius: 18px; margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style="width: 34px; height: 34px; background: #10b981; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 12px; border-radius: 8px;">FT</div>
+                    <div>
+                        <h2 style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin: 0;">Family Trust & Care Foundation</h2>
+                        <p style="font-size: 8px; font-weight: 700; color: #34d399; margin: 0; text-transform: uppercase; letter-spacing: 0.1em;">Official Executive Report Card</p>
+                    </div>
+                </div>
+                <span id="reportModalMonth" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); font-size: 9px; font-weight: 800; padding: 3px 10px; border-radius: 20px; text-transform: uppercase;">--</span>
+            </div>
 
-        Promise.all([
-            fetch(mainSheet).then(res => res.text()),
-            fetch(historySheet).then(res => res.text())
-        ]).then(([mainCsv, historyCsv]) => {
-            globalMainData = Papa.parse(mainCsv, {header: true, dynamicTyping: true}).data.filter(m => m.name);
-            historyData = Papa.parse(historyCsv, {header: true, dynamicTyping: true}).data.filter(row => {
-                const vals = Object.values(row);
-                return vals[0] && vals[2];
-            });
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 10px; margin-top: 6px;">
+                <div>
+                    <span style="font-size: 8px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em;">Total Collection Fund</span>
+                    <h3 id="reportModalTotal" style="font-size: 18px; font-weight: 900; color: #34d399; margin: 2px 0 0 0;">Rs. 0</h3>
+                </div>
+                <div style="display: flex; gap: 10px; text-align: right;">
+                    <div>
+                        <span style="font-size: 8px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Paid</span>
+                        <p id="reportModalPaid" style="font-size: 12px; font-weight: 800; color: #ffffff; margin: 0;">0</p>
+                    </div>
+                    <div>
+                        <span style="font-size: 8px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Pending</span>
+                        <p id="reportModalUnpaid" style="font-size: 12px; font-weight: 800; color: #f43f5e; margin: 0;">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            grandTotalGlobal = globalMainData.reduce((sum, m) => sum + (m.fund || 0), 0);
-            document.getElementById('grand-total').innerText = "Rs. " + grandTotalGlobal.toLocaleString();
-            document.getElementById('last-updated').innerText = "Last Updated: " + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        <!-- Members Table Style Header -->
+        <div style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; padding: 0 2px;">
+            <span style="font-size: 9px; font-weight: 800; text-transform: uppercase; color: #475569; letter-spacing: 0.05em;">Directory (<span id="reportModalTotalCount">0</span> Members)</span>
+            <span style="font-size: 8px; font-weight: 700; color: #059669; text-transform: uppercase;">Verified Ledger</span>
+        </div>
 
-            let monthsSet = [];
-            historyData.forEach(row => {
-                const vals = Object.values(row);
-                if(vals[1] && !monthsSet.includes(vals[1].toString().trim())) {
-                    monthsSet.push(vals[1].toString().trim());
-                }
-            });
-            availableMonths = monthsSet;
+        <!-- 2-Column Grid List for Report Card -->
+        <div id="reportModalList" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 14px;">
+            <!-- Members populated dynamically -->
+        </div>
 
-            // Smart Memory System for Last Updated Member Payment
-            let lastMemberName = "Member";
-            let lastMonthName = "Current Month";
-            let lastPaidAmount = 0;
+        <!-- Footer Note -->
+        <div style="border-top: 1px solid #cbd5e1; padding-top: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 8px; font-weight: 800; color: #64748b; text-transform: uppercase;">
+            <span>Portal: FTCF Digital System</span>
+            <span>@FTCF2026 Mughal Brothers</span>
+        </div>
+    </div>
 
-            const savedLatest = localStorage.getItem('ftcf_latest_payment');
-            
-            if (historyData.length > 0) {
-                // By default use the very last row from sheet history as baseline
-                const latestRow = historyData[historyData.length - 1];
-                const vals = Object.values(latestRow);
-                lastMemberName = vals[0] || 'Member';
-                lastMonthName = vals[1] || 'Current Month';
-                lastPaidAmount = vals[2] ? parseInt(vals[2]) : 0;
+    <script>
+        const SHEET_ID = "1hUEigyVt9FcLdeT-2G44mcUMo-r3gSb7AN0XcXilMVw";
+        const BASE_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+
+        let cachedRows = [];
+        let currentMonthText = "";
+
+        async function loadDashboardData() {
+            try {
+                const monthRes = await fetch(`${BASE_URL}&range=H1`);
+                const monthTxt = await monthRes.text();
+                const monthJson = JSON.parse(monthTxt.substring(47).slice(0, -2));
+                currentMonthText = monthJson.table.rows[0]?.c[0]?.v || "N/A";
+                document.getElementById('month-display').innerText = currentMonthText;
+
+                const dataRes = await fetch(`${BASE_URL}&range=A2:E50`);
+                const dataTxt = await dataRes.text();
+                const dataJson = JSON.parse(dataTxt.substring(47).slice(0, -2));
+                cachedRows = dataJson.table.rows;
+                renderMembers(cachedRows);
+            } catch (err) {
+                document.getElementById('member-list').innerHTML = "<p class='col-span-2 text-center text-xs text-rose-500 font-bold py-6'>Error: Sheet access denied.</p>";
             }
+        }
 
-            // If a custom recent update was saved via app memory, prioritize that!
-            if (savedLatest) {
-                try {
-                    const parsed = JSON.parse(savedLatest);
-                    lastMemberName = parsed.name;
-                    lastMonthName = parsed.month;
-                    lastPaidAmount = parsed.amount;
-                } catch(e) {}
-            }
+        function renderMembers(rows) {
+            const list = document.getElementById('member-list');
+            list.innerHTML = '';
+            let total = 0;
+            let paidNum = 0;
+            let unpaidNum = 0;
+            let totalMembers = 0;
 
-            // Trigger Toast Notification after 5 seconds
-            setTimeout(() => {
-                triggerVibrate(60); 
-                const toast = document.getElementById('toast-notification');
-                document.getElementById('toast-message').innerText = `${lastMemberName} paid Rs. ${lastPaidAmount.toLocaleString()} (${lastMonthName})`;
-                toast.classList.add('show');
-
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 3000);
-            }, 5000);
-
-            const list = document.getElementById('members-list');
-            globalMainData.forEach((m, idx) => {
-                const profilePic = m.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(m.name)}&background=0f172a&color=34d399`;
-                const memberId = m["Member ID"] || `FT-${idx + 1}`;
+            rows.forEach((row, idx) => {
+                if(!row.c[0]) return;
+                totalMembers++;
+                const name = row.c[0].v;
+                const amount = row.c[1]?.v || 0;
+                const status = row.c[2]?.v || "UNPAID";
                 
-                list.innerHTML += `
-                    <div onclick="triggerVibrate(30); showMemberProfile('${m.name}')" class="split-tier-card cursor-pointer group">
-                        <div class="p-3 flex items-center justify-between">
-                            <div class="flex items-center gap-3 min-w-0">
-                                <div class="relative shrink-0">
-                                    <img src="${profilePic}" class="w-10 h-10 rounded-xl object-cover ring-1 ring-slate-700 group-hover:ring-emerald-400/85 transition-all">
-                                    <span class="absolute -bottom-1 -right-1 text-[8px] font-black bg-slate-900 text-emerald-400 border border-emerald-500/30 px-1 rounded-md">
-                                        ${memberId}
-                                    </span>
-                                </div>
-                                <div class="overflow-hidden min-w-0">
-                                    <p class="text-[12px] font-bold text-slate-100 uppercase tracking-wide truncate group-hover:text-emerald-300 transition-colors">${m.name}</p>
-                                    <span class="text-[9px] font-medium text-slate-400 uppercase tracking-wider block">${m.phone || 'Member'}</span>
-                                </div>
-                            </div>
-                            <span class="px-2 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-800/50 text-emerald-400 text-[9px] font-bold uppercase tracking-wider shrink-0">
-                                ${m.status || 'Active'}
-                            </span>
+                const isPaid = status.toUpperCase() === 'PAID';
+                if(isPaid) {
+                    total += amount;
+                    paidNum++;
+                } else {
+                    unpaidNum++;
+                }
+
+                const card = document.createElement('div');
+                card.className = "split-tier-card p-2.5 flex flex-col justify-between group";
+                card.innerHTML = `
+                    <div class="flex items-center justify-between mb-1.5">
+                        <span class="text-[9px] font-black text-slate-400 bg-slate-950/60 px-1.5 py-0.5 rounded border border-slate-800">#${idx + 1}</span>
+                        <span class="text-[8px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider ${isPaid ? 'bg-emerald-950/80 text-emerald-400 border border-emerald-800/60' : 'bg-rose-950/80 text-rose-400 border border-rose-800/60'}">
+                            ${status}
+                        </span>
+                    </div>
+                    <div class="mb-2 min-w-0">
+                        <h4 class="font-bold text-slate-100 text-[11px] truncate uppercase tracking-wide group-hover:text-emerald-300 transition-colors" title="${name}">${name}</h4>
+                    </div>
+                    <div class="bottom-tier -mx-2.5 -mb-2.5 px-2.5 py-1.5 flex items-center justify-between mt-auto">
+                        <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Amount</span>
+                        <span class="text-[10px] font-black text-emerald-400">Rs. ${amount.toLocaleString()}</span>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+
+            document.getElementById('total-collection').innerText = `Rs. ${total.toLocaleString()}`;
+            document.getElementById('paid-count').innerText = paidNum;
+            document.getElementById('unpaid-count').innerText = unpaidNum;
+
+            const targetAmount = totalMembers > 0 ? totalMembers * 500 : 10000;
+            const percentage = Math.min(Math.round((total / targetAmount) * 100), 100);
+            
+            document.getElementById('target-percent').innerText = `${percentage}% (${total.toLocaleString()}/${targetAmount.toLocaleString()})`;
+            document.getElementById('progress-bar-fill').style.width = `${percentage}%`;
+        }
+
+        loadDashboardData();
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            document.querySelectorAll('#member-list > div').forEach(card => {
+                const name = card.querySelector('h4').innerText.toLowerCase();
+                card.style.display = name.includes(term) ? 'flex' : 'none';
+            });
+        });
+
+        function downloadReportCard() {
+            const btn = document.getElementById('downloadBtn');
+            const modal = document.getElementById('downloadReportModal');
+            
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin text-[9px]"></i> <span>Generating...</span>`;
+
+            document.getElementById('reportModalMonth').innerText = currentMonthText;
+            
+            let total = 0;
+            let paidNum = 0;
+            let unpaidNum = 0;
+            let modalListHtml = '';
+            let validMemberCount = 0;
+
+            cachedRows.forEach((row, idx) => {
+                if(!row.c[0]) return;
+                validMemberCount++;
+                const name = row.c[0].v;
+                const amount = row.c[1]?.v || 0;
+                const status = row.c[2]?.v || "UNPAID";
+                const isPaid = status.toUpperCase() === 'PAID';
+
+                if(isPaid) {
+                    total += amount;
+                    paidNum++;
+                } else {
+                    unpaidNum++;
+                }
+
+                // 2-Column Grid Card for Report Modal
+                modalListHtml += `
+                    <div style="background: #ffffff; padding: 8px 10px; border-radius: 8px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 2px rgba(0,0,0,0.04);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
+                            <span style="font-size: 8px; font-weight: 800; color: #64748b; background: #f1f5f9; padding: 1px 5px; border-radius: 4px;">#${idx + 1}</span>
+                            <span style="font-size: 8px; font-weight: 800; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; ${isPaid ? 'background: #d1fae5; color: #065f46;' : 'background: #ffe4e6; color: #9f1239;'}">${status}</span>
                         </div>
-                        <div class="bottom-tier px-3.5 py-2 flex items-center justify-between">
-                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Fund Contributed</span>
-                            <div class="flex items-center gap-2">
-                                <span class="text-[12px] font-black text-emerald-400 tracking-tight">Rs. ${(m.fund || 0).toLocaleString()}</span>
-                                <i class="fas fa-chevron-right text-[10px] text-slate-500 group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-all"></i>
-                            </div>
+                        <div style="margin-bottom: 4px; overflow: hidden;">
+                            <span style="font-size: 10px; font-weight: 700; color: #0f172a; text-transform: uppercase; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${name}">${name}</span>
+                        </div>
+                        <div style="border-top: 1px solid #f1f5f9; padding-top: 4px; display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 7px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Amount</span>
+                            <span style="font-size: 9px; font-weight: 800; color: #059669;">Rs. ${amount}</span>
                         </div>
                     </div>
                 `;
             });
-        });
 
-        function showMemberProfile(name) {
-            const memberInfo = globalMainData.find(m => m.name && m.name.toString().trim() === name.trim());
-            const memberHistory = historyData.filter(row => {
-                const values = Object.values(row);
-                return values[0] && values[0].toString().trim() === name.trim();
-            });
+            document.getElementById('reportModalTotal').innerText = `Rs. ${total.toLocaleString()}`;
+            document.getElementById('reportModalPaid').innerText = paidNum;
+            document.getElementById('reportModalUnpaid').innerText = unpaidNum;
+            document.getElementById('reportModalTotalCount').innerText = validMemberCount;
+            document.getElementById('reportModalList').innerHTML = modalListHtml;
 
-            if(!memberInfo) return;
-            currentActiveMember = memberInfo;
-
-            document.getElementById('profile-modal-name').innerText = memberInfo.name;
-            document.getElementById('profile-modal-id').innerText = memberInfo["Member ID"] || 'FT-00';
-            document.getElementById('profile-modal-phone').innerHTML = `<i class="fas fa-phone-alt text-[9px] mr-1.5"></i>${memberInfo.phone || 'No Phone'}`;
-            document.getElementById('profile-modal-fund').innerText = "Rs. " + (memberInfo.fund || 0).toLocaleString();
-            
-            const profilePic = memberInfo.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(memberInfo.name)}&background=0f172a&color=34d399`;
-            document.getElementById('profile-modal-img').src = profilePic;
-            
-            const container = document.getElementById('history-data');
-            
-            if(memberHistory.length > 0) {
-                // If user clicks a member, we can also record this as the actively viewed/updated member in memory if needed, 
-                // or you can explicitly update it when checking their latest history row:
-                const latestMemberPayment = memberHistory[memberHistory.length - 1];
-                const vals = Object.values(latestMemberPayment);
-                const memName = vals[0];
-                const memMonth = vals[1] || 'Current Month';
-                const memAmt = parseInt(vals[2]) || 0;
-
-                // Save to localStorage so notification shows this exact member's latest activity
-                localStorage.setItem('ftcf_latest_payment', JSON.stringify({
-                    name: memName,
-                    month: memMonth,
-                    amount: memAmt
-                }));
-
-                container.innerHTML = memberHistory.map(row => {
-                    const values = Object.values(row);
-                    return `
-                        <div class="flex justify-between items-center text-xs border-b border-slate-800 pb-2 pt-1 text-slate-300">
-                            <span class="opacity-80 font-medium truncate pr-2">${values[1] || 'N/A'}</span>
-                            <span class="font-bold text-emerald-400 bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-800/60 shrink-0">Rs. ${values[2] ? parseInt(values[2]).toLocaleString() : 0}</span>
-                        </div>
-                    `;
-                }).join('');
-            } else {
-                container.innerHTML = '<p class="text-xs text-center text-slate-500 py-6">No history records found.</p>';
-            }
-            document.getElementById('modal').classList.remove('hidden');
-        }
-
-         function generateDigitalIDCard() {
-            if(!currentActiveMember) return;
-
-            const m = currentActiveMember;
-            const profilePic = m.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(m.name)}&background=0f172a&color=34d399`;
-            const memberId = m["Member ID"] || 'FT-00';
-            
-            let assignedStatus = 'Executive Member';
-            if (memberId === 'FT-01') assignedStatus = 'Secretary';
-            else if (memberId === 'FT-02') assignedStatus = 'Managing Director';
-            else if (memberId === 'FT-07') assignedStatus = 'General Secretary';
-
-            document.getElementById('card-template-name').innerText = m.name;
-            document.getElementById('card-template-id').innerText = memberId;
-            document.getElementById('card-template-status').innerText = assignedStatus;
-            document.getElementById('card-template-phone').innerHTML = `<i class="fas fa-phone-alt" style="font-size: 11px; margin-right: 6px; color: #34d399;"></i>${m.phone || 'No Phone'}`;
-            document.getElementById('card-template-img').src = profilePic;
-
-            const cardElement = document.getElementById('digital-id-card-template');
-
-            html2canvas(cardElement, {
+            html2canvas(modal, {
                 scale: 3,
-                backgroundColor: null,
-                useCORS: true
-            }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = `FTCF_ID_Card_${memberId}.png`;
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            }).catch(err => {
-                alert('Digital ID Card generation failed. Please try again.');
-            });
-        }
-
-        function openReportCardModal() {
-            const now = new Date();
-            const dateStr = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            document.getElementById('report-datetime').innerText = `Generated: ${dateStr} | ${timeStr}`;
-
-            let monthsSet = [...availableMonths];
-            if(monthsSet.length === 0) monthsSet = ['Current Month'];
-
-            const fromSelect = document.getElementById('filter-from-month');
-            const toSelect = document.getElementById('filter-to-month');
-            
-            fromSelect.innerHTML = monthsSet.map(m => `<option value="${m}">${m}</option>`).join('');
-            toSelect.innerHTML = monthsSet.map(m => `<option value="${m}">${m}</option>`).join('');
-
-            fromSelect.value = monthsSet[0];
-            toSelect.value = monthsSet[monthsSet.length - 1];
-
-            updateReportTable();
-            document.getElementById('report-modal').classList.remove('hidden');
-        }
-
-        function updateReportTable() {
-            const fromMonth = document.getElementById('filter-from-month').value;
-            const toMonth = document.getElementById('filter-to-month').value;
-
-            const fromIdx = availableMonths.indexOf(fromMonth);
-            const toIdx = availableMonths.indexOf(toMonth);
-
-            let selectedMonths = [];
-            if (fromIdx !== -1 && toIdx !== -1 && fromIdx <= toIdx) {
-                selectedMonths = availableMonths.slice(fromIdx, toIdx + 1);
-            } else if (fromIdx !== -1 && toIdx !== -1 && fromIdx > toIdx) {
-                selectedMonths = [fromMonth];
-            } else {
-                selectedMonths = availableMonths.length > 0 ? availableMonths : ['Current Month'];
-            }
-
-            const durationText = selectedMonths.length > 1 ? `${selectedMonths[0]} - ${selectedMonths[selectedMonths.length - 1]}` : selectedMonths[0];
-            document.getElementById('report-duration').innerText = durationText;
-
-            let tableHTML = `
-                <table class="w-full text-left border-collapse border border-slate-300 text-[10px]">
-                    <thead>
-                        <tr class="bg-emerald-800 text-white border-b border-slate-300">
-                            <th class="p-2 border-r border-slate-300 font-bold uppercase">Member Name</th>
-            `;
-            selectedMonths.forEach(m => {
-                tableHTML += `<th class="p-2 border-r border-slate-300 text-center font-bold uppercase">${m}</th>`;
-            });
-            tableHTML += `<th class="p-2 text-center font-bold uppercase">Total</th></tr></thead><tbody>`;
-
-            let overallRangeTotal = 0;
-            globalMainData.forEach((member, index) => {
-                let rowTotal = 0;
-                tableHTML += `<tr class="${index % 2 === 0 ? 'bg-slate-50' : 'bg-white'} border-b border-slate-200">`;
-                tableHTML += `<td class="p-2 border-r border-slate-300 font-bold text-slate-900 uppercase truncate max-w-[100px]">${member.name}</td>`;
-
-                selectedMonths.forEach(month => {
-                    const match = historyData.find(r => {
-                        const vals = Object.values(r);
-                        return vals[0] && vals[0].toString().trim() === member.name.trim() && vals[1] && vals[1].toString().trim() === month;
-                    });
-                    const amt = match ? (parseInt(Object.values(match)[2]) || 0) : 0;
-                    rowTotal += amt;
-                    tableHTML += `<td class="p-2 border-r border-slate-300 text-center text-slate-700 font-medium">${amt > 0 ? amt.toLocaleString() : '-'}</td>`;
-                });
-
-                overallRangeTotal += rowTotal;
-                tableHTML += `<td class="p-2 text-center font-black text-emerald-800 bg-emerald-50">${rowTotal.toLocaleString()}</td></tr>`;
-            });
-
-            tableHTML += `</tbody></table>`;
-            document.getElementById('report-table-container').innerHTML = tableHTML;
-            document.getElementById('report-badge-total').innerText = "Rs. " + overallRangeTotal.toLocaleString();
-            document.getElementById('report-modal-total').innerText = "Total: Rs. " + overallRangeTotal.toLocaleString();
-        }
-
-        function generateAndDownloadReportCard() {
-            const originalCard = document.getElementById('printable-card');
-            
-            const clone = originalCard.cloneNode(true);
-            clone.style.position = 'absolute';
-            clone.style.left = '-9999px';
-            clone.style.top = '0';
-            clone.style.width = '620px';
-            clone.style.maxHeight = 'none';
-            clone.style.overflow = 'visible';
-            clone.style.boxShadow = 'none';
-            
-            document.body.appendChild(clone);
-
-            html2canvas(clone, { 
-                scale: 3, 
-                backgroundColor: '#ffffff',
                 useCORS: true,
-                windowWidth: 800
+                backgroundColor: '#f8fafc'
             }).then(canvas => {
-                document.body.removeChild(clone);
-
                 const link = document.createElement('a');
-                link.download = `FTCF_Report_Card_${Date.now()}.png`;
+                link.download = `FTCF_Report_Card_${currentMonthText}.png`;
                 link.href = canvas.toDataURL('image/png');
                 link.click();
+                
+                btn.innerHTML = `<i class="fas fa-download text-[9px]"></i> <span>Report Card</span>`;
             }).catch(err => {
-                if(document.body.contains(clone)) document.body.removeChild(clone);
-                alert('Image generation failed. Please try again.');
+                console.error(err);
+                btn.innerHTML = `<i class="fas fa-download text-[9px]"></i> <span>Report Card</span>`;
+                alert('Download failed, please try again.');
             });
         }
     </script>
