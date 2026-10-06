@@ -204,7 +204,7 @@
                        class="w-full pl-9 pr-4 py-2.5 rounded-2xl bg-slate-900/90 border border-slate-800 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500/80 shadow-inner transition-all">
             </div>
 
-            <!-- Members List (Double Columns Clean List - No Containers) -->
+            <!-- Members List (Double Columns - No Numbers, Clear Name, Amount & Status) -->
             <div id="member-list" class="grid grid-cols-2 gap-x-4 gap-y-2.5 bg-slate-900/40 p-3.5 rounded-2xl border border-slate-800 max-h-[420px] overflow-y-auto">
                 <!-- Populated Dynamically -->
             </div>
@@ -216,7 +216,7 @@
         </div>
     </main>
 
-    <!-- Completely Redesigned Professional Report Card (Double Column, No Containers, Crisp Layout) -->
+    <!-- Professional Report Card (Double Column, No Numbers, Clear Names/Amounts/Status) -->
     <div id="downloadReportModal" style="position: fixed; left: -9999px; top: 0; width: 500px; background: #ffffff; color: #0f172a; font-family: 'Plus Jakarta Sans', sans-serif; padding: 28px; border-radius: 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.2);">
         
         <!-- Header Banner -->
@@ -248,15 +248,15 @@
                     </div>
                 </div>
             </div>
-    </div>
+        </div>
 
         <!-- Directory Header -->
         <div style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px;">
             <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: #334155; letter-spacing: 0.05em;">Members Directory (<span id="reportModalTotalCount">0</span>)</span>
-            <span style="font-size: 9px; font-weight: 700; color: #059669; text-transform: uppercase;">Status / Amount</span>
+            <span style="font-size: 9px; font-weight: 700; color: #059669; text-transform: uppercase;">Name / Amount / Status</span>
         </div>
 
-        <!-- Clean Double Column List (No Containers per name) -->
+        <!-- Clean Double Column List (No Numbers, Clear Layout) -->
         <div id="reportModalList" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; row-gap: 8px; margin-bottom: 20px;">
             <!-- Populated dynamically -->
         </div>
@@ -301,7 +301,7 @@
             let unpaidNum = 0;
             let totalMembers = 0;
 
-            rows.forEach((row, idx) => {
+            rows.forEach((row) => {
                 if(!row.c[0]) return;
                 totalMembers++;
                 const name = row.c[0].v;
@@ -319,9 +319,8 @@
                 const item = document.createElement('div');
                 item.className = "flex items-center justify-between py-1.5 border-b border-slate-800/60 min-w-0";
                 item.innerHTML = `
-                    <div class="flex items-center gap-2 min-w-0 pr-2">
-                        <span class="text-[9px] font-bold text-slate-500 shrink-0">#${idx + 1}</span>
-                        <span class="font-bold text-slate-200 text-[11px] truncate uppercase tracking-wide" title="${name}">${name}</span>
+                    <div class="min-w-0 pr-2">
+                        <span class="font-bold text-slate-100 text-[11px] truncate uppercase tracking-wide block" title="${name}">${name}</span>
                     </div>
                     <div class="flex items-center gap-2 shrink-0">
                         <span class="text-[10px] font-extrabold text-emerald-400">Rs. ${amount}</span>
@@ -368,7 +367,7 @@
             let modalListHtml = '';
             let validMemberCount = 0;
 
-            cachedRows.forEach((row, idx) => {
+            cachedRows.forEach((row) => {
                 if(!row.c[0]) return;
                 validMemberCount++;
                 const name = row.c[0].v;
@@ -383,12 +382,11 @@
                     unpaidNum++;
                 }
 
-                // Clean Double Column Item for Report Modal (No Container)
+                // Clean Double Column Item for Report Modal (No Numbers, Prominent Names)
                 modalListHtml += `
                     <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0; border-bottom: 1px solid #f1f5f9;">
-                        <div style="display: flex; align-items: center; gap: 6px; overflow: hidden; padding-right: 6px;">
-                            <span style="font-size: 8px; font-weight: 700; color: #94a3b8;">#${idx + 1}</span>
-                            <span style="font-size: 10px; font-weight: 700; color: #1e293b; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${name}">${name}</span>
+                        <div style="overflow: hidden; padding-right: 6px;">
+                            <span style="font-size: 10px; font-weight: 800; color: #0f172a; text-transform: uppercase; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${name}">${name}</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
                             <span style="font-size: 10px; font-weight: 800; color: #059669;">Rs. ${amount}</span>
