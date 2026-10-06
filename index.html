@@ -200,7 +200,7 @@
                     </button>
                 </div>
                 
-                <!-- Printable Card Container (Full scrollable height removed for clean full-card rendering) -->
+                <!-- Printable Card Container -->
                 <div id="printable-card" class="bg-slate-950 p-4 rounded-xl border border-slate-800 overflow-y-auto flex-1 text-[11px] max-h-[65vh]">
                     <div class="text-center mb-3 pb-2 border-b border-slate-800">
                         <h2 class="text-sm font-black text-white uppercase tracking-wider">Family Trust & Care Foundation</h2>
@@ -350,7 +350,8 @@
             const dateStr = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
             const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             document.getElementById('report-datetime').innerText = `Generated: ${dateStr} | ${timeStr}`;
-        let monthsSet = [];
+
+            let monthsSet = [];
             historyData.forEach(row => {
                 const vals = Object.values(row);
                 if(vals[1] && !monthsSet.includes(vals[1].toString().trim())) {
@@ -396,33 +397,36 @@
             document.getElementById('report-modal').classList.remove('hidden');
         }
 
-        // Fully Fixed Full-Card Image Capture Function
+        // 100% Fixed Full-Card Cloning & Export Handler
         function generateAndDownloadReportCard() {
-            const cardElement = document.getElementById('printable-card');
+            const originalCard = document.getElementById('printable-card');
             
-            // Temporarily expand height to capture full scrollable content cleanly without cropping
-            const originalHeight = cardElement.style.maxHeight;
-            cardElement.style.maxHeight = 'none';
-            cardElement.style.overflow = 'visible';
+            // Create a temporary clone container off-screen with full expansion
+            const clone = originalCard.cloneNode(true);
+            clone.style.position = 'absolute';
+            clone.style.left = '-9999px';
+            clone.style.top = '0';
+            clone.style.width = '600px'; // Fixed optimal width for card layout
+            clone.style.maxHeight = 'none';
+            clone.style.overflow = 'visible';
+            clone.style.boxShadow = 'none';
+            
+            document.body.appendChild(clone);
 
-            html2canvas(cardElement, { 
-                scale: 3, // Ultra-HD resolution for clear text on WhatsApp
+            html2canvas(clone, { 
+                scale: 3, // Ultra-HD resolution for WhatsApp clarity
                 backgroundColor: '#020617',
                 useCORS: true,
-                scrollX: 0,
-                scrollY: 0
+                windowWidth: 800
             }).then(canvas => {
-                // Restore original styles
-                cardElement.style.maxHeight = '65vh';
-                cardElement.style.overflow = 'y-auto';
+                document.body.removeChild(clone);
 
                 const link = document.createElement('a');
                 link.download = `FTCF_Report_Card_${Date.now()}.png`;
                 link.href = canvas.toDataURL('image/png');
                 link.click();
             }).catch(err => {
-                cardElement.style.maxHeight = '65vh';
-                cardElement.style.overflow = 'y-auto';
+                if(document.body.contains(clone)) document.body.removeChild(clone);
                 alert('Image generation failed. Please try again.');
             });
         }
