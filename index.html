@@ -79,10 +79,12 @@
         }
         #monthly-list::-webkit-scrollbar,
         #expenses-detail-list::-webkit-scrollbar,
-        #ramzan-content::-webkit-scrollbar { width: 4px; }
+        #ramzan-content::-webkit-scrollbar,
+        #report-result-content::-webkit-scrollbar { width: 4px; }
         #monthly-list::-webkit-scrollbar-thumb,
         #expenses-detail-list::-webkit-scrollbar-thumb,
-        #ramzan-content::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        #ramzan-content::-webkit-scrollbar-thumb,
+        #report-result-content::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
     </style>
 </head>
 <body class="pb-12 relative antialiased selection:bg-emerald-900 selection:text-emerald-200">
@@ -187,7 +189,8 @@
             </div>
         </div>
 
-        <div class="text-center opacity-40 text-[9px] font-black uppercase tracking-[0.25em] pt-4 text-slate-500">
+        <!-- Hidden Trigger Footer (Double Tap here to open Report Generator) -->
+        <div ondblclick="openReportModal()" class="text-center opacity-40 hover:opacity-100 transition-opacity cursor-pointer text-[9px] font-black uppercase tracking-[0.25em] pt-4 text-slate-500 select-none">
             @FTCF2026 Founder Mughal Brothers
         </div>
     </main>
@@ -239,13 +242,116 @@
             </button>
         </div>
     </div>
-       <!-- Script Engine -->
+
+    <!-- Hidden Report Generator Modal -->
+    <div id="report-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="glass-card rounded-3xl p-5 w-full max-w-md border border-slate-700/80 shadow-2xl relative overflow-hidden">
+            <div class="flex justify-between items-center mb-3 pb-2 border-b border-slate-800">
+                <div>
+                    <h3 class="text-sm font-black text-slate-100 flex items-center gap-2 uppercase tracking-wide">
+                        <span>📑</span> Custom Report Generator
+                    </h3>
+                    <p class="text-[11px] text-emerald-400 font-urdu font-semibold mt-0.5">مدت منتخب کریں اور رپورٹ تیار کریں</p>
+                </div>
+                <button onclick="toggleModal('report-modal', false)" class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white flex items-center justify-center text-sm font-bold transition-all">✕</button>
+            </div>
+            <div class="space-y-3 text-xs">
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-[10px] text-slate-400 uppercase font-bold mb-1">Start Month</label>
+                        <select id="report-start-month" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-slate-200 font-bold focus:outline-none focus:border-emerald-500">
+                            <option value="january">January</option>
+                            <option value="february">February</option>
+                            <option value="march">March</option>
+                            <option value="april">April</option>
+                            <option value="may">May</option>
+                            <option value="june">June</option>
+                            <option value="july" selected>July</option>
+                            <option value="august">August</option>
+                            <option value="september">September</option>
+                            <option value="october">October</option>
+                            <option value="november">November</option>
+                            <option value="december">December</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] text-slate-400 uppercase font-bold mb-1">End Month</label>
+                        <select id="report-end-month" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-slate-200 font-bold focus:outline-none focus:border-emerald-500">
+                            <option value="january">January</option>
+                            <option value="february">February</option>
+                            <option value="march">March</option>
+                            <option value="april">April</option>
+                            <option value="may">May</option>
+                            <option value="june">June</option>
+                            <option value="july">July</option>
+                            <option value="august">August</option>
+                            <option value="september" selected>September</option>
+                            <option value="october">October</option>
+                            <option value="november">November</option>
+                            <option value="december">December</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button onclick="generateReportCard()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black py-2.5 rounded-xl text-xs uppercase tracking-wider transition-all shadow-lg">
+                    Generate Report Card 🖨️
+                </button>
+            </div>
+
+            <!-- White Theme Report Output Area -->
+            <div id="report-result-container" class="hidden mt-4 pt-3 border-t border-slate-800 max-h-72 overflow-y-auto">
+                <!-- White Report Card -->
+                <div id="printable-report-card" class="bg-white text-slate-900 p-4 rounded-2xl shadow-xl space-y-3 font-sans text-xs">
+                    <div class="text-center border-b pb-2">
+                        <h2 class="font-black text-sm uppercase text-emerald-800">Family Trust & Care Foundation</h2>
+                        <p class="text-[10px] font-bold text-slate-600">Official Financial Audit Report Card</p>
+                        <p id="report-duration-label" class="text-[9px] font-mono text-slate-500 mt-1"></p>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-2 bg-slate-100 p-2 rounded-xl text-[11px]">
+                        <div>
+                            <span class="text-slate-500 block text-[9px] uppercase font-bold">Total Collection</span>
+                            <span id="rep-total-income" class="font-black text-emerald-700">Rs. 0</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-500 block text-[9px] uppercase font-bold">Total Expenses</span>
+                            <span id="rep-total-expense" class="font-black text-rose-700">Rs. 0</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="font-black text-[10px] uppercase text-slate-700 mb-1.5">Detailed Breakdown (Transactions & Expenses)</h4>
+                        <div id="rep-details-list" class="space-y-1.5 max-h-40 overflow-y-auto pr-1">
+                            <!-- Items inserted dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="text-center pt-2 border-t text-[8px] text-slate-400 font-mono">
+                        Generated securely via FTCF 2026 System
+                    </div>
+                </div>
+
+                <div class="flex gap-2 mt-3">
+                    <button onclick="printReportCard()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-2 rounded-xl text-xs uppercase transition-all">
+                        Print / Save PDF 📄
+                    </button>
+                    <button onclick="toggleModal('report-modal', false)" class="px-4 bg-rose-950 text-rose-300 font-bold py-2 rounded-xl text-xs uppercase transition-all">
+                        Close
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Script Engine -->
     <script>
         const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6wLoB92RkkkAwO_IC6Bx-8Si5lYfpMpdtRo_e_9RB1DnceQ4aG-5_Cs9QWENrY_ZP9L7MF6psgGwD/pub?gid=0&single=true&output=csv";
         const EXPENSES_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6wLoB92RkkkAwO_IC6Bx-8Si5lYfpMpdtRo_e_9RB1DnceQ4aG-5_Cs9QWENrY_ZP9L7MF6psgGwD/pub?gid=762274826&single=true&output=csv";
         const RAMZAN_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRZ93s9o0iygZgHmzA0Z2JG7Wb_efFRi7AdifVoYjv3_nsNM_4OdvnUTyRzn9BdKskJzi43lCYDI4eW/pub?gid=0&single=true&output=csv";
         
         let sheetExpenses = [];
+        let mainLedgerRows = [];
 
         function toggleModal(modalId, show) {
             const modal = document.getElementById(modalId);
@@ -256,6 +362,85 @@
         function openExpensesModal() {
             renderExpensesList();
             toggleModal('expenses-modal', true);
+        }
+
+        function openReportModal() {
+            document.getElementById('report-result-container').classList.add('hidden');
+            toggleModal('report-modal', true);
+        }
+
+        const monthsOrder = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
+
+        function generateReportCard() {
+            const startM = document.getElementById('report-start-month').value;
+            const endM = document.getElementById('report-end-month').value;
+            
+            let startIndex = monthsOrder.indexOf(startM);
+            let endIndex = monthsOrder.indexOf(endM);
+
+            if(startIndex > endIndex) {
+                alert("Start month cannot be after end month!");
+                return;
+            }
+
+            let activeMonths = monthsOrder.slice(startIndex, endIndex + 1);
+
+            let totalIncomeRange = 0;
+            let totalExpenseRange = 0;
+            let reportHtml = "";
+
+            // Filter Main Ledger Income
+            mainLedgerRows.forEach(row => {
+                if(!row[0]) return;
+                let mName = row[0].toLowerCase();
+                let matched = activeMonths.some(am => mName.includes(am));
+                if(matched) {
+                    let b = parseFloat(row[1]?.replace(/,/g, '')) || 0;
+                    totalIncomeRange += b;
+                    reportHtml += `
+                    <div class="bg-slate-50 p-2 rounded border flex justify-between items-center text-[10px]">
+                        <div>
+                            <span class="font-bold uppercase text-slate-800">${row[0]}</span>
+                            <span class="block text-[8px] text-emerald-600 font-mono">Income Collection</span>
+                        </div>
+                        <span class="font-black text-emerald-700">+Rs. ${b.toLocaleString()}</span>
+                    </div>`;
+                }
+            });
+
+            // Filter Expenses within range
+            sheetExpenses.forEach(exp => {
+                let dateStr = (exp.date || '').toLowerCase();
+                let matched = activeMonths.some(am => dateStr.includes(am));
+                if(matched) {
+                    let netImpact = (exp.amount || 0) - (exp.paid || 0);
+                    totalExpenseRange += netImpact;
+                    reportHtml += `
+                    <div class="bg-slate-50 p-2 rounded border flex justify-between items-center text-[10px]">
+                        <div>
+                            <span class="font-bold uppercase text-slate-800">${exp.title || 'Expense'}</span>
+                            <span class="block text-[8px] text-slate-500">${exp.details || 'N/A'} | 📅 ${exp.date}</span>
+                        </div>
+                        <span class="font-black text-rose-700">-Rs. ${netImpact.toLocaleString()}</span>
+                    </div>`;
+                }
+            });
+
+            document.getElementById('report-duration-label').innerText = `Duration: ${startM.toUpperCase()} TO ${endM.toUpperCase()} 2026`;
+            document.getElementById('rep-total-income').innerText = "Rs. " + totalIncomeRange.toLocaleString();
+            document.getElementById('rep-total-expense').innerText = "Rs. " + totalExpenseRange.toLocaleString();
+            document.getElementById('rep-details-list').innerHTML = reportHtml || "<p class='text-center text-slate-400 py-2'>No records found in this duration.</p>";
+
+            document.getElementById('report-result-container').classList.remove('hidden');
+        }
+
+        function printReportCard() {
+            const printContent = document.getElementById('printable-report-card').innerHTML;
+            const originalBody = document.body.innerHTML;
+            document.body.innerHTML = `<div style="padding: 20px; background: white; color: black;">${printContent}</div>`;
+            window.print();
+            document.body.innerHTML = originalBody;
+            window.location.reload();
         }
 
         function renderExpensesList() {
@@ -317,11 +502,9 @@
                 .then(res => res.text())
                 .then(csvText => {
                     if(csvText.includes('<!DOCTYPE html>') || csvText.includes('Google Docs')) {
-                        console.warn("Google Sheets rate limit hit for expenses.");
                         loadMainLedgerData();
                         return;
                     }
-                    // Using header: false to bypass header name mismatches or hidden BOM characters
                     Papa.parse(csvText, {
                         header: false,
                         dynamicTyping: true,
@@ -346,7 +529,6 @@
                         }
                     });
                 }).catch(e => { 
-                    console.error("Expenses fetch error:", e);
                     loadMainLedgerData(); 
                 });
         }
@@ -359,7 +541,7 @@
                 .then(res => res.text())
                 .then(data => {
                     if(data.includes('<!DOCTYPE html>') || data.includes('Google Docs')) {
-                        document.getElementById('monthly-list').innerHTML = `<p class="text-center text-xs text-amber-400 font-bold py-4">Google Sheets traffic high hai. Baraye meharbani aik mint baad dobara refresh karein.</p>`;
+                        document.getElementById('monthly-list').innerHTML = `<p class="text-center text-xs text-amber-400 font-bold py-4">Google Sheets traffic high hai.</p>`;
                         return;
                     }
 
@@ -367,6 +549,7 @@
                     const list = document.getElementById('monthly-list');
                     let totalB = 0;
                     let htmlContent = "";
+                    mainLedgerRows = [];
 
                     let monthlyExpenses = {};
                     sheetExpenses.forEach(exp => {
@@ -375,21 +558,20 @@
                         let paidAmt = exp.paid || 0;
                         let netExpImpact = amt - paidAmt;
 
-                        const monthsList = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
-                        monthsList.forEach(m => {
+                        monthsOrder.forEach(m => {
                             if(dateStr.includes(m)) {
                                 if(!monthlyExpenses[m]) monthlyExpenses[m] = 0;
                                 monthlyExpenses[m] += netExpImpact;
                             }
                         });
                     });
-
-                    for(let i = 1; i < rows.length; i++) {
+        for(let i = 1; i < rows.length; i++) {
                         const row = rows[i];
                         if(!row.trim()) continue;
                         
                         const cols = row.split(',').map(c => c.replace(/"/g, '').trim());
                         if(cols[0]) {
+                            mainLedgerRows.push(cols);
                             const monthName = cols[0].toLowerCase();
                             const b = parseFloat(cols[1]?.replace(/,/g, '')) || 0;
                             const status = cols[3] || 'Live';
