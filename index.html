@@ -78,6 +78,32 @@
     }
     .hidden { display: none !important; }
     .flex-row { display: flex; justify-content: space-between; align-items: center; }
+    
+    /* FAQ Accordion Styling */
+    .faq-item {
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        border-radius: 12px;
+        margin-bottom: 8px;
+        overflow: hidden;
+    }
+    .faq-question {
+        padding: 10px 12px;
+        font-size: 11px;
+        font-weight: 700;
+        color: #34d399;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .faq-answer {
+        padding: 10px 12px;
+        font-size: 11px;
+        color: #cbd5e1;
+        border-top: 1px dashed rgba(16, 185, 129, 0.2);
+        background: rgba(15, 23, 42, 0.5);
+    }
   </style>
 </head>
 <body>
@@ -133,6 +159,66 @@
             <p>فاؤنڈیشن کا پورا ریکارڈ آن لائن اور مینوئل دونوں شکل میں موجود ہو گا۔</p>
             <p style="color: #fb7185; font-weight: bold;">ڈیتھ کے علاوہ کسی بھی قسم کے فنڈ کے لیے نیچے دیے گئے فارم کو فل کر کے سبمٹ کریں۔</p>
             <p style="text-align: left; font-weight: bold; color: #34d399; margin-top: 6px;">شکریہ!<br>ایف ٹی سی ایف مینجمنٹ</p>
+        </div>
+    </div>
+
+    <!-- FAQ SECTION (Pure Urdu) -->
+    <div class="glass-card">
+        <div class="flex-row" style="margin-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px;">
+            <span style="font-size: 9px; color: #cbd5e1; font-weight: bold; background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 10px;">معلومات</span>
+            <h3 style="font-size: 14px; font-weight: 900; color: #34d399; text-transform: uppercase;"><i class="fas fa-question-circle"></i> اکثر پوچھے گئے سوالات (FAQ)</h3>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+            <!-- FAQ 1 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span><i class="fas fa-chevron-down" style="font-size: 9px; margin-left: 6px;"></i> فاؤنڈیشن سے لون کے لیے کون اپلائی کر سکتا ہے؟</span>
+                </div>
+                <div class="faq-answer urdu-text hidden">
+                    فاؤنڈیشن کا ہر رجسٹرڈ ممبر قواعد و شرائط پر پورا اترنے کے بعد لون کے لیے اپلائی کر سکتا ہے۔
+                </div>
+            </div>
+
+            <!-- FAQ 2 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span><i class="fas fa-chevron-down" style="font-size: 9px; margin-left: 6px;"></i> اقساط کی واپسی کا کیا طریقہ کار ہے؟</span>
+                </div>
+                <div class="faq-answer urdu-text hidden">
+                    طے شدہ مہینوں کے اندر آسان ماہانہ اقساط کے ذریعے رقم واپس جمع کرانی ہوگی۔
+                </div>
+            </div>
+
+            <!-- FAQ 3 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span><i class="fas fa-chevron-down" style="font-size: 9px; margin-left: 6px;"></i> کیا ڈیتھ فنڈ واپس کرنا پڑتا ہے؟</span>
+                </div>
+                <div class="faq-answer urdu-text hidden">
+                    جی نہیں، قواعد کے مطابق ڈیتھ فنڈ ناقابلِ واپسی ہوتا ہے۔
+                </div>
+            </div>
+
+            <!-- FAQ 4 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span><i class="fas fa-chevron-down" style="font-size: 9px; margin-left: 6px;"></i> قسط کیسے جمع ہو گی؟</span>
+                </div>
+                <div class="faq-answer urdu-text hidden">
+                    قسط ہر مہینے کی پیمنٹ کے ساتھ جمع کروانی ہو گی۔
+                </div>
+            </div>
+
+            <!-- FAQ 5 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span><i class="fas fa-chevron-down" style="font-size: 9px; margin-left: 6px;"></i> کیا جس ممبر نے پہلے ہی لون لیا ہوا ہے وہ اور لون لینے کا حقدار ہو گا؟</span>
+                </div>
+                <div class="faq-answer urdu-text hidden">
+                    جی نہیں، پہلے لیے ہوئے لون کی تمام اقساط جمع کروانا ضروری ہے۔
+                </div>
+            </div>
         </div>
     </div>
 
@@ -214,6 +300,13 @@
             if(box) box.classList.toggle('hidden');
         }
 
+        function toggleFaq(element) {
+            var answer = element.nextElementSibling;
+            if(answer) {
+                answer.classList.toggle('hidden');
+            }
+        }
+
         function handleApplication() {
             var n = document.getElementById('uName').value.trim();
             var a = Number(document.getElementById('uAmount').value);
@@ -278,4 +371,5 @@
         }
     </script>
 </body>
-</html>
+  </html>
+  
