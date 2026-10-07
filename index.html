@@ -123,7 +123,7 @@
             <div class="flex justify-between items-start mb-1">
                 <div>
                     <p class="text-[10px] font-black tracking-[0.2em] text-slate-300 uppercase">Net Reserve Balance</p>
-                    <p class="text-xs text-emerald-300/90 font-urdu font-semibold mt-0.5">کل دستیاب فنڈز</p>
+                    <p class="text-xs text-emerald-300/90 font-urdu font-semibold mt-0.5">کل دستیاب فنڈز (بشمول واپسی)</p>
                 </div>
                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Active</span>
             </div>
@@ -134,7 +134,7 @@
 
             <div class="mt-4 pt-3 border-t border-white/10">
                 <div class="flex justify-between text-[10px] font-bold mb-1.5">
-                    <span class="text-slate-300 uppercase tracking-wider">Expense Ratio</span>
+                    <span class="text-slate-300 uppercase tracking-wider">Net Expense Ratio</span>
                     <span id="expense-percentage" class="text-emerald-400 font-mono">0%</span>
                 </div>
                 <div class="w-full h-2 bg-slate-950 rounded-full overflow-hidden p-0.5 border border-white/10">
@@ -159,7 +159,7 @@
             <!-- Clickable Total Expense Card -->
             <div onclick="openExpensesModal()" class="glass-card p-3.5 rounded-2xl flex flex-col justify-between border-l-4 border-l-rose-500 cursor-pointer hover:bg-slate-800/80 transition-all group">
                 <div class="flex items-center justify-between mb-1">
-                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider group-hover:text-rose-400 transition-colors">Total Expense 📋</span>
+                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider group-hover:text-rose-400 transition-colors">Net Expense 📋</span>
                     <span class="w-5 h-5 rounded-md bg-rose-950 text-rose-400 font-black text-xs flex items-center justify-center border border-rose-800">↑</span>
                 </div>
                 <h3 id="total-expenses" class="text-base font-extrabold text-slate-100 tracking-tight my-1">
@@ -240,9 +240,8 @@
         </div>
     </div>
 
-    <!-- Script Engine -->
+      <!-- Script Engine -->
     <script>
-        // Configured Links with your exact GIDs
         const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6wLoB92RkkkAwO_IC6Bx-8Si5lYfpMpdtRo_e_9RB1DnceQ4aG-5_Cs9QWENrY_ZP9L7MF6psgGwD/pub?gid=0&single=true&output=csv";
         const EXPENSES_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6wLoB92RkkkAwO_IC6Bx-8Si5lYfpMpdtRo_e_9RB1DnceQ4aG-5_Cs9QWENrY_ZP9L7MF6psgGwD/pub?gid=762274826&single=true&output=csv";
         const RAMZAN_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRZ93s9o0iygZgHmzA0Z2JG7Wb_efFRi7AdifVoYjv3_nsNM_4OdvnUTyRzn9BdKskJzi43lCYDI4eW/pub?gid=0&single=true&output=csv";
@@ -270,12 +269,12 @@
             }
 
             sheetExpenses.forEach((item) => {
-                let title = item.Title || 'Expense';
-                let date = item.Date || 'N/A';
-                let amount = parseFloat(item.Amount) || 0;
-                let details = item.Details || '';
-                let paid = parseFloat(item.Paid) || 0;
-                let remaining = parseFloat(item.Remaining) || (amount - paid);
+                let title = item.Title || item.title || 'Expense';
+                let date = item.Date || item.date || 'N/A';
+                let amount = parseFloat(item.Amount || item.amount) || 0;
+                let details = item.Details || item.details || '';
+                let paid = parseFloat(item.Paid || item.paid) || 0;
+                let remaining = parseFloat(item.Remaining || item.remaining) || (amount - paid);
 
                 html += `
                 <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800 space-y-2">
@@ -289,23 +288,21 @@
                         </span>
                     </div>`;
 
-                if(details || paid > 0 || remaining > 0) {
-                    html += `
-                    <div class="pt-2 border-t border-slate-800/80 grid grid-cols-3 gap-2 text-[10px]">
-                        <div class="bg-slate-950/60 p-1.5 rounded border border-slate-800/50">
-                            <span class="text-slate-400 block text-[8px] uppercase">Details/Tenure</span>
-                            <span class="font-bold text-slate-200">${details || 'N/A'}</span>
-                        </div>
-                        <div class="bg-slate-950/60 p-1.5 rounded border border-slate-800/50">
-                            <span class="text-emerald-400 block text-[8px] uppercase">Paid Back</span>
-                            <span class="font-bold text-emerald-300">Rs. ${paid.toLocaleString()}</span>
-                        </div>
-                        <div class="bg-slate-950/60 p-1.5 rounded border border-slate-800/50">
-                            <span class="text-amber-400 block text-[8px] uppercase">Remaining</span>
-                            <span class="font-bold text-amber-300">Rs. ${remaining.toLocaleString()}</span>
-                        </div>
-                    </div>`;
-                }
+                html += `
+                <div class="pt-2 border-t border-slate-800/80 grid grid-cols-3 gap-2 text-[10px]">
+                    <div class="bg-slate-950/60 p-1.5 rounded border border-slate-800/50">
+                        <span class="text-slate-400 block text-[8px] uppercase">Details/Tenure</span>
+                        <span class="font-bold text-slate-200">${details || 'N/A'}</span>
+                    </div>
+                    <div class="bg-slate-950/60 p-1.5 rounded border border-slate-800/50">
+                        <span class="text-emerald-400 block text-[8px] uppercase">Paid Back</span>
+                        <span class="font-bold text-emerald-300">Rs. ${paid.toLocaleString()}</span>
+                    </div>
+                    <div class="bg-slate-950/60 p-1.5 rounded border border-slate-800/50">
+                        <span class="text-amber-400 block text-[8px] uppercase">Remaining</span>
+                        <span class="font-bold text-amber-300">Rs. ${remaining.toLocaleString()}</span>
+                    </div>
+                </div>`;
 
                 html += `</div>`;
             });
@@ -330,7 +327,7 @@
                         dynamicTyping: true,
                         complete: function(results) {
                             if(results.data && results.data.length > 0) {
-                                sheetExpenses = results.data.filter(row => row.Title || row.Amount);
+                                sheetExpenses = results.data.filter(row => (row.Title || row.title || row.Amount || row.amount));
                             }
                             loadMainLedgerData();
                         }
@@ -358,15 +355,36 @@
                     let totalB = 0;
                     let htmlContent = "";
 
+                    // Map expenses by month/date string for matching
+                    let monthlyExpenses = {};
+                    sheetExpenses.forEach(exp => {
+                        let dateStr = (exp.Date || exp.date || '').toLowerCase();
+                        let amt = parseFloat(exp.Amount || exp.amount) || 0;
+                        let paidAmt = parseFloat(exp.Paid || exp.paid) || 0;
+                        let netExpImpact = amt - paidAmt; // Net remaining expense affecting reserve
+
+                        // Match month names in the expense date
+                        const monthsList = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
+                        monthsList.forEach(m => {
+                            if(dateStr.includes(m)) {
+                                if(!monthlyExpenses[m]) monthlyExpenses[m] = 0;
+                                monthlyExpenses[m] += netExpImpact;
+                            }
+                        });
+                    });
+
                     for(let i = 1; i < rows.length; i++) {
                         const row = rows[i];
                         if(!row.trim()) continue;
                         
                         const cols = row.split(',').map(c => c.replace(/"/g, '').trim());
                         if(cols[0]) {
+                            const monthName = cols[0].toLowerCase();
                             const b = parseFloat(cols[1]?.replace(/,/g, '')) || 0;
                             const status = cols[3] || 'Live';
                             totalB += b;
+
+                            let mExpense = monthlyExpenses[monthName] || 0;
 
                             htmlContent += `
                             <div class="glass-card p-3.5 rounded-2xl border border-slate-800/80 flex justify-between items-center">
@@ -380,22 +398,31 @@
                                     </div>
                                 </div>
                                 <div class="text-right">
-                                    <p class="text-emerald-400 font-extrabold text-xs">+Rs. ${b.toLocaleString()}</p>
-                                </div>
-                            </div>`;
+                                    <p class="text-emerald-400 font-extrabold text-xs">+Rs. ${b.toLocaleString()}</p>`;
+                            
+                            if(mExpense > 0) {
+                                htmlContent += `<p class="text-rose-400 font-bold text-[10px]">-Rs. ${mExpense.toLocaleString()} Exp</p>`;
+                            }
+
+                            htmlContent += `</div></div>`;
                         }
                     }
 
                     list.innerHTML = htmlContent || "<p class='text-center text-xs text-slate-500 py-4'>No data found.</p>";
                     
-                    let finalTotalExpenses = sheetExpenses.reduce((acc, curr) => acc + (parseFloat(curr.Amount) || 0), 0);
-                    const netSavings = totalB - finalTotalExpenses;
+                    // Calculate total raw expenses and total paid back
+                    let grossExpenses = sheetExpenses.reduce((acc, curr) => acc + (parseFloat(curr.Amount || curr.amount) || 0), 0);
+                    let totalPaidBack = sheetExpenses.reduce((acc, curr) => acc + (parseFloat(curr.Paid || curr.paid) || 0), 0);
+                    
+                    // Net expense is Gross Expenses minus Paid Back amount (so when paid back increases, net expense decreases and reserve balance increases automatically)
+                    let netExpenses = grossExpenses - totalPaidBack;
+                    const netSavings = totalB - netExpenses;
                     
                     document.getElementById('total-balance').innerText = "Rs. " + totalB.toLocaleString();
-                    document.getElementById('total-expenses').innerText = "Rs. " + finalTotalExpenses.toLocaleString();
+                    document.getElementById('total-expenses').innerText = "Rs. " + netExpenses.toLocaleString();
                     document.getElementById('net-savings').innerText = "Rs. " + netSavings.toLocaleString();
 
-                    const expPercentage = totalB > 0 ? Math.min(Math.round((finalTotalExpenses / totalB) * 100), 100) : 0;
+                    const expPercentage = totalB > 0 ? Math.min(Math.round((netExpenses / totalB) * 100), 100) : 0;
                     document.getElementById('expense-percentage').innerText = expPercentage + "%";
                     document.getElementById('expense-progress-bar').style.width = expPercentage + "%";
 
@@ -408,10 +435,8 @@
                 });
         }
 
-        // Run Dashboard Initialization
         initDashboard();
 
-        // Fetch Ramzan Vision Data
         fetch(RAMZAN_CSV_URL)
             .then(res => res.text())
             .then(data => {
