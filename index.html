@@ -22,7 +22,7 @@
         max-width: 480px;
         margin: 0 auto;
     }
-    .urdu-text { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.2; direction: rtl; }
+    .urdu-text { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.2; direction: rtl; text-align: right; }
     
     .bank-gradient { 
         background: linear-gradient(135deg, rgba(6, 78, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
@@ -82,38 +82,37 @@
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- Header (Badge removed as requested) -->
     <header class="flex-row" style="padding-bottom: 16px; border-bottom: 1px solid #1e293b; margin-bottom: 16px;">
         <div>
           <span style="font-size: 10px; font-weight: 900; color: #34d399; letter-spacing: 1px;">2026-2027 FISCAL PORTAL</span>
           <h1 style="font-size: 18px; font-weight: 900; text-transform: uppercase;">Rules & Shrait</h1>
         </div>
-        <div style="font-size: 9px; color: #34d399; background: #064e3b; padding: 6px 10px; border-radius: 12px; font-weight: bold;">PORTAL LIVE</div>
     </header>
 
-    <!-- Fund Allocation Section (Replaced old stats & loantakers with Qawaid and Shrait Scrollable Container) -->
+    <!-- Qawaid and Shrait Section in Pure Urdu -->
     <div class="glass-card bank-gradient" style="margin-bottom: 16px;">
         <div class="flex-row" style="margin-bottom: 12px; border-bottom: 1px solid rgba(16, 185, 129, 0.3); padding-bottom: 8px;">
-            <h3 style="font-size: 14px; font-weight: 900; color: #34d399; text-transform: uppercase;"><i class="fas fa-scroll"></i> Qawaid and Shrait</h3>
             <span style="font-size: 9px; color: #cbd5e1; font-weight: bold; background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 10px;">FTCF Official</span>
+            <h3 style="font-size: 14px; font-weight: 900; color: #34d399; text-transform: uppercase;"><i class="fas fa-scroll"></i> قواعد و شرائط</h3>
         </div>
 
         <!-- Scrollable Urdu Rules Container -->
-        <div class="urdu-text" style="max-height: 280px; overflow-y: auto; padding-right: 6px; font-size: 12px; color: #e2e8f0; display: flex; flex-direction: column; gap: 10px;">
-            <p><strong>1. Death Fund:</strong> ke liye jari kiye gaya fund Naqabil e Wapis ho ga. Jo members se ni liya jay ga.</p>
-            <p><strong>2. Medical Fund:</strong> ke liye Jari ki gai Raqam Loan ho gi foundation k mustahkam hone tak jo k teh shuda Maheeno me iksaat me wapis pay katni ho gi.</p>
-            <p><strong>3. Marriage:</strong> ke liye koi b Member Fund Apply kar sakta hai. Jo k Account ka jaiza lene k bad usy loan k tour per di jay gi.</p>
-            <p><strong>4. Reserve Fund:</strong> kisi b emergency surtehal se nipatne k liye hamesha reserve rahe gi.</p>
+        <div class="urdu-text" style="max-height: 280px; overflow-y: auto; padding-left: 6px; font-size: 12px; color: #e2e8f0; display: flex; flex-direction: column; gap: 10px;">
+            <p><strong>۱. ڈیتھ فنڈ:</strong> کے لیے جاری کیا گیا فنڈ ناقابلِ واپسی ہو گا، جو ممبران سے نہیں لیا جائے گا۔</p>
+            <p><strong>۲. میڈیکل فنڈ:</strong> کے لیے جاری کی گئی رقم لون ہو گی فاؤنڈیشن کے مستحکم ہونے تک، جو کہ طے شدہ مہینوں میں اقساط میں واپس ادا کرنی ہو گی۔</p>
+            <p><strong>۳. شادی (Marriage):</strong> کے لیے کوئی بھی ممبر فنڈ اپلائی کر سکتا ہے، جو کہ اکاؤنٹ کا جائزہ لینے کے بعد اسے لون کے طور پر دی جائے گی۔</p>
+            <p><strong>۴. ریزرو فنڈ:</strong> کسی بھی ہنگامی صورتحال سے نمٹنے کے لیے ہمیشہ ریزرو رہے گا۔</p>
             
             <div style="border-top: 1px dashed rgba(16, 185, 129, 0.3); padding-top: 8px; margin-top: 4px;">
-                <p style="color: #34d399; font-weight: 700;">Time period:</p>
-                <p>Yah Tamam Catagories Waqat k sath sath unlock ki jayn gi aur har rule tamam members par lagu ho ga. Aur sare rules b sab members ki mashawrat se teh hon gay.</p>
+                <p style="color: #34d399; font-weight: 700;">وقت کا دورانیہ (Time Period):</p>
+                <p>یہ تمام کیٹیگریز وقت کے ساتھ ساتھ انلاک کی جائیں گی اور ہر رول تمام ممبران پر لاگو ہو گا۔ اور سارے رولز بھی سب ممبران کی مشاورت سے طے ہوں گے۔</p>
             </div>
 
-            <p>Ham ne in charo catagories ko mundarjazel percentage ke hisab se divide kiya hai.</p>
-            <p>Foundation ka pora record online aur manual dono shakal mein mojood ho ga.</p>
-            <p style="color: #fb7185; font-weight: bold;">Death ke elawa kisi b qisam ke Fund ke liye neche diye gay Form ko fill kar ke submit karin.</p>
-            <p style="text-align: right; font-weight: bold; color: #34d399; margin-top: 6px;">Shukriya!<br>FTCF Management</p>
+            <p>ہم نے ان چاروں کیٹیگریز کو مندرجہ ذیل پرسنٹیج کے حساب سے تقسیم کیا ہے۔</p>
+            <p>فاؤنڈیشن کا پورا ریکارڈ آن لائن اور مینوئل دونوں شکل میں موجود ہو گا۔</p>
+            <p style="color: #fb7185; font-weight: bold;">ڈیتھ کے علاوہ کسی بھی قسم کے فنڈ کے لیے نیچے دیے گئے فارم کو فل کر کے سبمٹ کریں۔</p>
+            <p style="text-align: left; font-weight: bold; color: #34d399; margin-top: 6px;">شکریہ!<br>ایف ٹی سی ایف مینجمنٹ</p>
         </div>
     </div>
 
@@ -124,8 +123,8 @@
             <span>Read Full Mission & Vision</span>
         </button>
         
-        <div id="missionBox" class="glass-card urdu-text hidden" style="margin-top: 10px; max-height: 200px; overflow-y: auto; font-size: 12px; color: #e2e8f0;">
-            <p>ہمارا عزم ہے کہ ہم نے اپنے علاقے میں "فیملی ٹرسٹ" کو ایک مثالی نیٹ ورک بنانا ہے۔ یہ ہم سب ممبران کی اپنی مشترکہ فاؤنڈیشن hai.</p>
+        <div id="missionBox" class="glass-card urdu-text hidden" style="margin-top: 10px; max-height: 200px; overflow-y: auto; font-size: 12px; color: #e2e8f0; text-align: right;">
+            <p>ہمارا عزم ہے کہ ہم نے اپنے علاقے میں "فیملی ٹرسٹ" کو ایک مثالی نیٹ ورک بنانا ہے۔ یہ ہم سب ممبران کی اپنی مشترکہ فاؤنڈیشن ہے۔</p>
         </div>
     </div>
 
