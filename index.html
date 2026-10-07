@@ -85,12 +85,12 @@
     <!-- Header -->
     <header class="flex-row" style="padding-bottom: 16px; border-bottom: 1px solid #1e293b; margin-bottom: 16px;">
         <div>
-          <span style="font-size: 10px; font-weight: 900; color: #34d399; letter-spacing: 1px;">Foundation Catagories</span>
-          <h1 style="font-size: 18px; font-weight: 900; text-transform: uppercase;">Mughal Network System</h1>
+          <span style="font-size: 10px; font-weight: 900; color: #34d399; letter-spacing: 1px;">2026-2027 FISCAL PORTAL</span>
+          <h1 style="font-size: 18px; font-weight: 900; text-transform: uppercase;">Rules & Shrait</h1>
         </div>
     </header>
 
-    <!-- Qawaid and Shrait Section with Fund Allocation in Pure Urdu -->
+    <!-- Qawaid and Shrait Section with Fund Allocations & Status in Pure Urdu -->
     <div class="glass-card bank-gradient" style="margin-bottom: 16px;">
         <div class="flex-row" style="margin-bottom: 12px; border-bottom: 1px solid rgba(16, 185, 129, 0.3); padding-bottom: 8px;">
             <span style="font-size: 9px; color: #cbd5e1; font-weight: bold; background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 10px;">FTCF Official</span>
@@ -98,7 +98,7 @@
         </div>
 
         <!-- Scrollable Urdu Rules Container -->
-        <div class="urdu-text" style="max-height: 320px; overflow-y: auto; padding-left: 6px; font-size: 12px; color: #e2e8f0; display: flex; flex-direction: column; gap: 10px;">
+        <div class="urdu-text" style="max-height: 360px; overflow-y: auto; padding-left: 6px; font-size: 12px; color: #e2e8f0; display: flex; flex-direction: column; gap: 10px;">
             <p><strong>۱. ڈیتھ فنڈ:</strong> کے لیے جاری کیا گیا فنڈ ناقابلِ واپسی ہو گا، جو ممبران سے نہیں لیا جائے گا۔</p>
             <p><strong>۲. میڈیکل فنڈ:</strong> کے لیے جاری کی گئی رقم لون ہو گی فاؤنڈیشن کے مستحکم ہونے تک، جو کہ طے شدہ مہینوں میں اقساط میں واپس ادا کرنی ہو گی۔</p>
             <p><strong>۳. شادی (Marriage):</strong> کے لیے کوئی بھی ممبر فنڈ اپلائی کر سکتا ہے، جو کہ اکاؤنٹ کا جائزہ لینے کے بعد اسے لون کے طور پر دی جائے گی۔</p>
@@ -109,10 +109,25 @@
                 <p>یہ تمام کیٹیگریز وقت کے ساتھ ساتھ انلاک کی جائیں گی اور ہر رول تمام ممبران پر لاگو ہو گا۔ اور سارے رولز بھی سب ممبران کی مشاورت سے طے ہوں گے۔</p>
             </div>
 
-            <!-- Fund Allocation Percentage Summary -->
-            <div style="background: rgba(0, 0, 0, 0.3); padding: 10px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.2); margin-top: 4px;">
-                <p style="color: #34d399; font-weight: 700; margin-bottom: 4px;">فنڈ کی تقسیم (Fund Allocation):</p>
-                <p>ہم نے ان چاروں کیٹیگریز کو آپسی مشاورت سے مندرجہ ذیل فیصد (Percentage) کے حساب سے تقسیم کیا ہے تاکہ تمام امور شفاف رہیں۔</p>
+            <!-- Fund Allocation Breakdown with Lock/Unlock Status -->
+            <div style="background: rgba(0, 0, 0, 0.4); padding: 12px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.3); margin-top: 4px; display: flex; flex-direction: column; gap: 6px;">
+                <p style="color: #34d399; font-weight: 700; margin-bottom: 2px;">فنڈ کی تقسیم اور اسٹیٹس (Fund Allocation & Status):</p>
+                <div class="flex-row" style="background: rgba(16, 185, 129, 0.1); padding: 6px 10px; border-radius: 8px;">
+                    <span>Death Fund: <strong style="color: #34d399;">30%</strong></span>
+                    <span style="font-size: 10px; background: #064e3b; color: #34d399; padding: 2px 6px; border-radius: 6px; font-weight: bold;"><i class="fas fa-lock-open"></i> Unlock</span>
+                </div>
+                <div class="flex-row" style="background: rgba(255, 255, 255, 0.05); padding: 6px 10px; border-radius: 8px;">
+                    <span>Medical Fund: <strong style="color: #38bdf8;">25%</strong></span>
+                    <span style="font-size: 10px; background: #334155; color: #cbd5e1; padding: 2px 6px; border-radius: 6px; font-weight: bold;"><i class="fas fa-lock"></i> Lock</span>
+                </div>
+                <div class="flex-row" style="background: rgba(255, 255, 255, 0.05); padding: 6px 10px; border-radius: 8px;">
+                    <span>Marriage Fund: <strong style="color: #38bdf8;">25%</strong></span>
+                    <span style="font-size: 10px; background: #334155; color: #cbd5e1; padding: 2px 6px; border-radius: 6px; font-weight: bold;"><i class="fas fa-lock"></i> Lock</span>
+                </div>
+                <div class="flex-row" style="background: rgba(16, 185, 129, 0.1); padding: 6px 10px; border-radius: 8px;">
+                    <span>Reserve Fund: <strong style="color: #34d399;">20%</strong></span>
+                    <span style="font-size: 10px; background: #064e3b; color: #34d399; padding: 2px 6px; border-radius: 6px; font-weight: bold;"><i class="fas fa-lock-open"></i> Unlock</span>
+                </div>
             </div>
 
             <p>فاؤنڈیشن کا پورا ریکارڈ آن لائن اور مینوئل دونوں شکل میں موجود ہو گا۔</p>
