@@ -239,8 +239,7 @@
             </button>
         </div>
     </div>
-
-      <!-- Script Engine -->
+       <!-- Script Engine -->
     <script>
         const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6wLoB92RkkkAwO_IC6Bx-8Si5lYfpMpdtRo_e_9RB1DnceQ4aG-5_Cs9QWENrY_ZP9L7MF6psgGwD/pub?gid=0&single=true&output=csv";
         const EXPENSES_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6wLoB92RkkkAwO_IC6Bx-8Si5lYfpMpdtRo_e_9RB1DnceQ4aG-5_Cs9QWENrY_ZP9L7MF6psgGwD/pub?gid=762274826&single=true&output=csv";
@@ -269,12 +268,12 @@
             }
 
             sheetExpenses.forEach((item) => {
-                let title = item.Title || item.title || 'Expense';
-                let date = item.Date || item.date || 'N/A';
-                let amount = parseFloat(item.Amount || item.amount) || 0;
-                let details = item.Details || item.details || '';
-                let paid = parseFloat(item.Paid || item.paid) || 0;
-                let remaining = parseFloat(item.Remaining || item.remaining) || (amount - paid);
+                let title = item.title || 'Expense';
+                let date = item.date || 'N/A';
+                let amount = parseFloat(item.amount) || 0;
+                let details = item.details || '';
+                let paid = parseFloat(item.paid) || 0;
+                let remaining = parseFloat(item.remaining) || (amount - paid);
 
                 html += `
                 <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800 space-y-2">
@@ -322,12 +321,26 @@
                         loadMainLedgerData();
                         return;
                     }
+                    // Using header: false to bypass header name mismatches or hidden BOM characters
                     Papa.parse(csvText, {
-                        header: true,
+                        header: false,
                         dynamicTyping: true,
                         complete: function(results) {
-                            if(results.data && results.data.length > 0) {
-                                sheetExpenses = results.data.filter(row => (row.Title || row.title || row.Amount || row.amount));
+                            if(results.data && results.data.length > 1) {
+                                sheetExpenses = [];
+                                for(let i = 1; i < results.data.length; i++) {
+                                    const row = results.data[i];
+                                    if(row && row[0]) {
+                                        sheetExpenses.push({
+                                            title: row[0] ? row[0].toString().replace(/"/g, '').trim() : '',
+                                            date: row[1] ? row[1].toString().replace(/"/g, '').trim() : '',
+                                            amount: parseFloat(row[2]) || 0,
+                                            details: row[3] ? row[3].toString().replace(/"/g, '').trim() : '',
+                                            paid: parseFloat(row[4]) || 0,
+                                            remaining: parseFloat(row[5]) || 0
+                                        });
+                                    }
+                                }
                             }
                             loadMainLedgerData();
                         }
@@ -355,15 +368,13 @@
                     let totalB = 0;
                     let htmlContent = "";
 
-                    // Map expenses by month/date string for matching
                     let monthlyExpenses = {};
                     sheetExpenses.forEach(exp => {
-                        let dateStr = (exp.Date || exp.date || '').toLowerCase();
-                        let amt = parseFloat(exp.Amount || exp.amount) || 0;
-                        let paidAmt = parseFloat(exp.Paid || exp.paid) || 0;
-                        let netExpImpact = amt - paidAmt; // Net remaining expense affecting reserve
+                        let dateStr = (exp.date || '').toLowerCase();
+                        let amt = exp.amount || 0;
+                        let paidAmt = exp.paid || 0;
+                        let netExpImpact = amt - paidAmt;
 
-                        // Match month names in the expense date
                         const monthsList = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
                         monthsList.forEach(m => {
                             if(dateStr.includes(m)) {
@@ -410,11 +421,8 @@
 
                     list.innerHTML = htmlContent || "<p class='text-center text-xs text-slate-500 py-4'>No data found.</p>";
                     
-                    // Calculate total raw expenses and total paid back
-                    let grossExpenses = sheetExpenses.reduce((acc, curr) => acc + (parseFloat(curr.Amount || curr.amount) || 0), 0);
-                    let totalPaidBack = sheetExpenses.reduce((acc, curr) => acc + (parseFloat(curr.Paid || curr.paid) || 0), 0);
-                    
-                    // Net expense is Gross Expenses minus Paid Back amount (so when paid back increases, net expense decreases and reserve balance increases automatically)
+                    let grossExpenses = sheetExpenses.reduce((acc, curr) => acc + curr.amount, 0);
+                    let totalPaidBack = sheetExpenses.reduce((acc, curr) => acc + curr.paid, 0);
                     let netExpenses = grossExpenses - totalPaidBack;
                     const netSavings = totalB - netExpenses;
                     
