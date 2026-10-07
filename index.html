@@ -188,26 +188,25 @@
         </div>
 
         <div class="text-center opacity-40 text-[9px] font-black uppercase tracking-[0.25em] pt-4 text-slate-500">
-            ©FTCF2026 Founder Mughal Brothers
+            @FTCF2026 Founder Mughal Brothers
         </div>
     </main>
 
-    <!-- Expenses Detail Modal (Detailed View with Loan & Remaining Info) -->
+    <!-- Expenses Detail Modal -->
     <div id="expenses-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
         <div class="glass-card rounded-3xl p-5 w-full max-w-md border border-slate-700/80 shadow-2xl relative overflow-hidden">
             <div class="flex justify-between items-center mb-3 pb-2 border-b border-slate-800">
                 <div>
                     <h3 class="text-sm font-black text-slate-100 flex items-center gap-2 uppercase tracking-wide">
-                        <span>📊</span> Expense & Loan Details 
+                        <span>📊</span> Expense & Loan Log
                     </h3>
                     <p class="text-[11px] text-rose-400 font-urdu font-semibold mt-0.5">اخراجات اور قرض کی تفصیلی معلومات</p>
                 </div>
                 <button onclick="toggleModal('expenses-modal', false)" class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white flex items-center justify-center text-sm font-bold transition-all">✕</button>
             </div>
             
-            <!-- List Container -->
             <div id="expenses-detail-list" class="space-y-3 max-h-80 overflow-y-auto pr-1 text-xs">
-                <div class="text-center py-6 text-slate-500">Loading details from sheet...</div>
+                <div class="text-center py-6 text-slate-500">Loading details...</div>
             </div>
 
             <button onclick="toggleModal('expenses-modal', false)" class="mt-4 w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-2.5 rounded-xl text-xs uppercase tracking-wider transition-all">
@@ -243,13 +242,9 @@
 
     <!-- Script Engine -->
     <script>
-        // Main Ledger CSV URL (Aapki wali sheet ka link)
+        // Configured Links with your exact GIDs
         const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6wLoB92RkkkAwO_IC6Bx-8Si5lYfpMpdtRo_e_9RB1DnceQ4aG-5_Cs9QWENrY_ZP9L7MF6psgGwD/pub?gid=0&single=true&output=csv";
-        
-        // Expenses Tab CSV URL (Yahan apne Expenses tab ka published CSV link lagana hai)
         const EXPENSES_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6wLoB92RkkkAwO_IC6Bx-8Si5lYfpMpdtRo_e_9RB1DnceQ4aG-5_Cs9QWENrY_ZP9L7MF6psgGwD/pub?gid=762274826&single=true&output=csv";
-        
-        // Ramzan Tab CSV URL
         const RAMZAN_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRZ93s9o0iygZgHmzA0Z2JG7Wb_efFRi7AdifVoYjv3_nsNM_4OdvnUTyRzn9BdKskJzi43lCYDI4eW/pub?gid=0&single=true&output=csv";
         
         let sheetExpenses = [];
@@ -275,7 +270,6 @@
             }
 
             sheetExpenses.forEach((item) => {
-                // Columns mapping: Title, Date, Amount, Details, Paid, Remaining
                 let title = item.Title || 'Expense';
                 let date = item.Date || 'N/A';
                 let amount = parseFloat(item.Amount) || 0;
@@ -295,7 +289,6 @@
                         </span>
                     </div>`;
 
-                                   // Agar loan ya details ki maloomat mojood ho toh show karein
                 if(details || paid > 0 || remaining > 0) {
                     html += `
                     <div class="pt-2 border-t border-slate-800/80 grid grid-cols-3 gap-2 text-[10px]">
@@ -320,14 +313,49 @@
             container.innerHTML = html;
         }
 
-        function loadDashboardData() {
-            // Fetch Main Ledger for Total Balance & Monthly Overview
-            fetch(CSV_URL)
+        function initDashboard() {
+            const cacheBuster = new Date().getTime();
+            const finalExpUrl = `${EXPENSES_CSV_URL}&t=${cacheBuster}`;
+            
+            fetch(finalExpUrl)
+                .then(res => res.text())
+                .then(csvText => {
+                    if(csvText.includes('<!DOCTYPE html>') || csvText.includes('Google Docs')) {
+                        console.warn("Google Sheets rate limit hit for expenses.");
+                        loadMainLedgerData();
+                        return;
+                    }
+                    Papa.parse(csvText, {
+                        header: true,
+                        dynamicTyping: true,
+                        complete: function(results) {
+                            if(results.data && results.data.length > 0) {
+                                sheetExpenses = results.data.filter(row => row.Title || row.Amount);
+                            }
+                            loadMainLedgerData();
+                        }
+                    });
+                }).catch(e => { 
+                    console.error("Expenses fetch error:", e);
+                    loadMainLedgerData(); 
+                });
+        }
+
+        function loadMainLedgerData() {
+            const cacheBuster = new Date().getTime();
+            const finalMainUrl = `${CSV_URL}&t=${cacheBuster}`;
+
+            fetch(finalMainUrl)
                 .then(res => res.text())
                 .then(data => {
+                    if(data.includes('<!DOCTYPE html>') || data.includes('Google Docs')) {
+                        document.getElementById('monthly-list').innerHTML = `<p class="text-center text-xs text-amber-400 font-bold py-4">Google Sheets traffic high hai. Baraye meharbani aik mint baad dobara refresh karein.</p>`;
+                        return;
+                    }
+
                     const rows = data.split('\n');
                     const list = document.getElementById('monthly-list');
-                    let totalB = 0, totalE = 0;
+                    let totalB = 0;
                     let htmlContent = "";
 
                     for(let i = 1; i < rows.length; i++) {
@@ -337,9 +365,8 @@
                         const cols = row.split(',').map(c => c.replace(/"/g, '').trim());
                         if(cols[0]) {
                             const b = parseFloat(cols[1]?.replace(/,/g, '')) || 0;
-                            const e = parseFloat(cols[2]?.replace(/,/g, '')) || 0;
+                            const status = cols[3] || 'Live';
                             totalB += b;
-                            totalE += e;
 
                             htmlContent += `
                             <div class="glass-card p-3.5 rounded-2xl border border-slate-800/80 flex justify-between items-center">
@@ -349,12 +376,11 @@
                                     </div>
                                     <div>
                                         <h4 class="font-bold text-slate-100 text-xs uppercase tracking-wide">${cols[0]}</h4>
-                                        <span class="text-[9px] text-slate-500 font-mono font-bold tracking-wider uppercase">${cols[3] || 'LOGGED'}</span>
+                                        <span class="text-[9px] text-slate-400 font-mono font-bold tracking-wider uppercase">${status}</span>
                                     </div>
                                 </div>
                                 <div class="text-right">
                                     <p class="text-emerald-400 font-extrabold text-xs">+Rs. ${b.toLocaleString()}</p>
-                                    <p class="text-rose-400 font-bold text-[10px] mt-0.5">-Rs. ${e.toLocaleString()}</p>
                                 </div>
                             </div>`;
                         }
@@ -362,12 +388,9 @@
 
                     list.innerHTML = htmlContent || "<p class='text-center text-xs text-slate-500 py-4'>No data found.</p>";
                     
-                    let finalTotalExpenses = totalE;
-                    if(sheetExpenses.length > 0) {
-                        finalTotalExpenses = sheetExpenses.reduce((acc, curr) => acc + (parseFloat(curr.Amount) || 0), 0);
-                    }
-
+                    let finalTotalExpenses = sheetExpenses.reduce((acc, curr) => acc + (parseFloat(curr.Amount) || 0), 0);
                     const netSavings = totalB - finalTotalExpenses;
+                    
                     document.getElementById('total-balance').innerText = "Rs. " + totalB.toLocaleString();
                     document.getElementById('total-expenses').innerText = "Rs. " + finalTotalExpenses.toLocaleString();
                     document.getElementById('net-savings').innerText = "Rs. " + netSavings.toLocaleString();
@@ -380,27 +403,13 @@
                         document.getElementById('savings-box').className = "bank-gradient bank-gradient-deficit p-5 rounded-3xl shadow-2xl transition-all duration-300";
                         document.getElementById('expense-progress-bar').className = "h-full bg-rose-500 rounded-full transition-all duration-500";
                     }
+                }).catch(err => {
+                    document.getElementById('monthly-list').innerHTML = `<p class="text-center text-xs text-rose-400 font-bold py-6">Failed to load main sheet data.</p>`;
                 });
-
-            // Fetch Dedicated Expenses Tab CSV
-            if(EXPENSES_CSV_URL.indexOf('YOUR_EXPENSES_TAB_GID') === -1) {
-                fetch(EXPENSES_CSV_URL)
-                    .then(res => res.text())
-                    .then(csvText => {
-                        Papa.parse(csvText, {
-                            header: true,
-                            dynamicTyping: true,
-                            complete: function(results) {
-                                if(results.data && results.data.length > 0) {
-                                    sheetExpenses = results.data.filter(row => row.Title || row.Amount);
-                                }
-                            }
-                        });
-                    }).catch(e => {});
-            }
         }
 
-        loadDashboardData();
+        // Run Dashboard Initialization
+        initDashboard();
 
         // Fetch Ramzan Vision Data
         fetch(RAMZAN_CSV_URL)
