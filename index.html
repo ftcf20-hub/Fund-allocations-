@@ -11,9 +11,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Urdu:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
-    <!-- Tailwind CSS & PapaParse -->
+    <!-- Tailwind CSS, PapaParse & html2canvas -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -251,44 +252,23 @@
                     <h3 class="text-sm font-black text-slate-100 flex items-center gap-2 uppercase tracking-wide">
                         <span>📑</span> Custom Report Generator
                     </h3>
-                    <p class="text-[11px] text-emerald-400 font-urdu font-semibold mt-0.5">مدت منتخب کریں اور رپورٹ تیار کریں</p>
+                    <p class="text-[11px] text-emerald-400 font-urdu font-semibold mt-0.5">مدت (ماہ اور سال) منتخب کریں</p>
                 </div>
                 <button onclick="toggleModal('report-modal', false)" class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white flex items-center justify-center text-sm font-bold transition-all">✕</button>
             </div>
+
             <div class="space-y-3 text-xs">
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block text-[10px] text-slate-400 uppercase font-bold mb-1">Start Month</label>
-                        <select id="report-start-month" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-slate-200 font-bold focus:outline-none focus:border-emerald-500">
-                            <option value="january">January</option>
-                            <option value="february">February</option>
-                            <option value="march">March</option>
-                            <option value="april">April</option>
-                            <option value="may">May</option>
-                            <option value="june">June</option>
-                            <option value="july" selected>July</option>
-                            <option value="august">August</option>
-                            <option value="september">September</option>
-                            <option value="october">October</option>
-                            <option value="november">November</option>
-                            <option value="december">December</option>
+                        <label class="block text-[10px] text-slate-400 uppercase font-bold mb-1">Start Month & Year</label>
+                        <select id="report-start-index" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-slate-200 font-bold focus:outline-none focus:border-emerald-500">
+                            <!-- Dynamic options populated via script -->
                         </select>
                     </div>
                     <div>
-                        <label class="block text-[10px] text-slate-400 uppercase font-bold mb-1">End Month</label>
-                        <select id="report-end-month" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-slate-200 font-bold focus:outline-none focus:border-emerald-500">
-                            <option value="january">January</option>
-                            <option value="february">February</option>
-                            <option value="march">March</option>
-                            <option value="april">April</option>
-                            <option value="may">May</option>
-                            <option value="june">June</option>
-                            <option value="july">July</option>
-                            <option value="august">August</option>
-                            <option value="september" selected>September</option>
-                            <option value="october">October</option>
-                            <option value="november">November</option>
-                            <option value="december">December</option>
+                        <label class="block text-[10px] text-slate-400 uppercase font-bold mb-1">End Month & Year</label>
+                        <select id="report-end-index" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-slate-200 font-bold focus:outline-none focus:border-emerald-500">
+                            <!-- Dynamic options populated via script -->
                         </select>
                     </div>
                 </div>
@@ -298,24 +278,24 @@
                 </button>
             </div>
 
-            <!-- White Theme Report Output Area -->
+               <!-- White Theme Report Output Area -->
             <div id="report-result-container" class="hidden mt-4 pt-3 border-t border-slate-800 max-h-72 overflow-y-auto">
-                <!-- White Report Card -->
-                <div id="printable-report-card" class="bg-white text-slate-900 p-4 rounded-2xl shadow-xl space-y-3 font-sans text-xs">
+                <!-- White Report Card (Target for Image Download) -->
+                <div id="printable-report-card" class="bg-white text-slate-900 p-5 rounded-2xl shadow-xl space-y-3 font-sans text-xs">
                     <div class="text-center border-b pb-2">
                         <h2 class="font-black text-sm uppercase text-emerald-800">Family Trust & Care Foundation</h2>
                         <p class="text-[10px] font-bold text-slate-600">Official Financial Audit Report Card</p>
-                        <p id="report-duration-label" class="text-[9px] font-mono text-slate-500 mt-1"></p>
+                        <p id="report-duration-label" class="text-[9px] font-mono text-slate-500 mt-1 font-bold"></p>
                     </div>
                     
-                    <div class="grid grid-cols-2 gap-2 bg-slate-100 p-2 rounded-xl text-[11px]">
+                    <div class="grid grid-cols-2 gap-2 bg-slate-100 p-2.5 rounded-xl text-[11px]">
                         <div>
                             <span class="text-slate-500 block text-[9px] uppercase font-bold">Total Collection</span>
-                            <span id="rep-total-income" class="font-black text-emerald-700">Rs. 0</span>
+                            <span id="rep-total-income" class="font-black text-emerald-700 text-sm">Rs. 0</span>
                         </div>
                         <div>
                             <span class="text-slate-500 block text-[9px] uppercase font-bold">Total Expenses</span>
-                            <span id="rep-total-expense" class="font-black text-rose-700">Rs. 0</span>
+                            <span id="rep-total-expense" class="font-black text-rose-700 text-sm">Rs. 0</span>
                         </div>
                     </div>
 
@@ -332,10 +312,10 @@
                 </div>
 
                 <div class="flex gap-2 mt-3">
-                    <button onclick="printReportCard()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-2 rounded-xl text-xs uppercase transition-all">
-                        Print / Save PDF 📄
+                    <button onclick="downloadReportAsImage()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black py-2.5 rounded-xl text-xs uppercase transition-all shadow-md">
+                        Download Image 🖼️
                     </button>
-                    <button onclick="toggleModal('report-modal', false)" class="px-4 bg-rose-950 text-rose-300 font-bold py-2 rounded-xl text-xs uppercase transition-all">
+                    <button onclick="toggleModal('report-modal', false)" class="px-4 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-2.5 rounded-xl text-xs uppercase transition-all">
                         Close
                     </button>
                 </div>
@@ -352,6 +332,7 @@
         
         let sheetExpenses = [];
         let mainLedgerRows = [];
+        let globalTimelineMonths = []; // Stores objects like {name: 'January 2026', monthKey: 'january', year: 2026}
 
         function toggleModal(modalId, show) {
             const modal = document.getElementById(modalId);
@@ -366,34 +347,90 @@
 
         function openReportModal() {
             document.getElementById('report-result-container').classList.add('hidden');
+            populateReportDropdowns();
             toggleModal('report-modal', true);
         }
 
-        const monthsOrder = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
+        function populateReportDropdowns() {
+            const startSelect = document.getElementById('report-start-index');
+            const endSelect = document.getElementById('report-end-index');
+            
+            let html = "";
+            globalTimelineMonths.forEach((item, index) => {
+                html += `<option value="${index}">${item.name}</option>`;
+            });
+
+            startSelect.innerHTML = html;
+            endSelect.innerHTML = html;
+
+            if(globalTimelineMonths.length > 0) {
+                startSelect.value = 0;
+                endSelect.value = globalTimelineMonths.length - 1;
+            }
+        }
+
+        // Helper to parse date string from expense row (e.g. "15 May 2026", "May-2026", "2026-05-12") into comparable timestamp or year-month key
+        function parseExpenseDateToObj(dateStr) {
+            if(!dateStr) return null;
+            dateStr = dateStr.toLowerCase().trim();
+            
+            const monthsMap = {
+                'january': 0, 'jan': 0,
+                'february': 1, 'feb': 1,
+                'march': 2, 'mar': 2,
+                'april': 3, 'apr': 3,
+                'may': 4,
+                'june': 5, 'jun': 5,
+                'july': 6, 'jul': 6,
+                'august': 7, 'aug': 7,
+                'september': 8, 'sep': 8,
+                'october': 9, 'oct': 9,
+                'november': 10, 'nov': 10,
+                'december': 11, 'dec': 11
+            };
+
+            let foundMonth = -1;
+            let foundYear = 2026; // Default
+
+            for(let m in monthsMap) {
+                if(dateStr.includes(m)) {
+                    foundMonth = monthsMap[m];
+                    break;
+                }
+            }
+
+            // Extract 4 digit year if present
+            let yearMatch = dateStr.match(/202[6-7]/);
+            if(yearMatch) {
+                foundYear = parseInt(yearMatch[0]);
+            }
+
+            if(foundMonth !== -1) {
+                return { month: foundMonth, year: foundYear };
+            }
+            return null;
+        }
 
         function generateReportCard() {
-            const startM = document.getElementById('report-start-month').value;
-            const endM = document.getElementById('report-end-month').value;
-            
-            let startIndex = monthsOrder.indexOf(startM);
-            let endIndex = monthsOrder.indexOf(endM);
+            const startIndex = parseInt(document.getElementById('report-start-index').value);
+            const endIndex = parseInt(document.getElementById('report-end-index').value);
 
             if(startIndex > endIndex) {
-                alert("Start month cannot be after end month!");
+                alert("Start period cannot be after end period!");
                 return;
             }
 
-            let activeMonths = monthsOrder.slice(startIndex, endIndex + 1);
+            let activeTimelineSlice = globalTimelineMonths.slice(startIndex, endIndex + 1);
 
             let totalIncomeRange = 0;
             let totalExpenseRange = 0;
             let reportHtml = "";
 
-            // Filter Main Ledger Income
+            // Filter Income from Main Ledger rows matching active timeline slice
             mainLedgerRows.forEach(row => {
                 if(!row[0]) return;
-                let mName = row[0].toLowerCase();
-                let matched = activeMonths.some(am => mName.includes(am));
+                let rowLabel = row[0].toLowerCase().trim();
+                let matched = activeTimelineSlice.some(t => rowLabel.includes(t.monthKey) && rowLabel.includes(t.year));
                 if(matched) {
                     let b = parseFloat(row[1]?.replace(/,/g, '')) || 0;
                     totalIncomeRange += b;
@@ -408,25 +445,30 @@
                 }
             });
 
-            // Filter Expenses within range
+            // Filter Expenses exactly matching the exact month & year in active timeline slice
             sheetExpenses.forEach(exp => {
-                let dateStr = (exp.date || '').toLowerCase();
-                let matched = activeMonths.some(am => dateStr.includes(am));
-                if(matched) {
-                    let netImpact = (exp.amount || 0) - (exp.paid || 0);
-                    totalExpenseRange += netImpact;
-                    reportHtml += `
-                    <div class="bg-slate-50 p-2 rounded border flex justify-between items-center text-[10px]">
-                        <div>
-                            <span class="font-bold uppercase text-slate-800">${exp.title || 'Expense'}</span>
-                            <span class="block text-[8px] text-slate-500">${exp.details || 'N/A'} | 📅 ${exp.date}</span>
-                        </div>
-                        <span class="font-black text-rose-700">-Rs. ${netImpact.toLocaleString()}</span>
-                    </div>`;
+                let expDateObj = parseExpenseDateToObj(exp.date);
+                if(expDateObj) {
+                    let matched = activeTimelineSlice.some(t => t.monthIndex === expDateObj.month && t.year === expDateObj.year);
+                    if(matched) {
+                        let netImpact = (exp.amount || 0) - (exp.paid || 0);
+                        totalExpenseRange += netImpact;
+                        reportHtml += `
+                        <div class="bg-slate-50 p-2 rounded border flex justify-between items-center text-[10px]">
+                            <div>
+                                <span class="font-bold uppercase text-slate-800">${exp.title || 'Expense'}</span>
+                                <span class="block text-[8px] text-slate-500">${exp.details || 'N/A'} | 📅 ${exp.date}</span>
+                            </div>
+                            <span class="font-black text-rose-700">-Rs. ${netImpact.toLocaleString()}</span>
+                        </div>`;
+                    }
                 }
             });
 
-            document.getElementById('report-duration-label').innerText = `Duration: ${startM.toUpperCase()} TO ${endM.toUpperCase()} 2026`;
+            const startLabel = globalTimelineMonths[startIndex].name;
+            const endLabel = globalTimelineMonths[endIndex].name;
+
+            document.getElementById('report-duration-label').innerText = `Duration: ${startLabel} TO ${endLabel}`;
             document.getElementById('rep-total-income').innerText = "Rs. " + totalIncomeRange.toLocaleString();
             document.getElementById('rep-total-expense').innerText = "Rs. " + totalExpenseRange.toLocaleString();
             document.getElementById('rep-details-list').innerHTML = reportHtml || "<p class='text-center text-slate-400 py-2'>No records found in this duration.</p>";
@@ -434,13 +476,14 @@
             document.getElementById('report-result-container').classList.remove('hidden');
         }
 
-        function printReportCard() {
-            const printContent = document.getElementById('printable-report-card').innerHTML;
-            const originalBody = document.body.innerHTML;
-            document.body.innerHTML = `<div style="padding: 20px; background: white; color: black;">${printContent}</div>`;
-            window.print();
-            document.body.innerHTML = originalBody;
-            window.location.reload();
+        function downloadReportAsImage() {
+            const cardElement = document.getElementById('printable-report-card');
+            html2canvas(cardElement, { scale: 2, backgroundColor: '#ffffff' }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `FTCF-Report-Card-${Date.now()}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
         }
 
         function renderExpensesList() {
@@ -493,6 +536,8 @@
 
             container.innerHTML = html;
         }
+
+        const monthsOrderNames = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
 
         function initDashboard() {
             const cacheBuster = new Date().getTime();
@@ -550,34 +595,47 @@
                     let totalB = 0;
                     let htmlContent = "";
                     mainLedgerRows = [];
+                    globalTimelineMonths = [];
 
-                    let monthlyExpenses = {};
-                    sheetExpenses.forEach(exp => {
-                        let dateStr = (exp.date || '').toLowerCase();
-                        let amt = exp.amount || 0;
-                        let paidAmt = exp.paid || 0;
-                        let netExpImpact = amt - paidAmt;
-
-                        monthsOrder.forEach(m => {
-                            if(dateStr.includes(m)) {
-                                if(!monthlyExpenses[m]) monthlyExpenses[m] = 0;
-                                monthlyExpenses[m] += netExpImpact;
-                            }
-                        });
-                    });
-        for(let i = 1; i < rows.length; i++) {
+                    for(let i = 1; i < rows.length; i++) {
                         const row = rows[i];
                         if(!row.trim()) continue;
                         
                         const cols = row.split(',').map(c => c.replace(/"/g, '').trim());
                         if(cols[0]) {
                             mainLedgerRows.push(cols);
-                            const monthName = cols[0].toLowerCase();
+                            let colNameLower = cols[0].toLowerCase();
+                            
+                            // Find month index and year from Ledger row (e.g. "May 2026")
+                            let mIndex = -1;
+                            monthsOrderNames.forEach((mName, mIdx) => {
+                                if(colNameLower.includes(mName)) mIndex = mIdx;
+                            });
+
+                            let yrMatch = colNameLower.match(/202[6-7]/);
+                            let yrVal = yrMatch ? parseInt(yrMatch[0]) : 2026;
+
+                            if(mIndex !== -1) {
+                                globalTimelineMonths.push({
+                                    name: cols[0],
+                                    monthKey: monthsOrderNames[mIndex],
+                                    monthIndex: mIndex,
+                                    year: yrVal
+                                });
+                            }
+
                             const b = parseFloat(cols[1]?.replace(/,/g, '')) || 0;
                             const status = cols[3] || 'Live';
                             totalB += b;
 
-                            let mExpense = monthlyExpenses[monthName] || 0;
+                            // Calculate exact month match expenses for display
+                            let mExpense = 0;
+                            sheetExpenses.forEach(exp => {
+                                let expObj = parseExpenseDateToObj(exp.date);
+                                if(expObj && expObj.month === mIndex && expObj.year === yrVal) {
+                                    mExpense += (exp.amount || 0) - (exp.paid || 0);
+                                }
+                            });
 
                             htmlContent += `
                             <div class="glass-card p-3.5 rounded-2xl border border-slate-800/80 flex justify-between items-center">
