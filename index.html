@@ -1,708 +1,262 @@
 <!DOCTYPE html>
-<html lang="ur" dir="ltr">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FTCF | Family Trust Dashboard 2026</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>FTCF | Modern Financial Portal</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- PapaParse for reading CSV directly -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap');
     
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Urdu:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { 
+        font-family: 'Plus Jakarta Sans', sans-serif; 
+        background-color: #090d16; 
+        color: #f8fafc; 
+        min-height: 100vh; 
+        padding: 16px;
+        max-width: 480px;
+        margin: 0 auto;
+    }
+    .urdu-text { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.2; direction: rtl; }
     
-    <!-- Tailwind CSS, PapaParse & html2canvas -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        urdu: ['Noto Sans Urdu', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: #090d16; 
-            color: #f8fafc;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-        .ambient-glow-1 {
-            position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
-            width: 400px; height: 400px; background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, rgba(0,0,0,0) 70%);
-            pointer-events: none; z-index: 0; filter: blur(40px);
-        }
-        .ambient-glow-2 {
-            position: fixed; top: 250px; right: -100px;
-            width: 320px; height: 320px; background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, rgba(0,0,0,0) 70%);
-            pointer-events: none; z-index: 0;
-        }
-        .bank-gradient { 
-            background: linear-gradient(135deg, rgba(6, 78, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
-            border: 1px solid rgba(16, 185, 129, 0.35);
-            box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.2);
-            backdrop-filter: blur(16px);
-        }
-        .bank-gradient-deficit {
-            background: linear-gradient(135deg, rgba(136, 19, 55, 0.6) 0%, rgba(15, 23, 42, 0.85) 100%) !important;
-            border: 1.5px solid rgba(244, 63, 94, 0.8) !important;
-        }
-        .glass-card { 
-            background: rgba(15, 23, 42, 0.85); 
-            backdrop-filter: blur(24px); 
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-        .shimmer-box {
-            background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
-            background-size: 200% 100%; animation: shimmer 1.5s infinite;
-        }
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-        .pulse-dot {
-            width: 7px; height: 7px; background-color: #34d399; border-radius: 50%;
-            box-shadow: 0 0 10px #34d399; animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.8); }
-            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
-        }
-        #monthly-list::-webkit-scrollbar,
-        #expenses-detail-list::-webkit-scrollbar,
-        #ramzan-content::-webkit-scrollbar,
-        #report-result-content::-webkit-scrollbar { width: 4px; }
-        #monthly-list::-webkit-scrollbar-thumb,
-        #expenses-detail-list::-webkit-scrollbar-thumb,
-        #ramzan-content::-webkit-scrollbar-thumb,
-        #report-result-content::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
-    </style>
+    .bank-gradient { 
+        background: linear-gradient(135deg, rgba(6, 78, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+        border: 1px solid rgba(16, 185, 129, 0.35);
+        box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.2);
+    }
+    .glass-card {
+        background: rgba(15, 23, 42, 0.95); 
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 16px;
+        margin-bottom: 12px;
+    }
+    .btn {
+        width: 100%;
+        padding: 14px;
+        border-radius: 14px;
+        font-weight: 800;
+        font-size: 12px;
+        text-transform: uppercase;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: 0.2s;
+    }
+    .btn-emerald { background-color: #10b981; color: #022c22; }
+    .btn-emerald:active { transform: scale(0.98); }
+    .btn-slate { background-color: #1e293b; color: #f8fafc; border: 1px solid #334155; }
+    .input-field {
+        width: 100%;
+        padding: 12px 14px;
+        font-size: 13px;
+        background-color: #090d16;
+        border: 1px solid #334155;
+        color: #f8fafc;
+        border-radius: 14px;
+        outline: none;
+        margin-bottom: 10px;
+    }
+    .input-field:focus { border-color: #10b981; }
+    .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        z-index: 100;
+    }
+    .hidden { display: none !important; }
+    .flex-row { display: flex; justify-content: space-between; align-items: center; }
+  </style>
 </head>
-<body class="pb-12 relative antialiased selection:bg-emerald-900 selection:text-emerald-200">
+<body>
 
-    <div class="ambient-glow-1"></div>
-    <div class="ambient-glow-2"></div>
-
-    <!-- Header Section -->
-    <header class="bg-gradient-to-b from-slate-900 via-slate-900/90 to-transparent pt-6 pb-8 px-4 relative z-10">
-        <div class="max-w-md mx-auto flex flex-col items-center text-center space-y-3">
-            <div class="w-full flex items-center justify-between">
-                <button onclick="toggleModal('ramzan-modal', true)" class="flex items-center gap-1.5 bg-emerald-950/80 hover:bg-emerald-900/90 border border-emerald-500/30 text-emerald-300 px-3.5 py-1.5 rounded-full backdrop-blur-md transition-all text-xs font-bold active:scale-95 shadow-md">
-                    <span>🌙</span> <span>Ramzan Vision 2027</span>
-                </button>
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-700/80 text-[10px] font-bold text-slate-300 shadow-sm backdrop-blur-md">
-                    <span class="pulse-dot"></span> <span>FTCF LIVE</span>
-                </div>
-            </div>
-
-            <div>
-                <h1 class="text-lg font-black tracking-tight text-slate-100 flex items-center justify-center gap-2 uppercase">
-                    Family Trust & Care Foundation
-                </h1>
-                <p class="text-xs text-emerald-400/90 font-urdu mt-1 font-semibold">مستقبل کی بہتری اور باہمی تعاون کا شفاف ڈیش بورڈ</p>
-            </div>
-
-            <div class="inline-flex items-center px-3.5 py-1 rounded-full bg-slate-950/80 border border-slate-800 text-emerald-400 text-[10px] font-mono tracking-widest font-bold uppercase">
-                FISCAL YEAR 2026 - 2027
-            </div>
+    <!-- Header -->
+    <header class="flex-row" style="padding-bottom: 16px; border-bottom: 1px solid #1e293b; margin-bottom: 16px;">
+        <div>
+          <span style="font-size: 10px; font-weight: 900; color: #34d399; letter-spacing: 1px;">2026-2027 FISCAL PORTAL</span>
+          <h1 style="font-size: 18px; font-weight: 900; text-transform: uppercase;">Rules & Shrait</h1>
         </div>
+        <div style="font-size: 9px; color: #34d399; background: #064e3b; padding: 6px 10px; border-radius: 12px; font-weight: bold;">PORTAL LIVE</div>
     </header>
 
-    <!-- Main Content Container -->
-    <main class="max-w-md mx-auto px-4 space-y-4 relative z-20 -mt-2">
+    <!-- Fund Allocation Section (Replaced old stats & loantakers with Qawaid and Shrait Scrollable Container) -->
+    <div class="glass-card bank-gradient" style="margin-bottom: 16px;">
+        <div class="flex-row" style="margin-bottom: 12px; border-bottom: 1px solid rgba(16, 185, 129, 0.3); padding-bottom: 8px;">
+            <h3 style="font-size: 14px; font-weight: 900; color: #34d399; text-transform: uppercase;"><i class="fas fa-scroll"></i> Qawaid and Shrait</h3>
+            <span style="font-size: 9px; color: #cbd5e1; font-weight: bold; background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 10px;">FTCF Official</span>
+        </div>
 
-        <!-- Net Reserve Balance Card -->
-        <div id="savings-box" class="bank-gradient p-5 rounded-3xl shadow-2xl transition-all duration-300">
-            <div class="flex justify-between items-start mb-1">
-                <div>
-                    <p class="text-[10px] font-black tracking-[0.2em] text-slate-300 uppercase">Net Reserve Balance</p>
-                    <p class="text-xs text-emerald-300/90 font-urdu font-semibold mt-0.5">کل دستیاب فنڈز (بشمول واپسی)</p>
-                </div>
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Active</span>
-            </div>
+        <!-- Scrollable Urdu Rules Container -->
+        <div class="urdu-text" style="max-height: 280px; overflow-y: auto; padding-right: 6px; font-size: 12px; color: #e2e8f0; display: flex; flex-direction: column; gap: 10px;">
+            <p><strong>1. Death Fund:</strong> ke liye jari kiye gaya fund Naqabil e Wapis ho ga. Jo members se ni liya jay ga.</p>
+            <p><strong>2. Medical Fund:</strong> ke liye Jari ki gai Raqam Loan ho gi foundation k mustahkam hone tak jo k teh shuda Maheeno me iksaat me wapis pay katni ho gi.</p>
+            <p><strong>3. Marriage:</strong> ke liye koi b Member Fund Apply kar sakta hai. Jo k Account ka jaiza lene k bad usy loan k tour per di jay gi.</p>
+            <p><strong>4. Reserve Fund:</strong> kisi b emergency surtehal se nipatne k liye hamesha reserve rahe gi.</p>
             
-            <h2 id="net-savings" class="text-3xl font-black tracking-tight text-emerald-400 my-2">
-                <span class="inline-block w-36 h-8 shimmer-box rounded-lg"></span>
-            </h2>
-
-            <div class="mt-4 pt-3 border-t border-white/10">
-                <div class="flex justify-between text-[10px] font-bold mb-1.5">
-                    <span class="text-slate-300 uppercase tracking-wider">Net Expense Ratio</span>
-                    <span id="expense-percentage" class="text-emerald-400 font-mono">0%</span>
-                </div>
-                <div class="w-full h-2 bg-slate-950 rounded-full overflow-hidden p-0.5 border border-white/10">
-                    <div id="expense-progress-bar" class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-500" style="width: 0%"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Quick Summary Stats Grid -->
-        <div class="grid grid-cols-2 gap-3">
-            <div class="glass-card p-3.5 rounded-2xl flex flex-col justify-between border-l-4 border-l-emerald-500">
-                <div class="flex items-center justify-between mb-1">
-                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider">Total Income</span>
-                    <span class="w-5 h-5 rounded-md bg-emerald-950 text-emerald-400 font-black text-xs flex items-center justify-center border border-emerald-800">↓</span>
-                </div>
-                <h3 id="total-balance" class="text-base font-extrabold text-slate-100 tracking-tight my-1">
-                    <span class="inline-block w-20 h-5 shimmer-box rounded"></span>
-                </h3>
-                <p class="text-[10px] text-slate-400 font-urdu font-semibold">کل آمدن</p>
+            <div style="border-top: 1px dashed rgba(16, 185, 129, 0.3); padding-top: 8px; margin-top: 4px;">
+                <p style="color: #34d399; font-weight: 700;">Time period:</p>
+                <p>Yah Tamam Catagories Waqat k sath sath unlock ki jayn gi aur har rule tamam members par lagu ho ga. Aur sare rules b sab members ki mashawrat se teh hon gay.</p>
             </div>
 
-            <!-- Clickable Total Expense Card -->
-            <div onclick="openExpensesModal()" class="glass-card p-3.5 rounded-2xl flex flex-col justify-between border-l-4 border-l-rose-500 cursor-pointer hover:bg-slate-800/80 transition-all group">
-                <div class="flex items-center justify-between mb-1">
-                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider group-hover:text-rose-400 transition-colors">Net Expense 📋</span>
-                    <span class="w-5 h-5 rounded-md bg-rose-950 text-rose-400 font-black text-xs flex items-center justify-center border border-rose-800">↑</span>
-                </div>
-                <h3 id="total-expenses" class="text-base font-extrabold text-slate-100 tracking-tight my-1">
-                    <span class="inline-block w-20 h-5 shimmer-box rounded"></span>
-                </h3>
-                <p class="text-[10px] text-slate-400 font-urdu font-semibold">تفصیل کے لیے کلک کریں</p>
-            </div>
-        </div>
-
-        <!-- Monthly Overview Section -->
-        <div class="pt-2">
-            <div class="flex items-center justify-between mb-3 px-1">
-                <div>
-                    <h3 class="text-xs font-black uppercase tracking-[0.2em] text-slate-200">Monthly Overview</h3>
-                    <p class="text-[10px] text-slate-400 font-urdu font-semibold mt-0.5">ماہانہ وصولی و اخراجات کا ریکارڈ</p>
-                </div>
-                <span class="text-[9px] font-bold text-emerald-400 bg-slate-900 px-2.5 py-1 rounded-md border border-slate-800 font-mono">2026 LOG</span>
-            </div>
-
-            <div id="monthly-list" class="space-y-2.5">
-                <div class="glass-card p-4 rounded-2xl flex justify-between items-center border border-slate-800">
-                    <div class="w-24 h-4 shimmer-box rounded"></div>
-                    <div class="w-16 h-4 shimmer-box rounded"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Hidden Trigger Footer (Double Tap here to open Report Generator) -->
-        <div ondblclick="openReportModal()" class="text-center opacity-40 hover:opacity-100 transition-opacity cursor-pointer text-[9px] font-black uppercase tracking-[0.25em] pt-4 text-slate-500 select-none">
-            @FTCF2026 Founder Mughal Brothers
-        </div>
-    </main>
-
-    <!-- Expenses Detail Modal -->
-    <div id="expenses-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-        <div class="glass-card rounded-3xl p-5 w-full max-w-md border border-slate-700/80 shadow-2xl relative overflow-hidden">
-            <div class="flex justify-between items-center mb-3 pb-2 border-b border-slate-800">
-                <div>
-                    <h3 class="text-sm font-black text-slate-100 flex items-center gap-2 uppercase tracking-wide">
-                        <span>📊</span> Expense & Loan Log
-                    </h3>
-                    <p class="text-[11px] text-rose-400 font-urdu font-semibold mt-0.5">اخراجات اور قرض کی تفصیلی معلومات</p>
-                </div>
-                <button onclick="toggleModal('expenses-modal', false)" class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white flex items-center justify-center text-sm font-bold transition-all">✕</button>
-            </div>
-            
-            <div id="expenses-detail-list" class="space-y-3 max-h-80 overflow-y-auto pr-1 text-xs">
-                <div class="text-center py-6 text-slate-500">Loading details...</div>
-            </div>
-
-            <button onclick="toggleModal('expenses-modal', false)" class="mt-4 w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-2.5 rounded-xl text-xs uppercase tracking-wider transition-all">
-                Close
-            </button>
-        </div>
-    </div>
-    <!-- Ramzan Modal -->
-    <div id="ramzan-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-        <div class="glass-card rounded-3xl p-6 w-full max-w-sm border border-slate-700/80 shadow-2xl relative overflow-hidden">
-            <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-800">
-                <div>
-                    <h3 class="text-sm font-black text-slate-100 flex items-center gap-2 uppercase tracking-wide">
-                        <span>🌙</span> Ramzan Vision 2027
-                    </h3>
-                    <p class="text-[11px] text-emerald-400 font-urdu font-semibold mt-0.5">رمضان فنڈ اور منصوبہ بندی</p>
-                </div>
-                <button onclick="toggleModal('ramzan-modal', false)" class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white flex items-center justify-center text-sm font-bold transition-all">✕</button>
-            </div>
-            
-            <div id="ramzan-content" class="space-y-2.5 max-h-72 overflow-y-auto pr-1 text-xs">
-                <div class="p-4 text-center space-y-2">
-                    <div class="w-full h-8 shimmer-box rounded-lg"></div>
-                </div>
-            </div>
-
-            <button onclick="toggleModal('ramzan-modal', false)" class="mt-5 w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black py-2.5 rounded-xl text-xs uppercase tracking-wider transition-all">
-                Close Panel
-            </button>
+            <p>Ham ne in charo catagories ko mundarjazel percentage ke hisab se divide kiya hai.</p>
+            <p>Foundation ka pora record online aur manual dono shakal mein mojood ho ga.</p>
+            <p style="color: #fb7185; font-weight: bold;">Death ke elawa kisi b qisam ke Fund ke liye neche diye gay Form ko fill kar ke submit karin.</p>
+            <p style="text-align: right; font-weight: bold; color: #34d399; margin-top: 6px;">Shukriya!<br>FTCF Management</p>
         </div>
     </div>
 
-    <!-- Hidden Report Generator Modal -->
-    <div id="report-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-        <div class="glass-card rounded-3xl p-5 w-full max-w-md border border-slate-700/80 shadow-2xl relative overflow-hidden">
-            <div class="flex justify-between items-center mb-3 pb-2 border-b border-slate-800">
-                <div>
-                    <h3 class="text-sm font-black text-slate-100 flex items-center gap-2 uppercase tracking-wide">
-                        <span>📑</span> Custom Report Generator
-                    </h3>
-                    <p class="text-[11px] text-emerald-400 font-urdu font-semibold mt-0.5">مدت (ماہ اور سال) منتخب کریں</p>
+    <!-- Mission & Vision -->
+    <div style="margin-bottom: 16px;">
+        <button onclick="toggleMission()" class="btn btn-slate">
+            <i class="fas fa-book-open" style="color: #34d399;"></i>
+            <span>Read Full Mission & Vision</span>
+        </button>
+        
+        <div id="missionBox" class="glass-card urdu-text hidden" style="margin-top: 10px; max-height: 200px; overflow-y: auto; font-size: 12px; color: #e2e8f0;">
+            <p>ہمارا عزم ہے کہ ہم نے اپنے علاقے میں "فیملی ٹرسٹ" کو ایک مثالی نیٹ ورک بنانا ہے۔ یہ ہم سب ممبران کی اپنی مشترکہ فاؤنڈیشن hai.</p>
+        </div>
+    </div>
+
+    <!-- Application Form -->
+    <div class="glass-card">
+        <h3 style="font-size: 13px; font-weight: 900; text-align: center; text-transform: uppercase; margin-bottom: 4px;">Request Financial Assistance</h3>
+        <p style="font-size: 9px; color: #94a3b8; text-align: center; text-transform: uppercase; margin-bottom: 14px; font-weight: 700;">Submit details directly to WhatsApp</p>
+        
+        <input type="text" id="uName" placeholder="Full Name" class="input-field">
+        <input type="number" id="uAmount" placeholder="Loan Amount (PKR)" class="input-field">
+        <textarea id="uReason" placeholder="Reason for Request" class="input-field" rows="3" style="resize: none;"></textarea>
+        
+        <button onclick="handleApplication()" class="btn btn-emerald">
+            <i class="fab fa-whatsapp" style="font-size: 16px;"></i> Submit & Generate Receipt
+        </button>
+    </div>
+
+    <!-- DIGITAL RECEIPT MODAL -->
+    <div id="receiptModal" class="modal hidden">
+        <div style="width: 100%; max-width: 360px;">
+            <div class="glass-card" style="border: 1px solid #334155; margin-bottom: 10px; background: linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(6, 78, 59, 0.4) 100%);">
+                <!-- Receipt Header -->
+                <div class="flex-row" style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px;">
+                    <div>
+                        <span style="color: #34d399; font-weight: 900; font-size: 11px; letter-spacing: 0.5px;"><i class="fas fa-shield-alt"></i> FTCF OFFICIAL</span>
+                        <h4 style="font-size: 16px; font-weight: 900; margin-top: 2px;">Financial Voucher</h4>
+                    </div>
+                    <span style="background: rgba(16, 185, 129, 0.2); color: #34d399; font-size: 9px; font-weight: 900; padding: 3px 8px; border-radius: 20px; border: 1px solid rgba(16, 185, 129, 0.3);">Verified Draft</span>
                 </div>
-                <button onclick="toggleModal('report-modal', false)" class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white flex items-center justify-center text-sm font-bold transition-all">✕</button>
-            </div>
 
-            <div class="space-y-3 text-xs">
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="block text-[10px] text-slate-400 uppercase font-bold mb-1">Start Month & Year</label>
-                        <select id="report-start-index" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-slate-200 font-bold focus:outline-none focus:border-emerald-500">
-                            <!-- Dynamic options populated via script -->
-                        </select>
+                <!-- Receipt Body Details -->
+                <div style="font-size: 12px; display: flex; flex-direction: column; gap: 8px;">
+                    <div class="flex-row"><span style="color: #94a3b8; font-size: 11px;">Reference ID:</span> <span id="rcptRef" style="font-weight: 900; color: #38bdf8; font-family: monospace;">#FTCF-0000</span></div>
+                    <div class="flex-row"><span style="color: #94a3b8; font-size: 11px;">Date & Time:</span> <span id="rcptDateTime" style="font-weight: bold; font-size: 11px; color: #cbd5e1;">---</span></div>
+                    <div class="flex-row"><span style="color: #94a3b8; font-size: 11px;">Applicant Name:</span> <span id="rcptName" style="font-weight: bold; color: #f8fafc;">---</span></div>
+                    <div class="flex-row" style="background: rgba(16, 185, 129, 0.1); padding: 8px; border-radius: 8px; border: 1px dashed rgba(16, 185, 129, 0.3);">
+                        <span style="color: #34d399; font-weight: 800; font-size: 11px;">Requested Amount:</span> 
+                        <span id="rcptAmount" style="font-weight: 900; color: #34d399; font-size: 14px;">Rs. 0</span>
                     </div>
-                    <div>
-                        <label class="block text-[10px] text-slate-400 uppercase font-bold mb-1">End Month & Year</label>
-                        <select id="report-end-index" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-slate-200 font-bold focus:outline-none focus:border-emerald-500">
-                            <!-- Dynamic options populated via script -->
-                        </select>
-                    </div>
-                </div>
-
-                <button onclick="generateReportCard()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black py-2.5 rounded-xl text-xs uppercase tracking-wider transition-all shadow-lg">
-                    Generate Report Card 🖨️
-                </button>
-            </div>
-
-            <!-- White Theme Report Output Area formatted for A4 standard ratio -->
-            <div id="report-result-container" class="hidden mt-4 pt-3 border-t border-slate-800 max-h-72 overflow-y-auto">
-                <!-- A4 Formatted White Report Card Container -->
-                <div id="printable-report-card" style="width: 700px; margin: 0 auto;" class="bg-white text-slate-900 p-8 rounded-xl shadow-2xl space-y-4 font-sans text-xs">
-                    <div class="text-center border-b-2 border-slate-200 pb-3">
-                        <h2 class="font-black text-lg uppercase tracking-wider text-emerald-900">Family Trust & Care Foundation</h2>
-                        <p class="text-[11px] font-bold text-slate-600 uppercase mt-0.5">Official Financial Audit Report Card</p>
-                        <p id="report-duration-label" class="text-[10px] font-mono text-emerald-700 mt-1.5 font-black bg-emerald-50 inline-block px-3 py-1 rounded-full border border-emerald-200"></p>
-                    </div>
-                    
-                    <div class="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs">
-                        <div>
-                            <span class="text-slate-500 block text-[10px] uppercase font-bold">Total Collection (Income)</span>
-                            <span id="rep-total-income" class="font-black text-emerald-700 text-base">Rs. 0</span>
-                        </div>
-                        <div>
-                            <span class="text-slate-500 block text-[10px] uppercase font-bold">Total Expenses</span>
-                            <span id="rep-total-expense" class="font-black text-rose-700 text-base">Rs. 0</span>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h4 class="font-black text-xs uppercase text-slate-800 mb-2 border-b pb-1">Detailed Breakdown (Transactions & Expenses)</h4>
-                        <div id="rep-details-list" class="space-y-2">
-                            <!-- Items inserted dynamically -->
-                        </div>
-                    </div>
-
-                    <div class="text-center pt-4 border-t border-slate-200 text-[9px] text-slate-500 font-mono tracking-widest uppercase">
-                        Generated securely via FTCF 2026 System • Verified Document
+                    <div style="margin-top: 2px;">
+                        <span style="color: #94a3b8; font-size: 10px; text-transform: uppercase; font-weight: 800;">Purpose / Reason:</span> 
+                        <p id="rcptReason" style="font-size: 11px; font-style: italic; color: #e2e8f0; margin-top: 3px; background: rgba(0,0,0,0.3); padding: 8px; border-radius: 8px; border-left: 3px solid #10b981;">---</p>
                     </div>
                 </div>
 
-                <div class="flex gap-2 mt-4">
-                    <button onclick="downloadReportAsImage()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black py-2.5 rounded-xl text-xs uppercase transition-all shadow-md">
-                        Download Full A4 Image 🖼️
-                    </button>
-                    <button onclick="toggleModal('report-modal', false)" class="px-4 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-2.5 rounded-xl text-xs uppercase transition-all">
-                        Close
-                    </button>
+                <div style="margin-top: 12px; padding-top: 8px; border-top: 1px dashed rgba(255,255,255,0.1); text-align: center;">
+                    <span style="font-size: 9px; color: #64748b; font-weight: 700; letter-spacing: 0.5px;">FAMILY TRUST & CARE FOUNDATION PORTAL</span>
                 </div>
             </div>
 
+            <a id="modalWaBtn" href="#" target="_blank" class="btn btn-emerald" style="text-decoration: none; margin-bottom: 8px;">
+                <i class="fab fa-whatsapp" style="font-size: 15px;"></i> Send on WhatsApp Now
+            </a>
+            <button onclick="downloadReceipt()" class="btn btn-slate" style="margin-bottom: 8px; background: #0369a1; color: #fff; border: none;">
+                <i class="fas fa-download"></i> Download / Save Receipt
+            </button>
+            <button onclick="closeReceiptModal()" class="btn btn-slate">Close</button>
         </div>
     </div>
 
     <!-- Script Engine -->
     <script>
-        const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6wLoB92RkkkAwO_IC6Bx-8Si5lYfpMpdtRo_e_9RB1DnceQ4aG-5_Cs9QWENrY_ZP9L7MF6psgGwD/pub?gid=0&single=true&output=csv";
-        const EXPENSES_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6wLoB92RkkkAwO_IC6Bx-8Si5lYfpMpdtRo_e_9RB1DnceQ4aG-5_Cs9QWENrY_ZP9L7MF6psgGwD/pub?gid=762274826&single=true&output=csv";
-        const RAMZAN_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRZ93s9o0iygZgHmzA0Z2JG7Wb_efFRi7AdifVoYjv3_nsNM_4OdvnUTyRzn9BdKskJzi43lCYDI4eW/pub?gid=0&single=true&output=csv";
-        
-        let sheetExpenses = [];
-        let mainLedgerRows = [];
-        let globalTimelineMonths = [];
+        var globalWaNumber = "923433052346";
 
-        function toggleModal(modalId, show) {
-            const modal = document.getElementById(modalId);
-            if (show) modal.classList.remove('hidden');
-            else modal.classList.add('hidden');
+        function toggleMission() {
+            var box = document.getElementById('missionBox');
+            if(box) box.classList.toggle('hidden');
         }
 
-        function openExpensesModal() {
-            renderExpensesList();
-            toggleModal('expenses-modal', true);
-        }
+        function handleApplication() {
+            var n = document.getElementById('uName').value.trim();
+            var a = Number(document.getElementById('uAmount').value);
+            var r = document.getElementById('uReason').value.trim();
 
-        function openReportModal() {
-            document.getElementById('report-result-container').classList.add('hidden');
-            populateReportDropdowns();
-            toggleModal('report-modal', true);
-        }
-
-        function populateReportDropdowns() {
-            const startSelect = document.getElementById('report-start-index');
-            const endSelect = document.getElementById('report-end-index');
-            
-            let html = "";
-            globalTimelineMonths.forEach((item, index) => {
-                html += `<option value="${index}">${item.name}</option>`;
-            });
-
-            startSelect.innerHTML = html;
-            endSelect.innerHTML = html;
-
-            if(globalTimelineMonths.length > 0) {
-                startSelect.value = 0;
-                endSelect.value = globalTimelineMonths.length - 1;
-            }
-        }
-
-        function parseExpenseDateToObj(dateStr) {
-            if(!dateStr) return null;
-            dateStr = dateStr.toLowerCase().trim();
-            
-            const monthsMap = {
-                'january': 0, 'jan': 0,
-                'february': 1, 'feb': 1,
-                'march': 2, 'mar': 2,
-                'april': 3, 'apr': 3,
-                'may': 4,
-                'june': 5, 'jun': 5,
-                'july': 6, 'jul': 6,
-                'august': 7, 'aug': 7,
-                'september': 8, 'sep': 8,
-                'october': 9, 'oct': 9,
-                'november': 10, 'nov': 10,
-                'december': 11, 'dec': 11
-            };
-
-            let foundMonth = -1;
-            let foundYear = 2026;
-
-            for(let m in monthsMap) {
-                if(dateStr.includes(m)) {
-                    foundMonth = monthsMap[m];
-                    break;
-                }
+            if(!n || !a || !r) {
+              alert("Pehle tamam khane (Name, Amount, Reason) theek se pur karein.");
+              return;
             }
 
-            let yearMatch = dateStr.match(/202[6-7]/);
-            if(yearMatch) {
-                foundYear = parseInt(yearMatch[0]);
+            if(a <= 0) {
+              alert("Amount 0 ya negative nahi ho sakti!");
+              return;
             }
 
-            if(foundMonth !== -1) {
-                return { month: foundMonth, year: foundYear };
-            }
-            return null;
+            var refId = "FTCF-" + Math.floor(1000 + Math.random() * 9000);
+            var now = new Date();
+            var dateStr = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            document.getElementById('rcptRef').innerText = "#" + refId;
+            document.getElementById('rcptDateTime').innerText = dateStr;
+            document.getElementById('rcptName').innerText = n;
+            document.getElementById('rcptAmount').innerText = "Rs. " + a.toLocaleString();
+            document.getElementById('rcptReason').innerText = r;
+
+            var waText = "*FTCF Loan Application*\nRef: #" + refId + "\nDate: " + dateStr + "\nName: " + n + "\nAmount: Rs. " + a.toLocaleString() + "\nReason: " + r;
+            var waUrl = "https://api.whatsapp.com/send?phone=" + globalWaNumber + "&text=" + encodeURIComponent(waText);
+            document.getElementById('modalWaBtn').href = waUrl;
+
+            document.getElementById('receiptModal').classList.remove('hidden');
         }
 
-        function generateReportCard() {
-            const startIndex = parseInt(document.getElementById('report-start-index').value);
-            const endIndex = parseInt(document.getElementById('report-end-index').value);
+        function downloadReceipt() {
+            var ref = document.getElementById('rcptRef').innerText;
+            var dt = document.getElementById('rcptDateTime').innerText;
+            var name = document.getElementById('rcptName').innerText;
+            var amt = document.getElementById('rcptAmount').innerText;
+            var reason = document.getElementById('rcptReason').innerText;
 
-            if(startIndex > endIndex) {
-                alert("Start period cannot be after end period!");
-                return;
-            }
+            var receiptText = "=== FTCF FINANCIAL VOUCHER ===\n" +
+                              "Reference: " + ref + "\n" +
+                              "Date & Time: " + dt + "\n" +
+                              "Applicant Name: " + name + "\n" +
+                              "Requested Amount: " + amt + "\n" +
+                              "Reason: " + reason + "\n" +
+                              "============================\n" +
+                              "Family Trust & Care Foundation";
 
-            let activeTimelineSlice = globalTimelineMonths.slice(startIndex, endIndex + 1);
-
-            let totalIncomeRange = 0;
-            let totalExpenseRange = 0;
-            let reportHtml = "";
-
-            mainLedgerRows.forEach(row => {
-                if(!row[0]) return;
-                let rowLabel = row[0].toLowerCase().trim();
-                let matched = activeTimelineSlice.some(t => rowLabel.includes(t.monthKey) && rowLabel.includes(t.year));
-                if(matched) {
-                    let b = parseFloat(row[1]?.replace(/,/g, '')) || 0;
-                    totalIncomeRange += b;
-                    reportHtml += `
-                    <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 flex justify-between items-center text-xs">
-                        <div>
-                            <span class="font-black uppercase text-slate-800">${row[0]}</span>
-                            <span class="block text-[9px] text-emerald-700 font-mono font-bold">Income Collection</span>
-                        </div>
-                        <span class="font-black text-emerald-800 text-sm">+Rs. ${b.toLocaleString()}</span>
-                    </div>`;
-                }
-            });
-
-            sheetExpenses.forEach(exp => {
-                let expDateObj = parseExpenseDateToObj(exp.date);
-                if(expDateObj) {
-                    let matched = activeTimelineSlice.some(t => t.monthIndex === expDateObj.month && t.year === expDateObj.year);
-                    if(matched) {
-                        let netImpact = (exp.amount || 0) - (exp.paid || 0);
-                        totalExpenseRange += netImpact;
-                        reportHtml += `
-                        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 flex justify-between items-center text-xs">
-                            <div>
-                                <span class="font-black uppercase text-slate-800">${exp.title || 'Expense'}</span>
-                                <span class="block text-[9px] text-slate-600 font-medium">${exp.details || 'N/A'} | 📅 ${exp.date}</span>
-                            </div>
-                            <span class="font-black text-rose-700 text-sm">-Rs. ${netImpact.toLocaleString()}</span>
-                        </div>`;
-                    }
-                }
-            });
-
-            const startLabel = globalTimelineMonths[startIndex].name;
-            const endLabel = globalTimelineMonths[endIndex].name;
-
-            document.getElementById('report-duration-label').innerText = `Duration Period: ${startLabel} TO ${endLabel}`;
-            document.getElementById('rep-total-income').innerText = "Rs. " + totalIncomeRange.toLocaleString();
-            document.getElementById('rep-total-expense').innerText = "Rs. " + totalExpenseRange.toLocaleString();
-            document.getElementById('rep-details-list').innerHTML = reportHtml || "<p class='text-center text-slate-500 py-3'>No records found in this duration.</p>";
-
-            document.getElementById('report-result-container').classList.remove('hidden');
+            var blob = new Blob([receiptText], { type: 'text/plain;charset=utf-8' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = ref + "-Receipt.txt";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
 
-        function downloadReportAsImage() {
-            const cardElement = document.getElementById('printable-report-card');
-            // Temporary scale and styling adjustments for crystal clear full content capture
-            html2canvas(cardElement, { 
-                scale: 3, 
-                backgroundColor: '#ffffff',
-                useCORS: true,
-                scrollY: -window.scrollY
-            }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = `FTCF-A4-Audit-Report-${Date.now()}.png`;
-                link.href = canvas.toDataURL('image/png', 1.0);
-                link.click();
-            });
+        function closeReceiptModal() {
+            document.getElementById('receiptModal').classList.add('hidden');
         }
-
-        function renderExpensesList() {
-            const container = document.getElementById('expenses-detail-list');
-            let html = "";
-            
-            if(sheetExpenses.length === 0) {
-                container.innerHTML = "<p class='text-center text-slate-500 py-6'>No detailed expenses found in sheet tab.</p>";
-                return;
-            }
-
-            sheetExpenses.forEach((item) => {
-                let title = item.title || 'Expense';
-                let date = item.date || 'N/A';
-                let amount = parseFloat(item.amount) || 0;
-                let details = item.details || '';
-                let paid = parseFloat(item.paid) || 0;
-                let remaining = parseFloat(item.remaining) || (amount - paid);
-
-                html += `
-                <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800 space-y-2">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="text-xs font-black text-slate-100 uppercase tracking-wide">${title}</p>
-                            <span class="text-[9px] text-slate-400 font-mono">📅 ${date}</span>
-                        </div>
-                        <span class="text-xs font-black px-2.5 py-1 rounded-lg border text-rose-400 border-rose-800/80 bg-rose-950/80">
-                            Rs. ${amount.toLocaleString()}
-                        </span>
-                    </div>`;
-
-                html += `
-                <div class="pt-2 border-t border-slate-800/80 grid grid-cols-3 gap-2 text-[10px]">
-                    <div class="bg-slate-950/60 p-1.5 rounded border border-slate-800/50">
-                        <span class="text-slate-400 block text-[8px] uppercase">Details/Tenure</span>
-                        <span class="font-bold text-slate-200">${details || 'N/A'}</span>
-                    </div>
-                    <div class="bg-slate-950/60 p-1.5 rounded border border-slate-800/50">
-                        <span class="text-emerald-400 block text-[8px] uppercase">Paid Back</span>
-                        <span class="font-bold text-emerald-300">Rs. ${paid.toLocaleString()}</span>
-                    </div>
-                    <div class="bg-slate-950/60 p-1.5 rounded border border-slate-800/50">
-                        <span class="text-amber-400 block text-[8px] uppercase">Remaining</span>
-                        <span class="font-bold text-amber-300">Rs. ${remaining.toLocaleString()}</span>
-                    </div>
-                </div>`;
-
-                html += `</div>`;
-            });
-
-            container.innerHTML = html;
-        }
-
-        const monthsOrderNames = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
-
-        function initDashboard() {
-            const cacheBuster = new Date().getTime();
-            const finalExpUrl = `${EXPENSES_CSV_URL}&t=${cacheBuster}`;
-            
-            fetch(finalExpUrl)
-                .then(res => res.text())
-                .then(csvText => {
-                    if(csvText.includes('<!DOCTYPE html>') || csvText.includes('Google Docs')) {
-                        loadMainLedgerData();
-                        return;
-                    }
-                    Papa.parse(csvText, {
-                        header: false,
-                        dynamicTyping: true,
-                        complete: function(results) {
-                            if(results.data && results.data.length > 1) {
-                                sheetExpenses = [];
-                                for(let i = 1; i < results.data.length; i++) {
-                                    const row = results.data[i];
-                                    if(row && row[0]) {
-                                        sheetExpenses.push({
-                                            title: row[0] ? row[0].toString().replace(/"/g, '').trim() : '',
-                                            date: row[1] ? row[1].toString().replace(/"/g, '').trim() : '',
-                                            amount: parseFloat(row[2]) || 0,
-                                            details: row[3] ? row[3].toString().replace(/"/g, '').trim() : '',
-                                            paid: parseFloat(row[4]) || 0,
-                                            remaining: parseFloat(row[5]) || 0
-                                        });
-                                    }
-                                }
-                            }
-                            loadMainLedgerData();
-                        }
-                    });
-                }).catch(e => { 
-                    loadMainLedgerData(); 
-                });
-        }
-
-        function loadMainLedgerData() {
-            const cacheBuster = new Date().getTime();
-            const finalMainUrl = `${CSV_URL}&t=${cacheBuster}`;
-
-            fetch(finalMainUrl)
-                .then(res => res.text())
-                .then(data => {
-                    if(data.includes('<!DOCTYPE html>') || data.includes('Google Docs')) {
-                        document.getElementById('monthly-list').innerHTML = `<p class="text-center text-xs text-amber-400 font-bold py-4">Google Sheets traffic high hai.</p>`;
-                        return;
-                    }
-
-                    const rows = data.split('\n');
-                    const list = document.getElementById('monthly-list');
-                    let totalB = 0;
-                    let htmlContent = "";
-                    mainLedgerRows = [];
-                    globalTimelineMonths = [];
-
-                    for(let i = 1; i < rows.length; i++) {
-                        const row = rows[i];
-                        if(!row.trim()) continue;
-                        
-                        const cols = row.split(',').map(c => c.replace(/"/g, '').trim());
-                        if(cols[0]) {
-                            mainLedgerRows.push(cols);
-                            let colNameLower = cols[0].toLowerCase();
-                            
-                            let mIndex = -1;
-                            monthsOrderNames.forEach((mName, mIdx) => {
-                                if(colNameLower.includes(mName)) mIndex = mIdx;
-                            });
-
-                            let yrMatch = colNameLower.match(/202[6-7]/);
-                            let yrVal = yrMatch ? parseInt(yrMatch[0]) : 2026;
-
-                            if(mIndex !== -1) {
-                                globalTimelineMonths.push({
-                                    name: cols[0],
-                                    monthKey: monthsOrderNames[mIndex],
-                                    monthIndex: mIndex,
-                                    year: yrVal
-                                });
-                            }
-
-                            const b = parseFloat(cols[1]?.replace(/,/g, '')) || 0;
-                            const status = cols[3] || 'Live';
-                            totalB += b;
-
-                            let mExpense = 0;
-                            sheetExpenses.forEach(exp => {
-                                let expObj = parseExpenseDateToObj(exp.date);
-                                if(expObj && expObj.month === mIndex && expObj.year === yrVal) {
-                                    mExpense += (exp.amount || 0) - (exp.paid || 0);
-                                }
-                            });
-
-                            htmlContent += `
-                            <div class="glass-card p-3.5 rounded-2xl border border-slate-800/80 flex justify-between items-center">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center text-xs font-bold font-mono text-emerald-400">
-                                        ${i.toString().padStart(2, '0')}
-                                    </div>
-                                    <div>
-                                        <h4 class="font-bold text-slate-100 text-xs uppercase tracking-wide">${cols[0]}</h4>
-                                        <span class="text-[9px] text-slate-400 font-mono font-bold tracking-wider uppercase">${status}</span>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <p class="text-emerald-400 font-extrabold text-xs">+Rs. ${b.toLocaleString()}</p>`;
-                            
-                            if(mExpense > 0) {
-                                htmlContent += `<p class="text-rose-400 font-bold text-[10px]">-Rs. ${mExpense.toLocaleString()} Exp</p>`;
-                            }
-
-                            htmlContent += `</div></div>`;
-                        }
-                    }
-
-                    list.innerHTML = htmlContent || "<p class='text-center text-xs text-slate-500 py-4'>No data found.</p>";
-                    
-                    let grossExpenses = sheetExpenses.reduce((acc, curr) => acc + curr.amount, 0);
-                    let totalPaidBack = sheetExpenses.reduce((acc, curr) => acc + curr.paid, 0);
-                    let netExpenses = grossExpenses - totalPaidBack;
-                    const netSavings = totalB - netExpenses;
-                    
-                    document.getElementById('total-balance').innerText = "Rs. " + totalB.toLocaleString();
-                    document.getElementById('total-expenses').innerText = "Rs. " + netExpenses.toLocaleString();
-                    document.getElementById('net-savings').innerText = "Rs. " + netSavings.toLocaleString();
-
-                    const expPercentage = totalB > 0 ? Math.min(Math.round((netExpenses / totalB) * 100), 100) : 0;
-                    document.getElementById('expense-percentage').innerText = expPercentage + "%";
-                    document.getElementById('expense-progress-bar').style.width = expPercentage + "%";
-
-                    if (netSavings < 0) {
-                        document.getElementById('savings-box').className = "bank-gradient bank-gradient-deficit p-5 rounded-3xl shadow-2xl transition-all duration-300";
-                        document.getElementById('expense-progress-bar').className = "h-full bg-rose-500 rounded-full transition-all duration-500";
-                    }
-                }).catch(err => {
-                    document.getElementById('monthly-list').innerHTML = `<p class="text-center text-xs text-rose-400 font-bold py-6">Failed to load main sheet data.</p>`;
-                });
-        }
-
-        initDashboard();
-
-        fetch(RAMZAN_CSV_URL)
-            .then(res => res.text())
-            .then(data => {
-                const rows = data.split('\n');
-                let html = "";
-                for(let i = 1; i < rows.length; i++) {
-                    const row = rows[i];
-                    if(!row.trim()) continue;
-                    const cols = row.split(',').map(c => c.replace(/"/g, '').trim());
-                    if(cols[0]) {
-                        html += `
-                        <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 flex justify-between items-center">
-                            <p class="text-[10px] text-slate-400 uppercase tracking-wider font-extrabold">${cols[0]}</p>
-                            <span class="text-xs font-black px-2.5 py-1 rounded-lg border text-emerald-400 border-emerald-800/80 bg-emerald-950/80">${cols[1] || '0'}</span>
-                        </div>`;
-                    }
-                }
-                document.getElementById('ramzan-content').innerHTML = html || "<p class='text-center text-slate-500 py-4'>No details recorded.</p>";
-            });
     </script>
 </body>
 </html>
