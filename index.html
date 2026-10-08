@@ -1,193 +1,403 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ur" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>FTCF | Family Trust & Care Foundation - Official Public Portal</title>
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Family Trust & Care Foundation (FTCF) - Official Portal</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap');
-    
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { 
-        font-family: 'Plus Jakarta Sans', sans-serif; 
-        background-color: #090d16; 
-        color: #f8fafc; 
-        min-height: 100vh; 
-        padding: 16px;
-        max-width: 480px;
-        margin: 0 auto;
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+    :root {
+      --primary-blue: #0060AE;
+      --dark-blue: #003d73;
+      --accent-red: #DC0505;
+      --light-bg: #f4f7f6;
+      --text-dark: #333333;
     }
-    .urdu-text { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.2; direction: rtl; text-align: right; }
-    
-    .bank-gradient { 
-        background: linear-gradient(135deg, rgba(6, 78, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
-        border: 1px solid rgba(16, 185, 129, 0.35);
-        box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.2);
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+    body { background-color: var(--light-bg); color: var(--text-dark); line-height: 1.6; }
+
+    /* Top Bar */
+    .top-bar {
+      background-color: var(--dark-blue);
+      color: #fff;
+      padding: 8px 5%;
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
     }
-    .glass-card {
-        background: rgba(15, 23, 42, 0.95); 
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
-        padding: 16px;
-        margin-bottom: 12px;
+    .top-bar-info span { margin-left: 20px; }
+    .top-bar-info i { color: #ffcc00; margin-left: 5px; }
+
+    /* Header & Navigation */
+    header {
+      background: #ffffff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
-    .btn {
-        width: 100%;
-        padding: 14px;
-        border-radius: 14px;
-        font-weight: 800;
-        font-size: 12px;
-        text-transform: uppercase;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        transition: 0.2s;
-        text-decoration: none;
+    .navbar {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .btn-emerald { background-color: #10b981; color: #022c22; }
-    .btn-emerald:active { transform: scale(0.98); }
-    .btn-slate { background-color: #1e293b; color: #f8fafc; border: 1px solid #334155; }
-    .input-field {
-        width: 100%;
-        padding: 12px 14px;
-        font-size: 13px;
-        background-color: #090d16;
-        border: 1px solid #334155;
-        color: #f8fafc;
-        border-radius: 14px;
-        outline: none;
-        margin-bottom: 10px;
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
-    .input-field:focus { border-color: #10b981; }
-    .flex-row { display: flex; justify-content: space-between; align-items: center; }
+    .logo-area h1 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary-blue);
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+    .logo-area span {
+      font-size: 11px;
+      color: #666;
+      display: block;
+    }
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-dark);
+      font-weight: 600;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+    .nav-links a:hover { color: var(--primary-blue); }
+    .donate-btn-nav {
+      background-color: var(--accent-red) !important;
+      color: #fff !important;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-transform: uppercase;
+      font-size: 13px !important;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(rgba(0, 96, 174, 0.85), rgba(0, 61, 115, 0.9)), url('https://images.unsplash.com/photo-1532629345422-7515f3d16bb9?auto=format&fit=crop&w=1400&q=80');
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      padding: 80px 20px;
+      text-align: center;
+    }
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .hero h2 {
+      font-family: 'Noto Nastaliq Urdu', serif;
+      font-size: 32px;
+      margin-bottom: 20px;
+      line-height: 1.8;
+    }
+    .hero p {
+      font-size: 16px;
+      margin-bottom: 30px;
+      color: #e0e0e0;
+    }
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .btn-main {
+      padding: 12px 25px;
+      border-radius: 5px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 14px;
+      transition: 0.2s;
+    }
+    .btn-primary-custom { background-color: #fff; color: var(--primary-blue); }
+    .btn-accent-custom { background-color: var(--accent-red); color: #fff; }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .section-title h3 {
+      font-size: 26px;
+      color: var(--dark-blue);
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    .section-title p {
+      color: #666;
+      font-size: 14px;
+    }
+
+    /* Services Grid */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .service-card {
+      background: #fff;
+      padding: 30px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      text-align: center;
+      border-bottom: 4px solid var(--primary-blue);
+      transition: 0.3s;
+    }
+    .service-card:hover { transform: translateY(-5px); }
+    .service-card i {
+      font-size: 35px;
+      color: var(--primary-blue);
+      margin-bottom: 15px;
+    }
+    .service-card h4 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: var(--dark-blue);
+    }
+    .service-card p {
+      font-size: 13px;
+      color: #666;
+      font-family: 'Noto Nastaliq Urdu', serif;
+      line-height: 1.8;
+    }
+
+    /* Section Forms & Donation Info */
+    .info-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-top: 50px;
+    }
+    @media(max-width: 768px) {
+      .info-split { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+    .card-box {
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+    .card-box h4 {
+      font-size: 20px;
+      color: var(--dark-blue);
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--light-bg);
+      padding-bottom: 10px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    .form-control {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 14px;
+      outline: none;
+    }
+    .form-control:focus { border-color: var(--primary-blue); }
+    .submit-btn {
+      background-color: var(--primary-blue);
+      color: #fff;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--dark-blue);
+      color: #fff;
+      padding: 40px 20px 20px 20px;
+      margin-top: 60px;
+      text-align: center;
+      font-size: 13px;
+    }
+    footer p { color: #b0c4de; margin-top: 15px; }
   </style>
 </head>
 <body>
 
-    <!-- Header / Brand -->
-    <header class="flex-row" style="padding-bottom: 16px; border-bottom: 1px solid #1e293b; margin-bottom: 16px;">
+  <!-- Top Contact Bar -->
+  <div class="top-bar">
+    <div class="top-bar-info">
+      <span><i class="fas fa-phone-alt"></i> 0343-8800890 / 0344-9461259</span>
+      <span><i class="fas fa-envelope"></i> info@ftcf.org</span>
+    </div>
+    <div>
+      <span><i class="fas fa-globe"></i> Official Welfare Portal</span>
+    </div>
+  </div>
+
+  <!-- Main Navigation Header -->
+  <header>
+    <div class="navbar">
+      <div class="logo-area">
+        <i class="fas fa-hands-helping" style="font-size: 32px; color: var(--primary-blue);"></i>
         <div>
-          <span style="font-size: 10px; font-weight: 900; color: #34d399; letter-spacing: 1px;">PUBLIC WELFARE PORTAL</span>
-          <h1 style="font-size: 18px; font-weight: 900; text-transform: uppercase;">FTCF Foundation</h1>
+          <h1>FTCF Pakistan</h1>
+          <span>Family Trust & Care Foundation</span>
         </div>
-        <span style="background: rgba(16, 185, 129, 0.2); color: #34d399; font-size: 9px; font-weight: 900; padding: 4px 8px; border-radius: 20px; border: 1px solid rgba(16, 185, 129, 0.3);">Official</span>
-    </header>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#">ہوم (Home)</a></li>
+        <li><a href="#about">تعارف</a></li>
+        <li><a href="#services">فلاحی شعبے</a></li>
+        <li><a href="#apply">مدد کی درخواست</a></li>
+        <li><a href="#donate" class="donate-btn-nav">ڈونٹ کریں (Donate)</a></li>
+      </ul>
+    </div>
+  </header>
 
-    <!-- Hero Banner -->
-    <div class="glass-card bank-gradient" style="text-align: center; padding: 24px 16px;">
-        <span style="font-size: 11px; font-weight: 800; color: #34d399; text-transform: uppercase; letter-spacing: 1px;"><i class="fas fa-hand-holding-heart"></i> Mo'tamad Support Network</span>
-        <h2 style="font-size: 20px; font-weight: 900; margin: 8px 0 12px 0; color: #f8fafc;">فیملی ٹرسٹ اینڈ کیئر فاؤنڈیشن</h2>
-        <p class="urdu-text" style="font-size: 11px; color: #cbd5e1; margin-bottom: 16px; text-align: center;">
-            علاقے کی ترقی، باہمی تعاون اور ضرورت مندوں کی بروقت مالی امداد کا ایک موثر اور شفاف ذریعہ۔
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h2>انسانیت کی خدمت، باہمی تعاون اور شفاف فلاحی نظام</h2>
+      <p>فیملی ٹرسٹ اینڈ کیئر فاؤنڈیشن (FTCF) علاقے کے ضرورت مندوں، بیماروں اور مستحق خاندانوں کی بروقت مالی اور فلاحی معاونت کے لیے پرعزم ہے۔</p>
+      <div class="hero-buttons">
+        <a href="#apply" class="btn-main btn-primary-custom"><i class="fas fa-file-alt"></i> مدد کے لیے درخواست دیں</a>
+        <a href="#donate" class="btn-main btn-accent-custom"><i class="fas fa-hand-holding-usd"></i> فنڈ میں حصہ ڈالیں</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Container -->
+  <div class="container">
+
+    <!-- About Section -->
+    <div id="about" class="section-title">
+      <h3>ہمارے بنیادی فلاحی شعبے</h3>
+      <p> شفافیت اور دیانت داری کے ساتھ فنڈز کی تقسیم اور امدادی سرگرمیاں </p>
+    </div>
+
+    <!-- Services Cards Grid (Alkhidmat Style) -->
+    <div id="services" class="services-grid">
+      <div class="service-card">
+        <i class="fas fa-heartbeat"></i>
+        <h4>Medical Support</h4>
+        <p>مستحق مریضوں کے علاج معالجے اور ہنگامی طبی امداد کے لیے مالی تعاون۔</p>
+      </div>
+      <div class="service-card">
+        <i class="fas fa-hands-washing"></i>
+        <h4>Death & Family Fund</h4>
+        <p>مشکل وقت اور ناگہانی حالات میں متاثرہ خاندانوں کے ساتھ بھرپور مالی تعاون۔</p>
+      </div>
+      <div class="service-card">
+        <i class="fas fa-graduation-cap"></i>
+        <h4>Education Assistance</h4>
+        <p>غریب اور لائق طلباء کی تعلیمی اخراجات اور فیسوں میں معاونت۔</p>
+      </div>
+      <div class="service-card">
+        <i class="fas fa-shield-alt"></i>
+        <h4>Community Welfare</h4>
+        <p>علاقے کی فلاح و بہبود اور باہمی بھائی چارے کو فروغ دینا۔</p>
+      </div>
+    </div>
+
+    <!-- Split Section: Apply Form & Donation Info -->
+    <div class="info-split">
+      
+      <!-- Public Application Form -->
+      <div id="apply" class="card-box">
+        <h4>مدد کی درخواست فارم (Assistance Request)</h4>
+        <div class="form-group">
+          <label>مکمل نام (Full Name)</label>
+          <input type="text" id="pName" class="form-control" placeholder="اپنا نام درج کریں">
+        </div>
+        <div class="form-group">
+          <label>درکار رقم (Required Amount in PKR)</label>
+          <input type="number" id="pAmt" class="form-control" placeholder="مطلوبہ رقم لکھیں">
+        </div>
+        <div class="form-group">
+          <label>مدد کی وجہ / تفصیل (Reason)</label>
+          <textarea id="pReason" class="form-control" rows="3" placeholder="تفصیل بیان کریں"></textarea>
+        </div>
+        <button onclick="sendToWhatsApp()" class="submit-btn"><i class="fab fa-whatsapp"></i> واٹس ایپ پر درخواست بھیجیں</button>
+      </div>
+
+      <!-- Donation Info Box -->
+      <div id="donate" class="card-box" style="border-top: 4px solid var(--accent-red);">
+        <h4>فنڈ میں معاونت کا طریقہ (Donation Details)</h4>
+        <p style="font-size: 13px; color: #666; margin-bottom: 15px; font-family: 'Noto Nastaliq Urdu', serif;">
+          آپ اپنی زکوٰۃ، صدقات اور عطیات مندرجہ ذیل آفیشل رابطہ نمبرز یا اکاؤন্টز کے ذریعے جمع کرا سکتے ہیں:
         </p>
-        
-        <div style="display: flex; gap: 8px;">
-            <a href="#applyForm" class="btn btn-emerald" style="flex: 1;"><i class="fas fa-file-alt"></i> مدد کی درخواست</a>
-            <a href="#donateSection" class="btn btn-slate" style="flex: 1; border-color: #34d399; color: #34d399;"><i class="fas fa-donate"></i> ڈونٹ کریں</a>
+        <div style="background: var(--light-bg); padding: 15px; border-radius: 5px; margin-bottom: 15px;">
+          <p style="font-weight: 600; font-size: 14px; color: var(--dark-blue);">📞 Official Contact Numbers:</p>
+          <p style="font-size: 14px; margin-top: 5px;">0343-8800890 / 0344-9461259</p>
         </div>
+        <div style="background: var(--light-bg); padding: 15px; border-radius: 5px;">
+          <p style="font-weight: 600; font-size: 14px; color: var(--dark-blue);">💼 Transparency Policy:</p>
+          <p style="font-size: 12px; color: #666; margin-top: 5px; font-family: 'Noto Nastaliq Urdu', serif;">ہر ایک روپے کا حساب اور شفاف ریکارڈ کمیونٹی پورٹل پر محفوظ رکھا جاتا ہے۔</p>
+        </div>
+      </div>
+
     </div>
 
-    <!-- About FTCF Section -->
-    <div class="glass-card">
-        <div class="flex-row" style="margin-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px;">
-            <span style="font-size: 9px; color: #cbd5e1; font-weight: bold; background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 10px;">تعارف</span>
-            <h3 style="font-size: 14px; font-weight: 900; color: #34d399;"><i class="fas fa-info-circle"></i> فاؤنڈیشن کا مقصد</h3>
-        </div>
-        <div class="urdu-text" style="font-size: 12px; color: #e2e8f0;">
-            <p>ہمارا عزم ہے کہ ہم نے اپنے علاقے میں "فیملی ٹرسٹ" کو ایک مثالی نیٹ ورک بنانا ہے۔ فاؤنڈیشن تمام ممبران کے باہمی اشتراک سے ہنگامی حالات، میڈیکل اور فلاحی کاموں میں بھرپور معاونت فراہم کرتی ہے۔</p>
-        </div>
-    </div>
+  </div>
 
-    <!-- Fund Status / Transparency -->
-    <div class="glass-card">
-        <div class="flex-row" style="margin-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px;">
-            <span style="font-size: 9px; color: #cbd5e1; font-weight: bold; background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 10px;">شفافیت</span>
-            <h3 style="font-size: 14px; font-weight: 900; color: #34d399;"><i class="fas fa-chart-pie"></i> فنڈ کی تقسیم</h3>
-        </div>
+  <!-- Footer -->
+  <footer>
+    <i class="fas fa-hands-helping" style="font-size: 28px; margin-bottom: 10px;"></i>
+    <p>Family Trust & Care Foundation (FTCF) — Serving Humanity with Integrity</p>
+    <p style="font-size: 11px; margin-top: 5px;">© 2026 All Rights Reserved.</p>
+  </footer>
 
-        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 12px;">
-            <div class="flex-row" style="background: rgba(16, 185, 129, 0.1); padding: 8px 10px; border-radius: 8px;">
-                <span>Death Fund: <strong style="color: #34d399;">30%</strong></span>
-                <span style="font-size: 10px; background: #064e3b; color: #34d399; padding: 2px 6px; border-radius: 6px; font-weight: bold;">Active</span>
-            </div>
-            <div class="flex-row" style="background: rgba(255, 255, 255, 0.05); padding: 8px 10px; border-radius: 8px;">
-                <span>Medical Fund: <strong style="color: #38bdf8;">25%</strong></span>
-                <span style="font-size: 10px; background: #334155; color: #cbd5e1; padding: 2px 6px; border-radius: 6px; font-weight: bold;">Secured</span>
-            </div>
-            <div class="flex-row" style="background: rgba(255, 255, 255, 0.05); padding: 8px 10px; border-radius: 8px;">
-                <span>Marriage Fund: <strong style="color: #38bdf8;">25%</strong></span>
-                <span style="font-size: 10px; background: #334155; color: #cbd5e1; padding: 2px 6px; border-radius: 6px; font-weight: bold;">Secured</span>
-            </div>
-            <div class="flex-row" style="background: rgba(16, 185, 129, 0.1); padding: 8px 10px; border-radius: 8px;">
-                <span>Reserve Fund: <strong style="color: #34d399;">20%</strong></span>
-                <span style="font-size: 10px; background: #064e3b; color: #34d399; padding: 2px 6px; border-radius: 6px; font-weight: bold;">Active</span>
-            </div>
-        </div>
-    </div>
+  <!-- WhatsApp Script -->
+  <script>
+    function sendToWhatsApp() {
+      var name = document.getElementById('pName').value.trim();
+      var amt = document.getElementById('pAmt').value.trim();
+      var reason = document.getElementById('pReason').value.trim();
 
-    <!-- Donation Section -->
-    <div id="donateSection" class="glass-card" style="border-color: rgba(56, 189, 248, 0.3);">
-        <div class="flex-row" style="margin-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px;">
-            <span style="font-size: 9px; color: #38bdf8; font-weight: bold; background: rgba(56, 189, 248, 0.1); padding: 3px 8px; border-radius: 10px;">حصہ ڈالیں</span>
-            <h3 style="font-size: 14px; font-weight: 900; color: #38bdf8;"><i class="fas fa-hand-holding-usd"></i> فنڈ میں معاونت (Donate)</h3>
-        </div>
-        <p class="urdu-text" style="font-size: 11px; color: #cbd5e1; margin-bottom: 10px;">
-            آپ اپنے عطیات یا ماہانہ فیس مندرجہ ذیل آفیشल نمبرز پر جمع کرا کے تصدیق کے لیے رسید واٹس ایپ پر بھیج سکتے ہیں:
-        </p>
-        <div style="background: rgba(0,0,0,0.4); padding: 10px; border-radius: 10px; font-size: 12px; color: #f8fafc; display: flex; flex-direction: column; gap: 4px;">
-            <div>📞 Contact: <strong>0343-8800890 / 0344-9461259</strong></div>
-        </div>
-    </div>
+      if(!name || !amt || !reason) {
+        alert("برائے مہربانی تمام خانے پُر کریں۔");
+        return;
+      }
 
-    <!-- Public Application Form -->
-    <div id="applyForm" class="glass-card">
-        <h3 style="font-size: 13px; font-weight: 900; text-align: center; text-transform: uppercase; margin-bottom: 4px;">Madad Ki Darkhwast</h3>
-        <p style="font-size: 9px; color: #94a3b8; text-align: center; text-transform: uppercase; margin-bottom: 14px; font-weight: 700;">Send details directly to management WhatsApp</p>
-        
-        <input type="text" id="pubName" placeholder="Full Name" class="input-field">
-        <input type="number" id="pubAmount" placeholder="Required Amount (PKR)" class="input-field">
-        <textarea id="pubReason" placeholder="Reason for Financial Help" class="input-field" rows="3" style="resize: none;"></textarea>
-        
-        <button onclick="submitPublicForm()" class="btn btn-emerald">
-            <i class="fab fa-whatsapp" style="font-size: 16px;"></i> Send Request via WhatsApp
-        </button>
-    </div>
+      var text = "*FTCF Public Assistance Request*\n" +
+                 "Naam: " + name + "\n" +
+                 "Raqam: Rs. " + Number(amt).toLocaleString() + "\n" +
+                 "Waja: " + reason;
 
-    <!-- Footer -->
-    <footer style="text-align: center; padding: 16px 0; color: #64748b; font-size: 10px;">
-        <p>© 2026 Family Trust & Care Foundation (FTCF). All Rights Reserved.</p>
-    </footer>
+      var url = "https://api.whatsapp.com/send?phone=923433052346&text=" + encodeURIComponent(text);
+      window.open(url, '_blank');
+    }
+  </script>
 
-    <!-- Script -->
-    <script>
-        var targetWaNumber = "923433052346";
-
-        function submitPublicForm() {
-            var name = document.getElementById('pubName').value.trim();
-            var amt = Number(document.getElementById('pubAmount').value);
-            var reason = document.getElementById('pubReason').value.trim();
-
-            if(!name || !amt || !reason) {
-                alert("Pehle tamam khane theek se pur karein.");
-                return;
-            }
-
-            var text = "*Public Assistance Request (FTCF)*\n" +
-                       "Name: " + name + "\n" +
-                       "Amount: Rs. " + amt.toLocaleString() + "\n" +
-                       "Reason: " + reason;
-
-            var url = "https://api.whatsapp.com/send?phone=" + targetWaNumber + "&text=" + encodeURIComponent(text);
-            window.open(url, '_blank');
-        }
-    </script>
 </body>
 </html>
-
-  
