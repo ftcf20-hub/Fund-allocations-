@@ -19,6 +19,14 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
     body { background-color: var(--light-bg); color: var(--text-dark); line-height: 1.6; }
 
+    /* Sticky Wrapper for Top Bar & Header */
+    .sticky-header-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
     /* Moving Top Marquee Bar */
     .top-bar {
       background-color: var(--dark-blue);
@@ -38,10 +46,6 @@
     /* Header & Navigation */
     header {
       background: #ffffff;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
     }
     .navbar {
       max-width: 1200px;
@@ -56,7 +60,6 @@
       align-items: center;
       gap: 15px;
     }
-    /* Next-Level Logo & Brand Style */
     .logo-icon-box {
       width: 50px;
       height: 50px;
@@ -105,7 +108,9 @@
       border-radius: 6px;
       text-transform: uppercase;
       font-size: 13px !important;
+      cursor: pointer;
       box-shadow: 0 4px 10px rgba(220, 5, 5, 0.3);
+      border: none;
     }
 
     /* Hero Section */
@@ -146,6 +151,8 @@
       font-weight: 600;
       text-decoration: none;
       font-size: 14px;
+      cursor: pointer;
+      border: none;
       transition: 0.2s;
     }
     .btn-primary-custom { background-color: #fff; color: var(--primary-blue); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
@@ -261,6 +268,81 @@
       box-shadow: 0 4px 12px rgba(0, 96, 174, 0.2);
     }
 
+    /* Popup Modal Styles */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: #fff;
+      width: 90%;
+      max-width: 500px;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      position: relative;
+      text-align: right;
+    }
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      font-size: 22px;
+      cursor: pointer;
+      color: #88px;
+    }
+    .account-card-item {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 12px 15px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .copy-btn {
+      background: var(--primary-blue);
+      color: #fff;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .copy-btn:hover { background: var(--dark-blue); }
+
+    /* Floating Contact Icons */
+    .floating-icons {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      z-index: 1500;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .float-icon {
+      width: 50px; height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 24px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .float-whatsapp { background-color: #25d366; }
+    .float-email { background-color: var(--primary-blue); }
+    .float-icon:hover { transform: scale(1.1); }
+
     /* Footer */
     footer {
       background-color: var(--dark-blue);
@@ -275,36 +357,39 @@
 </head>
 <body>
 
-  <!-- Moving Top Marquee Bar -->
-  <div class="top-bar">
-    <marquee behavior="scroll" direction="right" scrollamount="5">
-      <i class="fas fa-bullhorn"></i> خوش آمدید! FTCF Pakistan — فیملی ٹرسٹ اینڈ کیئر فاؤنڈیشن | 
-      <i class="fas fa-phone-alt"></i> رابطہ نمبرز: 0343-8800890 / 0344-9461259 / 0342-2735966 | 
-      <i class="fas fa-hand-holding-heart"></i> شفاف امداد، خدمتِ خلق اور فلاحی سرگرمیاں جاری ہیں!
-    </marquee>
-  </div>
-
-  <!-- Main Navigation Header -->
-  <header>
-    <div class="navbar">
-      <div class="logo-area">
-        <div class="logo-icon-box">
-          <i class="fas fa-hands-helping"></i>
-        </div>
-        <div>
-          <h1>FTCF Pakistan</h1>
-          <span>Family Trust & Care Foundation</span>
-        </div>
-      </div>
-      <ul class="nav-links">
-        <li><a href="#">ہوم</a></li>
-        <li><a href="#about">تعارف و بانیان</a></li>
-        <li><a href="#services">فلاحی شعبے</a></li>
-        <li><a href="#apply">مدد کی درخواست</a></li>
-        <li><a href="#donate" class="donate-btn-nav">ڈونٹ / ایزی پیسہ (Donate)</a></li>
-      </ul>
+  <!-- Sticky Wrapper for Top Bar and Navbar -->
+  <div class="sticky-header-wrapper">
+    <!-- Moving Top Marquee Bar -->
+    <div class="top-bar">
+      <marquee behavior="scroll" direction="right" scrollamount="5">
+        <i class="fas fa-bullhorn"></i> خوش آمدید! FTCF Pakistan — فیملی ٹرسٹ اینڈ کیئر فاؤنڈیشن | 
+        <i class="fas fa-phone-alt"></i> رابطہ نمبرز: 0343-8800890 / 0344-9461259 / 0342-2735966 | 
+        <i class="fas fa-hand-holding-heart"></i> شفاف امداد، خدمتِ خلق اور فلاحی سرگرمیاں جاری ہیں!
+      </marquee>
     </div>
-  </header>
+
+    <!-- Main Navigation Header -->
+    <header>
+      <div class="navbar">
+        <div class="logo-area">
+          <div class="logo-icon-box">
+            <i class="fas fa-hands-helping"></i>
+          </div>
+          <div>
+            <h1>FTCF Pakistan</h1>
+            <span>Family Trust & Care Foundation</span>
+          </div>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#">ہوم</a></li>
+          <li><a href="#about">تعارف و پس منظر</a></li>
+          <li><a href="#services">فلاحی شعبے</a></li>
+          <li><a href="#apply">مدد کی درخواست</a></li>
+          <li><button onclick="openDonateModal()" class="donate-btn-nav">ڈونٹ / فنڈ (Donate)</button></li>
+        </ul>
+      </div>
+    </header>
+  </div>
 
   <!-- Hero Section -->
   <section class="hero">
@@ -313,7 +398,7 @@
       <p>فیملی ٹرسٹ اینڈ کیئر فاؤنڈیشن (FTCF) علاقے کے ضرورت مندوں، بیماروں اور مستحق خاندانوں کی بروقت مالی اور فلاحی معاونت کے لیے دن رات کوشاں ہے۔</p>
       <div class="hero-buttons">
         <a href="#apply" class="btn-main btn-primary-custom"><i class="fas fa-file-alt"></i> مدد کے لیے درخواست دیں</a>
-        <a href="#donate" class="btn-main btn-accent-custom"><i class="fas fa-hand-holding-usd"></i> فنڈ میں حصہ ڈالیں</a>
+        <button onclick="openDonateModal()" class="btn-main btn-accent-custom"><i class="fas fa-hand-holding-usd"></i> فنڈ میں حصہ ڈالیں</button>
       </div>
     </div>
   </section>
@@ -321,22 +406,28 @@
   <!-- Main Content Container -->
   <div class="container">
 
-    <!-- About & Founders Section (Mughal Brothers & Ramzan Services) -->
+    <!-- About & Founders Section (Abbottabad Background & Mughal Brothers) -->
     <div id="about" class="card-box" style="margin-bottom: 40px; border-top: 4px solid var(--primary-blue);">
-      <h3 style="text-align: center; color: var(--dark-blue); margin-bottom: 25px;"><i class="fas fa-history"></i> فاؤنڈیشن کا پس منظر اور بانیان (Mughal Brothers)</h3>
-      <div style="font-family: 'Noto Nastaliq Urdu', serif; font-size: 15px; color: #444; line-height: 2.2; text-align: right;">
+      <h3 style="text-align: center; color: var(--dark-blue); margin-bottom: 25px;"><i class="fas fa-history"></i> فاؤنڈیشن کا پس منظر — سفرِ خدمت</h3>
+      <div style="font-family: 'Noto Nastaliq Urdu', serif; font-size: 15px; color: #444; line-height: 2.3; text-align: right;">
         <p style="margin-bottom: 15px;">
-          <strong>فیملی ٹرسٹ اینڈ کیئر فاؤنڈیشن (FTCF)</strong> کی بنیاد مغل برادرز (Mughal Brothers) کی جانب سے رکھی گئی، جنہوں نے علاقے کے مستحق اور پریشان حال لوگوں کی مدد کرنے کا عزم کیا۔ مغل برادرز نے اس فاؤنڈیشن کو کھڑا کرنے اور اسے ایک شفاف پلیٹ فارم بنانے کے لیے دن رات بے پناہ محنت کی ہے، تاکہ ہر ضرورت مند تک حق دار کا حصہ ایمانداری سے پہنچ سکے۔
+          ہم <strong>ایبٹ آباد</strong> کے ایک گاؤں سے تعلق رکھتے ہیں۔ اگر ہم اپنے پورے علاقے یعنی ایبٹ آباد، مانسہرہ، ہری پور اور حویلیاں کا جائزہ لیں تو یہاں کثیر تعداد میں ایسے علاقے موجود ہیں جہاں کے تقریباً <strong>80% لوگ بے روزگار</strong> ہیں۔ ان علاقوں میں نہ تو بنیادی سہولیات کا کوئی خاص انتظام ہے اور نہ ہی روزگار کا کوئی پائیدار ذریعہ۔ زیادہ تر لوگ دن بھر سخت محنت اور مزدوری کر کے اپنے معصوم بچوں کا پیٹ پالتے ہیں۔
+        </p>
+        <p style="margin-bottom: 15px;">
+          ان حالات کو مدنظر رکھتے ہوئے <strong>مغل برادرز</strong> نے اپنے علاقے کے ایسے ہی غریب اور سفید پوش (عزت دار) لوگوں کی مدد کے لیے ایک عملی قدم اٹھانے کا عزم کیا۔ یہ مقدس سفر انہوں نے سب سے پہلے اپنے خاندان سے شروع کیا اور پھر اسے وسعت دی تاکہ علاقے کے ہر اس مستحق فرد کی مدد کی جا सके جو پس پیس کر رہ جاتا ہے۔
         </p>
         <p>
-          خصوصاً <strong>ماہِ مبارک رمضان</strong> کے بابکت مہینے میں فاؤنڈیشن کی جانب سے مستحق خاندانوں میں راشن، مالی امداد اور ضروریاتِ زندگی کی فراہمی کے لیے خصوصی مہمات چلائی جاتی ہیں، تاکہ غریب اور نادار افراد بھی خوشیوں میں برابر کے شریک ہو سکیں۔
+          آج <strong>فیملی ٹرسٹ اینڈ کیئر فاؤنڈیشن (FTCF)</strong> کے ذریعے مغل برادرز اپنے علاقے کے نادار اور محتاج لوگوں کی خدمت کے لیے دن رات کوشاں ہیں، تاکہ ہر مستحق تک اس کی ابتدائی ضروریات کا ذریعہ پہنچ سکے۔ اللہ پاک مغل برادرز کی اس خلوص نیت کوشش کو شرفِ قبولیت بخشے، اسے کامیابی سے ہمکنار کرے اور تمام انسانیت پر اپنا خصوصی فضل و کرم فرمائے۔
         </p>
+        <div style="background: #eef6fc; padding: 15px; border-radius: 8px; margin-top: 20px; border-right: 4px solid var(--primary-blue); text-align: center;">
+          <p style="font-weight: 700; color: var(--dark-blue); font-size: 16px;">آپ سب سے تعاون کی پُرخلوص اپیل ہے — دل کھول کر ڈونیشن دیں اور مغل برادرز کی اس خیر کی چین کا حصہ بنیں۔ شکریہ!</p>
+        </div>
       </div>
     </div>
 
     <div class="section-title">
       <h3>ہمارے بنیادی فلاحی شعبے</h3>
-      <p> شفافیت اور دیانت داری کے ساتھ فنڈز کی تقسیم اور امدادی سرگرمیاں </p>
+      <p>شفافیت اور دیانت داری کے ساتھ فنڈز کی تقسیم اور امدادی سرگرمیاں</p>
     </div>
 
     <!-- Services Cards Grid -->
@@ -354,7 +445,7 @@
       <div class="service-card">
         <i class="fas fa-moon" style="color: #f59e0b;"></i>
         <h4>Ramzan & Relief Drive</h4>
-        <p>رمضان المبارک اور ہنگامی حالات میں مستحقین کو راشن اور امداد کی فراہمی۔</p>
+        <p>رمضان المبارک اور مشکل حالات میں مستحقین و سفید پوش خاندانوں کو راشن کی فراہمی۔</p>
       </div>
       <div class="service-card">
         <i class="fas fa-shield-alt"></i>
@@ -363,10 +454,10 @@
       </div>
     </div>
 
-    <!-- Split Section: Apply Form & Donation Info with Easypaisa -->
+    <!-- Split Section: Apply Form & Quick Donation Trigger -->
     <div class="info-split">
       
-      <!-- Public Application Form -->
+      <!-- Public Application Form (Name, Phone, Address, Reason, Amount) -->
       <div id="apply" class="card-box">
         <h4>مدد کی درخواست فارم (Assistance Request)</h4>
         <div class="form-group">
@@ -374,66 +465,137 @@
           <input type="text" id="pName" class="form-control" placeholder="اپنا نام درج کریں">
         </div>
         <div class="form-group">
-          <label>درکار رقم (Required Amount in PKR)</label>
-          <input type="number" id="pAmt" class="form-control" placeholder="مطلوبہ رقم لکھیں">
+          <label>فون نمبر (Phone Number)</label>
+          <input type="text" id="pPhone" class="form-control" placeholder="رابطہ نمبر لکھیں">
+        </div>
+        <div class="form-group">
+          <label>مکمل پتہ (Address - Abbottabad/Gird-o-Nawah)</label>
+          <input type="text" id="pAddress" class="form-control" placeholder="اپنا علاقہ اور پتہ درج کریں">
         </div>
         <div class="form-group">
           <label>مدد کی وجہ / تفصیل (Reason)</label>
-          <textarea id="pReason" class="form-control" rows="3" placeholder="تفصیل بیان کریں"></textarea>
+          <textarea id="pReason" class="form-control" rows="2" placeholder="مختصر وجہ بیان کریں"></textarea>
         </div>
-        <button onclick="sendToWhatsApp()" class="submit-btn"><i class="fab fa-whatsapp"></i> واٹس ایپ پر درخواست بھیجیں</button>
+        <div class="form-group">
+          <label>درکار رقم (Required Amount in PKR)</label>
+          <input type="number" id="pAmt" class="form-control" placeholder="مطلوبہ رقم لکھیں">
+        </div>
+        <button onclick="sendToWhatsAppForm()" class="submit-btn"><i class="fab fa-whatsapp"></i> واٹس ایپ پر درخواست بھیجیں</button>
       </div>
 
-      <!-- Donation Info Box with Easypaisa -->
-      <div id="donate" class="card-box" style="border-top: 4px solid var(--accent-red);">
-        <h4>فنڈ میں معاونت اور ایزی پیسہ (Donation Details)</h4>
-        <p style="font-size: 13px; color: #666; margin-bottom: 15px; font-family: 'Noto Nastaliq Urdu', serif;">
-          آپ اپنی زکوٰۃ، صدقات اور عطیات مندرجہ ذیل آفیشل رابطہ نمبرز اور ایزی پیسہ اکاؤنٹ پر جمع کرا سکتے ہیں:
+      <!-- Quick Donate Card Box -->
+      <div class="card-box" style="border-top: 4px solid var(--accent-red); display: flex; flex-direction: column; justify-content: center; text-align: center;">
+        <i class="fas fa-hand-holding-heart" style="font-size: 50px; color: var(--accent-red); margin-bottom: 20px;"></i>
+        <h4 style="border: none; text-align: center;">عطیات اور فنڈز میں معاونت</h4>
+        <p style="font-size: 14px; color: #555; margin-bottom: 25px; font-family: 'Noto Nastaliq Urdu', serif;">
+          آپ کی دی گئی ہر ایک پائی ایبٹ آباد اور گردونواح کے سفید پوش اور بے روزگار مستحقین تک ایمانداری سے پہنچائی جاتی ہے۔ اکاؤنٹ کی تفصیلات دیکھنے اور ایک کلک پر نمبر کاپی کرنے کے لیے نیچے دیے گئے بٹن پر کلک کریں:
         </p>
-        
-        <div style="background: #eef6fc; padding: 15px; border-radius: 6px; margin-bottom: 15px; border-right: 4px solid var(--primary-blue);">
-          <p style="font-weight: 700; font-size: 14px; color: var(--dark-blue); margin-bottom: 5px;"><i class="fas fa-mobile-alt"></i> Official Contact & Easypaisa Numbers:</p>
-          <p style="font-size: 15px; font-weight: 600; color: #222;">0343-8800890 / 0344-9461259 / 0342-2735966</p>
-        </div>
-
-        <div style="background: #fdf2f2; padding: 15px; border-radius: 6px; margin-bottom: 15px; border-right: 4px solid var(--accent-red);">
-          <p style="font-weight: 700; font-size: 14px; color: var(--accent-red); margin-bottom: 3px;"><i class="fas fa-wallet"></i> Easypaisa Account Info:</p>
-          <p style="font-size: 13px; color: #444; font-family: 'Noto Nastaliq Urdu', serif;">رقم منتقل کرنے کے بعد اسکرین شاٹ یا رسید آفیشل واٹس ایپ نمبر پر لازمی ارسال کریں تاکہ ریکارڈ محفوظ رہے۔</p>
-        </div>
-
-        <div style="background: var(--light-bg); padding: 12px; border-radius: 6px;">
-          <p style="font-weight: 600; font-size: 13px; color: var(--dark-blue);">💼 Transparency Policy:</p>
-          <p style="font-size: 12px; color: #666; margin-top: 3px; font-family: 'Noto Nastaliq Urdu', serif;">ہر ایک روپے کا حساب شفاف ریکارڈ پورٹل پر محفوظ رکھا جاتا ہے۔</p>
-        </div>
+        <button onclick="openDonateModal()" class="submit-btn" style="background-color: var(--accent-red); box-shadow: 0 4px 12px rgba(220, 5, 5, 0.3);">
+          <i class="fas fa-wallet"></i> اکاؤنٹ کی معلومات دیکھیں اور کاپی کریں
+        </button>
       </div>
 
     </div>
 
   </div>
 
+  <!-- Donation Accounts Popup Modal -->
+  <div id="donateModal" class="modal-overlay">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeDonateModal()">&times;</span>
+      <h3 style="color: var(--dark-blue); margin-bottom: 15px; font-size: 20px;"><i class="fas fa-university"></i> فنڈ اور ایزی پیسہ اکاؤنٹس</h3>
+      <p style="font-size: 13px; color: #666; margin-bottom: 20px; font-family: 'Noto Nastaliq Urdu', serif;">
+        رقم منتقل کرنے کے بعد اسکرین شاٹ آفیشل واٹس ایپ نمبر پر لازمی ارسال کریں۔ آپ آسانی سے سائیڈ والا بٹن دبا کر نمبر کاپی کر سکتے ہیں:
+      </p>
+
+      <!-- Account 1 -->
+      <div class="account-card-item">
+        <div>
+          <strong style="display: block; font-size: 13px; color: var(--primary-blue);"><i class="fas fa-mobile-alt"></i> Easypaisa / Contact 1</strong>
+          <span id="acc1" style="font-size: 15px; font-weight: 600; color: #222;">0343-8800890</span>
+        </div>
+        <button class="copy-btn" onclick="copyText('acc1')"><i class="fas fa-copy"></i> کاپی کریں</button>
+      </div>
+
+      <!-- Account 2 -->
+      <div class="account-card-item">
+        <div>
+          <strong style="display: block; font-size: 13px; color: var(--primary-blue);"><i class="fas fa-mobile-alt"></i> Easypaisa / Contact 2</strong>
+          <span id="acc2" style="font-size: 15px; font-weight: 600; color: #222;">0344-9461259</span>
+        </div>
+        <button class="copy-btn" onclick="copyText('acc2')"><i class="fas fa-copy"></i> کاپی کریں</button>
+      </div>
+
+      <!-- Account 3 -->
+      <div class="account-card-item">
+        <div>
+          <strong style="display: block; font-size: 13px; color: var(--primary-blue);"><i class="fas fa-mobile-alt"></i> Official Contact 3</strong>
+          <span id="acc3" style="font-size: 15px; font-weight: 600; color: #222;">0342-2735966</span>
+        </div>
+        <button class="copy-btn" onclick="copyText('acc3')"><i class="fas fa-copy"></i> کاپی کریں</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Contact Icons (WhatsApp & Email) -->
+  <div class="floating-icons">
+    <a href="https://wa.me/923433052346" target="_blank" class="float-icon float-whatsapp" title="WhatsApp Contact">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+    <a href="mailto:ftcf.20@gmail.com" class="float-icon float-email" title="Email FTCF">
+      <i class="fas fa-envelope"></i>
+    </a>
+  </div>
+
   <!-- Footer -->
   <footer>
     <i class="fas fa-hands-helping" style="font-size: 28px; margin-bottom: 10px;"></i>
     <p>Family Trust & Care Foundation (FTCF) — Founded by Mughal Brothers</p>
-    <p style="font-size: 11px; margin-top: 5px;">© 2026 All Rights Reserved.</p>
+    <p style="font-size: 11px; margin-top: 5px;">© 2026 All Rights Reserved. Abbottabad, Pakistan.</p>
   </footer>
 
-  <!-- WhatsApp Script -->
+  <!-- Scripts for Popup, Copy & WhatsApp Form -->
   <script>
-    function sendToWhatsApp() {
-      var name = document.getElementById('pName').value.trim();
-      var amt = document.getElementById('pAmt').value.trim();
-      var reason = document.getElementById('pReason').value.trim();
+    function openDonateModal() {
+      document.getElementById('donateModal').style.display = 'flex';
+    }
+    function closeDonateModal() {
+      document.getElementById('donateModal').style.display = 'none';
+    }
+    window.onclick = function(event) {
+      var modal = document.getElementById('donateModal');
+      if (event.target == modal) {
+    modal.style.display = 'none';
+      }
+    }
 
-      if(!name || !amt || !reason) {
-        alert("برائے مہربانی تمام خانے پُر کریں۔");
+    function copyText(containerId) {
+      var textToCopy = document.getElementById(containerId).innerText;
+      navigator.clipboard.writeText(textToCopy).then(function() {
+        alert("نمبر کاپی ہو گیا: " + textToCopy);
+      }, function(err) {
+        alert("کاپی کرنے میں خرابی پیش آئی۔");
+      });
+    }
+
+    function sendToWhatsAppForm() {
+      var name = document.getElementById('pName').value.trim();
+      var phone = document.getElementById('pPhone').value.trim();
+      var address = document.getElementById('pAddress').value.trim();
+      var reason = document.getElementById('pReason').value.trim();
+      var amt = document.getElementById('pAmt').value.trim();
+
+      if(!name || !phone || !address || !reason || !amt) {
+        alert("برائے مہربانی فارم کے تمام خانے پُر کریں۔");
         return;
       }
 
       var text = "*FTCF Public Assistance Request*\n" +
                  "Naam: " + name + "\n" +
-                 "Raqam: Rs. " + Number(amt).toLocaleString() + "\n" +
-                 "Waja: " + reason;
+                 "Phone: " + phone + "\n" +
+                 "Pata (Address): " + address + "\n" +
+                 "Waja: " + reason + "\n" +
+                 "Matlooba Raqam: Rs. " + Number(amt).toLocaleString();
 
       var url = "https://api.whatsapp.com/send?phone=923433052346&text=" + encodeURIComponent(text);
       window.open(url, '_blank');
