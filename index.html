@@ -3,11 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>FTCF | Modern Financial Portal</title>
+  <title>FTCF | Family Trust & Care Foundation - Official Public Portal</title>
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- PapaParse for reading CSV directly -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
   
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap');
@@ -50,6 +48,7 @@
         justify-content: center;
         gap: 8px;
         transition: 0.2s;
+        text-decoration: none;
     }
     .btn-emerald { background-color: #10b981; color: #022c22; }
     .btn-emerald:active { transform: scale(0.98); }
@@ -66,310 +65,129 @@
         margin-bottom: 10px;
     }
     .input-field:focus { border-color: #10b981; }
-    .modal {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.9);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 16px;
-        z-index: 100;
-    }
-    .hidden { display: none !important; }
     .flex-row { display: flex; justify-content: space-between; align-items: center; }
-    
-    /* FAQ Accordion Styling */
-    .faq-item {
-        background: rgba(0, 0, 0, 0.3);
-        border: 1px solid rgba(16, 185, 129, 0.2);
-        border-radius: 12px;
-        margin-bottom: 8px;
-        overflow: hidden;
-    }
-    .faq-question {
-        padding: 10px 12px;
-        font-size: 11px;
-        font-weight: 700;
-        color: #34d399;
-        cursor: pointer;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .faq-answer {
-        padding: 10px 12px;
-        font-size: 11px;
-        color: #cbd5e1;
-        border-top: 1px dashed rgba(16, 185, 129, 0.2);
-        background: rgba(15, 23, 42, 0.5);
-    }
   </style>
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- Header / Brand -->
     <header class="flex-row" style="padding-bottom: 16px; border-bottom: 1px solid #1e293b; margin-bottom: 16px;">
         <div>
-          <span style="font-size: 10px; font-weight: 900; color: #34d399; letter-spacing: 1px;">2026-2027 FISCAL PORTAL</span>
-          <h1 style="font-size: 18px; font-weight: 900; text-transform: uppercase;">Rules & Shrait</h1>
+          <span style="font-size: 10px; font-weight: 900; color: #34d399; letter-spacing: 1px;">PUBLIC WELFARE PORTAL</span>
+          <h1 style="font-size: 18px; font-weight: 900; text-transform: uppercase;">FTCF Foundation</h1>
         </div>
+        <span style="background: rgba(16, 185, 129, 0.2); color: #34d399; font-size: 9px; font-weight: 900; padding: 4px 8px; border-radius: 20px; border: 1px solid rgba(16, 185, 129, 0.3);">Official</span>
     </header>
 
-    <!-- Qawaid and Shrait Section with Fund Allocations & Status in Pure Urdu -->
-    <div class="glass-card bank-gradient" style="margin-bottom: 16px;">
-        <div class="flex-row" style="margin-bottom: 12px; border-bottom: 1px solid rgba(16, 185, 129, 0.3); padding-bottom: 8px;">
-            <span style="font-size: 9px; color: #cbd5e1; font-weight: bold; background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 10px;">FTCF Official</span>
-            <h3 style="font-size: 14px; font-weight: 900; color: #34d399; text-transform: uppercase;"><i class="fas fa-scroll"></i> قواعد و شرائط</h3>
-        </div>
-
-        <!-- Scrollable Urdu Rules Container -->
-        <div class="urdu-text" style="max-height: 360px; overflow-y: auto; padding-left: 6px; font-size: 12px; color: #e2e8f0; display: flex; flex-direction: column; gap: 10px;">
-            <p><strong>۱. ڈیتھ فنڈ:</strong> کے لیے جاری کیا گیا فنڈ ناقابلِ واپسی ہو گا، جو ممبران سے نہیں لیا جائے گا۔</p>
-            <p><strong>۲. میڈیکل فنڈ:</strong> کے لیے جاری کی گئی رقم لون ہو گی فاؤنڈیشن کے مستحکم ہونے تک، جو کہ طے شدہ مہینوں میں اقساط میں واپس ادا کرنی ہو گی۔</p>
-            <p><strong>۳. شادی (Marriage):</strong> کے لیے کوئی بھی ممبر فنڈ اپلائی کر سکتا ہے، جو کہ اکاؤنٹ کا جائزہ لینے کے بعد اسے لون کے طور پر دی جائے گی۔</p>
-            <p><strong>۴. ریزرو فنڈ:</strong> کسی بھی ہنگامی صورتحال سے نمٹنے کے لیے ہمیشہ ریزرو رہے گا۔</p>
-            
-            <div style="border-top: 1px dashed rgba(16, 185, 129, 0.3); padding-top: 8px; margin-top: 4px;">
-                <p style="color: #34d399; font-weight: 700;">وقت کا دورانیہ (Time Period):</p>
-                <p>یہ تمام کیٹیگریز وقت کے ساتھ ساتھ انلاک کی جائیں گی اور ہر رول تمام ممبران پر لاگو ہو گا۔ اور سارے رولز بھی سب ممبران کی مشاورت سے طے ہوں گے۔</p>
-            </div>
-
-            <!-- Fund Allocation Breakdown with Lock/Unlock Status -->
-            <div style="background: rgba(0, 0, 0, 0.4); padding: 12px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.3); margin-top: 4px; display: flex; flex-direction: column; gap: 6px;">
-                <p style="color: #34d399; font-weight: 700; margin-bottom: 2px;">فنڈ کی تقسیم اور اسٹیٹس (Fund Allocation & Status):</p>
-                <div class="flex-row" style="background: rgba(16, 185, 129, 0.1); padding: 6px 10px; border-radius: 8px;">
-                    <span>Death Fund: <strong style="color: #34d399;">30%</strong></span>
-                    <span style="font-size: 10px; background: #064e3b; color: #34d399; padding: 2px 6px; border-radius: 6px; font-weight: bold;"><i class="fas fa-lock-open"></i> Unlock</span>
-                </div>
-                <div class="flex-row" style="background: rgba(255, 255, 255, 0.05); padding: 6px 10px; border-radius: 8px;">
-                    <span>Medical Fund: <strong style="color: #38bdf8;">25%</strong></span>
-                    <span style="font-size: 10px; background: #334155; color: #cbd5e1; padding: 2px 6px; border-radius: 6px; font-weight: bold;"><i class="fas fa-lock"></i> Lock</span>
-                </div>
-                <div class="flex-row" style="background: rgba(255, 255, 255, 0.05); padding: 6px 10px; border-radius: 8px;">
-                    <span>Marriage Fund: <strong style="color: #38bdf8;">25%</strong></span>
-                    <span style="font-size: 10px; background: #334155; color: #cbd5e1; padding: 2px 6px; border-radius: 6px; font-weight: bold;"><i class="fas fa-lock"></i> Lock</span>
-                </div>
-                <div class="flex-row" style="background: rgba(16, 185, 129, 0.1); padding: 6px 10px; border-radius: 8px;">
-                    <span>Reserve Fund: <strong style="color: #34d399;">20%</strong></span>
-                    <span style="font-size: 10px; background: #064e3b; color: #34d399; padding: 2px 6px; border-radius: 6px; font-weight: bold;"><i class="fas fa-lock-open"></i> Unlock</span>
-                </div>
-            </div>
-
-            <p>فاؤنڈیشن کا پورا ریکارڈ آن لائن اور مینوئل دونوں شکل میں موجود ہو گا۔</p>
-            <p style="color: #fb7185; font-weight: bold;">ڈیتھ کے علاوہ کسی بھی قسم کے فنڈ کے لیے نیچے دیے گئے فارم کو فل کر کے سبمٹ کریں۔</p>
-            <p style="text-align: left; font-weight: bold; color: #34d399; margin-top: 6px;">شکریہ!<br>ایف ٹی سی ایف مینجمنٹ</p>
+    <!-- Hero Banner -->
+    <div class="glass-card bank-gradient" style="text-align: center; padding: 24px 16px;">
+        <span style="font-size: 11px; font-weight: 800; color: #34d399; text-transform: uppercase; letter-spacing: 1px;"><i class="fas fa-hand-holding-heart"></i> Mo'tamad Support Network</span>
+        <h2 style="font-size: 20px; font-weight: 900; margin: 8px 0 12px 0; color: #f8fafc;">فیملی ٹرسٹ اینڈ کیئر فاؤنڈیشن</h2>
+        <p class="urdu-text" style="font-size: 11px; color: #cbd5e1; margin-bottom: 16px; text-align: center;">
+            علاقے کی ترقی، باہمی تعاون اور ضرورت مندوں کی بروقت مالی امداد کا ایک موثر اور شفاف ذریعہ۔
+        </p>
+        
+        <div style="display: flex; gap: 8px;">
+            <a href="#applyForm" class="btn btn-emerald" style="flex: 1;"><i class="fas fa-file-alt"></i> مدد کی درخواست</a>
+            <a href="#donateSection" class="btn btn-slate" style="flex: 1; border-color: #34d399; color: #34d399;"><i class="fas fa-donate"></i> ڈونٹ کریں</a>
         </div>
     </div>
 
-    <!-- FAQ SECTION (Pure Urdu) -->
+    <!-- About FTCF Section -->
     <div class="glass-card">
         <div class="flex-row" style="margin-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px;">
-            <span style="font-size: 9px; color: #cbd5e1; font-weight: bold; background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 10px;">معلومات</span>
-            <h3 style="font-size: 14px; font-weight: 900; color: #34d399; text-transform: uppercase;"><i class="fas fa-question-circle"></i> اکثر پوچھے گئے سوالات (FAQ)</h3>
+            <span style="font-size: 9px; color: #cbd5e1; font-weight: bold; background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 10px;">تعارف</span>
+            <h3 style="font-size: 14px; font-weight: 900; color: #34d399;"><i class="fas fa-info-circle"></i> فاؤنڈیشن کا مقصد</h3>
         </div>
-
-        <div style="display: flex; flex-direction: column; gap: 6px;">
-            <!-- FAQ 1 -->
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span><i class="fas fa-chevron-down" style="font-size: 9px; margin-left: 6px;"></i> فاؤنڈیشن سے لون کے لیے کون اپلائی کر سکتا ہے؟</span>
-                </div>
-                <div class="faq-answer urdu-text hidden">
-                    فاؤنڈیشن کا ہر رجسٹرڈ ممبر قواعد و شرائط پر پورا اترنے کے بعد لون کے لیے اپلائی کر سکتا ہے۔
-                </div>
-            </div>
-
-            <!-- FAQ 2 -->
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span><i class="fas fa-chevron-down" style="font-size: 9px; margin-left: 6px;"></i> اقساط کی واپسی کا کیا طریقہ کار ہے؟</span>
-                </div>
-                <div class="faq-answer urdu-text hidden">
-                    طے شدہ مہینوں کے اندر آسان ماہانہ اقساط کے ذریعے رقم واپس جمع کرانی ہوگی۔
-                </div>
-            </div>
-
-            <!-- FAQ 3 -->
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span><i class="fas fa-chevron-down" style="font-size: 9px; margin-left: 6px;"></i> کیا ڈیتھ فنڈ واپس کرنا پڑتا ہے؟</span>
-                </div>
-                <div class="faq-answer urdu-text hidden">
-                    جی نہیں، قواعد کے مطابق ڈیتھ فنڈ ناقابلِ واپسی ہوتا ہے۔
-                </div>
-            </div>
-
-            <!-- FAQ 4 -->
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span><i class="fas fa-chevron-down" style="font-size: 9px; margin-left: 6px;"></i> قسط کیسے جمع ہو گی؟</span>
-                </div>
-                <div class="faq-answer urdu-text hidden">
-                    قسط ہر مہینے کی پیمنٹ کے ساتھ جمع کروانی ہو گی۔
-                </div>
-            </div>
-
-            <!-- FAQ 5 -->
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span><i class="fas fa-chevron-down" style="font-size: 9px; margin-left: 6px;"></i> کیا جس ممبر نے پہلے ہی لون لیا ہوا ہے وہ اور لون لینے کا حقدار ہو گا؟</span>
-                </div>
-                <div class="faq-answer urdu-text hidden">
-                    جی نہیں، پہلے لیے ہوئے لون کی تمام اقساط جمع کروانا ضروری ہے۔
-                </div>
-            </div>
+        <div class="urdu-text" style="font-size: 12px; color: #e2e8f0;">
+            <p>ہمارا عزم ہے کہ ہم نے اپنے علاقے میں "فیملی ٹرسٹ" کو ایک مثالی نیٹ ورک بنانا ہے۔ فاؤنڈیشن تمام ممبران کے باہمی اشتراک سے ہنگامی حالات، میڈیکل اور فلاحی کاموں میں بھرپور معاونت فراہم کرتی ہے۔</p>
         </div>
     </div>
 
-    <!-- Mission & Vision -->
-    <div style="margin-bottom: 16px;">
-        <button onclick="toggleMission()" class="btn btn-slate">
-            <i class="fas fa-book-open" style="color: #34d399;"></i>
-            <span>Read Full Mission & Vision</span>
-        </button>
-        
-        <div id="missionBox" class="glass-card urdu-text hidden" style="margin-top: 10px; max-height: 200px; overflow-y: auto; font-size: 12px; color: #e2e8f0; text-align: right;">
-            <p>ہمارا عزم ہے کہ ہم نے اپنے علاقے میں "فیملی ٹرسٹ" کو ایک مثالی نیٹ ورک بنانا ہے۔ یہ ہم سب ممبران کی اپنی مشترکہ فاؤنڈیشن ہے۔</p>
-        </div>
-    </div>
-
-    <!-- Application Form -->
+    <!-- Fund Status / Transparency -->
     <div class="glass-card">
-        <h3 style="font-size: 13px; font-weight: 900; text-align: center; text-transform: uppercase; margin-bottom: 4px;">Request Financial Assistance</h3>
-        <p style="font-size: 9px; color: #94a3b8; text-align: center; text-transform: uppercase; margin-bottom: 14px; font-weight: 700;">Submit details directly to WhatsApp</p>
-        
-        <input type="text" id="uName" placeholder="Full Name" class="input-field">
-        <input type="number" id="uAmount" placeholder="Loan Amount (PKR)" class="input-field">
-        <textarea id="uReason" placeholder="Reason for Request" class="input-field" rows="3" style="resize: none;"></textarea>
-        
-        <button onclick="handleApplication()" class="btn btn-emerald">
-            <i class="fab fa-whatsapp" style="font-size: 16px;"></i> Submit & Generate Receipt
-        </button>
-    </div>
+        <div class="flex-row" style="margin-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px;">
+            <span style="font-size: 9px; color: #cbd5e1; font-weight: bold; background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 10px;">شفافیت</span>
+            <h3 style="font-size: 14px; font-weight: 900; color: #34d399;"><i class="fas fa-chart-pie"></i> فنڈ کی تقسیم</h3>
+        </div>
 
-    <!-- DIGITAL RECEIPT MODAL -->
-    <div id="receiptModal" class="modal hidden">
-        <div style="width: 100%; max-width: 360px;">
-            <div class="glass-card" style="border: 1px solid #334155; margin-bottom: 10px; background: linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(6, 78, 59, 0.4) 100%);">
-                <!-- Receipt Header -->
-                <div class="flex-row" style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px;">
-                    <div>
-                        <span style="color: #34d399; font-weight: 900; font-size: 11px; letter-spacing: 0.5px;"><i class="fas fa-shield-alt"></i> FTCF OFFICIAL</span>
-                        <h4 style="font-size: 16px; font-weight: 900; margin-top: 2px;">Financial Voucher</h4>
-                    </div>
-                    <span style="background: rgba(16, 185, 129, 0.2); color: #34d399; font-size: 9px; font-weight: 900; padding: 3px 8px; border-radius: 20px; border: 1px solid rgba(16, 185, 129, 0.3);">Verified Draft</span>
-                </div>
-
-                <!-- Receipt Body Details -->
-                <div style="font-size: 12px; display: flex; flex-direction: column; gap: 8px;">
-                    <div class="flex-row"><span style="color: #94a3b8; font-size: 11px;">Reference ID:</span> <span id="rcptRef" style="font-weight: 900; color: #38bdf8; font-family: monospace;">#FTCF-0000</span></div>
-                    <div class="flex-row"><span style="color: #94a3b8; font-size: 11px;">Date & Time:</span> <span id="rcptDateTime" style="font-weight: bold; font-size: 11px; color: #cbd5e1;">---</span></div>
-                    <div class="flex-row"><span style="color: #94a3b8; font-size: 11px;">Applicant Name:</span> <span id="rcptName" style="font-weight: bold; color: #f8fafc;">---</span></div>
-                    <div class="flex-row" style="background: rgba(16, 185, 129, 0.1); padding: 8px; border-radius: 8px; border: 1px dashed rgba(16, 185, 129, 0.3);">
-                        <span style="color: #34d399; font-weight: 800; font-size: 11px;">Requested Amount:</span> 
-                        <span id="rcptAmount" style="font-weight: 900; color: #34d399; font-size: 14px;">Rs. 0</span>
-                    </div>
-                    <div style="margin-top: 2px;">
-                        <span style="color: #94a3b8; font-size: 10px; text-transform: uppercase; font-weight: 800;">Purpose / Reason:</span> 
-                        <p id="rcptReason" style="font-size: 11px; font-style: italic; color: #e2e8f0; margin-top: 3px; background: rgba(0,0,0,0.3); padding: 8px; border-radius: 8px; border-left: 3px solid #10b981;">---</p>
-                    </div>
-                </div>
-
-                <div style="margin-top: 12px; padding-top: 8px; border-top: 1px dashed rgba(255,255,255,0.1); text-align: center;">
-                    <span style="font-size: 9px; color: #64748b; font-weight: 700; letter-spacing: 0.5px;">FAMILY TRUST & CARE FOUNDATION PORTAL</span>
-                </div>
+        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 12px;">
+            <div class="flex-row" style="background: rgba(16, 185, 129, 0.1); padding: 8px 10px; border-radius: 8px;">
+                <span>Death Fund: <strong style="color: #34d399;">30%</strong></span>
+                <span style="font-size: 10px; background: #064e3b; color: #34d399; padding: 2px 6px; border-radius: 6px; font-weight: bold;">Active</span>
             </div>
-
-            <a id="modalWaBtn" href="#" target="_blank" class="btn btn-emerald" style="text-decoration: none; margin-bottom: 8px;">
-                <i class="fab fa-whatsapp" style="font-size: 15px;"></i> Send on WhatsApp Now
-            </a>
-            <button onclick="downloadReceipt()" class="btn btn-slate" style="margin-bottom: 8px; background: #0369a1; color: #fff; border: none;">
-                <i class="fas fa-download"></i> Download / Save Receipt
-            </button>
-            <button onclick="closeReceiptModal()" class="btn btn-slate">Close</button>
+            <div class="flex-row" style="background: rgba(255, 255, 255, 0.05); padding: 8px 10px; border-radius: 8px;">
+                <span>Medical Fund: <strong style="color: #38bdf8;">25%</strong></span>
+                <span style="font-size: 10px; background: #334155; color: #cbd5e1; padding: 2px 6px; border-radius: 6px; font-weight: bold;">Secured</span>
+            </div>
+            <div class="flex-row" style="background: rgba(255, 255, 255, 0.05); padding: 8px 10px; border-radius: 8px;">
+                <span>Marriage Fund: <strong style="color: #38bdf8;">25%</strong></span>
+                <span style="font-size: 10px; background: #334155; color: #cbd5e1; padding: 2px 6px; border-radius: 6px; font-weight: bold;">Secured</span>
+            </div>
+            <div class="flex-row" style="background: rgba(16, 185, 129, 0.1); padding: 8px 10px; border-radius: 8px;">
+                <span>Reserve Fund: <strong style="color: #34d399;">20%</strong></span>
+                <span style="font-size: 10px; background: #064e3b; color: #34d399; padding: 2px 6px; border-radius: 6px; font-weight: bold;">Active</span>
+            </div>
         </div>
     </div>
 
-    <!-- Script Engine -->
+    <!-- Donation Section -->
+    <div id="donateSection" class="glass-card" style="border-color: rgba(56, 189, 248, 0.3);">
+        <div class="flex-row" style="margin-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px;">
+            <span style="font-size: 9px; color: #38bdf8; font-weight: bold; background: rgba(56, 189, 248, 0.1); padding: 3px 8px; border-radius: 10px;">حصہ ڈالیں</span>
+            <h3 style="font-size: 14px; font-weight: 900; color: #38bdf8;"><i class="fas fa-hand-holding-usd"></i> فنڈ میں معاونت (Donate)</h3>
+        </div>
+        <p class="urdu-text" style="font-size: 11px; color: #cbd5e1; margin-bottom: 10px;">
+            آپ اپنے عطیات یا ماہانہ فیس مندرجہ ذیل آفیشल نمبرز پر جمع کرا کے تصدیق کے لیے رسید واٹس ایپ پر بھیج سکتے ہیں:
+        </p>
+        <div style="background: rgba(0,0,0,0.4); padding: 10px; border-radius: 10px; font-size: 12px; color: #f8fafc; display: flex; flex-direction: column; gap: 4px;">
+            <div>📞 Contact: <strong>0343-8800890 / 0344-9461259</strong></div>
+        </div>
+    </div>
+
+    <!-- Public Application Form -->
+    <div id="applyForm" class="glass-card">
+        <h3 style="font-size: 13px; font-weight: 900; text-align: center; text-transform: uppercase; margin-bottom: 4px;">Madad Ki Darkhwast</h3>
+        <p style="font-size: 9px; color: #94a3b8; text-align: center; text-transform: uppercase; margin-bottom: 14px; font-weight: 700;">Send details directly to management WhatsApp</p>
+        
+        <input type="text" id="pubName" placeholder="Full Name" class="input-field">
+        <input type="number" id="pubAmount" placeholder="Required Amount (PKR)" class="input-field">
+        <textarea id="pubReason" placeholder="Reason for Financial Help" class="input-field" rows="3" style="resize: none;"></textarea>
+        
+        <button onclick="submitPublicForm()" class="btn btn-emerald">
+            <i class="fab fa-whatsapp" style="font-size: 16px;"></i> Send Request via WhatsApp
+        </button>
+    </div>
+
+    <!-- Footer -->
+    <footer style="text-align: center; padding: 16px 0; color: #64748b; font-size: 10px;">
+        <p>© 2026 Family Trust & Care Foundation (FTCF). All Rights Reserved.</p>
+    </footer>
+
+    <!-- Script -->
     <script>
-        var globalWaNumber = "923433052346";
+        var targetWaNumber = "923433052346";
 
-        function toggleMission() {
-            var box = document.getElementById('missionBox');
-            if(box) box.classList.toggle('hidden');
-        }
+        function submitPublicForm() {
+            var name = document.getElementById('pubName').value.trim();
+            var amt = Number(document.getElementById('pubAmount').value);
+            var reason = document.getElementById('pubReason').value.trim();
 
-        function toggleFaq(element) {
-            var answer = element.nextElementSibling;
-            if(answer) {
-                answer.classList.toggle('hidden');
-            }
-        }
-
-        function handleApplication() {
-            var n = document.getElementById('uName').value.trim();
-            var a = Number(document.getElementById('uAmount').value);
-            var r = document.getElementById('uReason').value.trim();
-
-            if(!n || !a || !r) {
-              alert("Pehle tamam khane (Name, Amount, Reason) theek se pur karein.");
-              return;
+            if(!name || !amt || !reason) {
+                alert("Pehle tamam khane theek se pur karein.");
+                return;
             }
 
-            if(a <= 0) {
-              alert("Amount 0 ya negative nahi ho sakti!");
-              return;
-            }
+            var text = "*Public Assistance Request (FTCF)*\n" +
+                       "Name: " + name + "\n" +
+                       "Amount: Rs. " + amt.toLocaleString() + "\n" +
+                       "Reason: " + reason;
 
-            var refId = "FTCF-" + Math.floor(1000 + Math.random() * 9000);
-            var now = new Date();
-            var dateStr = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-            document.getElementById('rcptRef').innerText = "#" + refId;
-            document.getElementById('rcptDateTime').innerText = dateStr;
-            document.getElementById('rcptName').innerText = n;
-            document.getElementById('rcptAmount').innerText = "Rs. " + a.toLocaleString();
-            document.getElementById('rcptReason').innerText = r;
-
-            var waText = "*FTCF Loan Application*\nRef: #" + refId + "\nDate: " + dateStr + "\nName: " + n + "\nAmount: Rs. " + a.toLocaleString() + "\nReason: " + r;
-            var waUrl = "https://api.whatsapp.com/send?phone=" + globalWaNumber + "&text=" + encodeURIComponent(waText);
-            document.getElementById('modalWaBtn').href = waUrl;
-
-            document.getElementById('receiptModal').classList.remove('hidden');
-        }
-
-        function downloadReceipt() {
-            var ref = document.getElementById('rcptRef').innerText;
-            var dt = document.getElementById('rcptDateTime').innerText;
-            var name = document.getElementById('rcptName').innerText;
-            var amt = document.getElementById('rcptAmount').innerText;
-            var reason = document.getElementById('rcptReason').innerText;
-
-            var receiptText = "=== FTCF FINANCIAL VOUCHER ===\n" +
-                              "Reference: " + ref + "\n" +
-                              "Date & Time: " + dt + "\n" +
-                              "Applicant Name: " + name + "\n" +
-                              "Requested Amount: " + amt + "\n" +
-                              "Reason: " + reason + "\n" +
-                              "============================\n" +
-                              "Family Trust & Care Foundation";
-
-            var blob = new Blob([receiptText], { type: 'text/plain;charset=utf-8' });
-            var url = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = ref + "-Receipt.txt";
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
-
-        function closeReceiptModal() {
-            document.getElementById('receiptModal').classList.add('hidden');
+            var url = "https://api.whatsapp.com/send?phone=" + targetWaNumber + "&text=" + encodeURIComponent(text);
+            window.open(url, '_blank');
         }
     </script>
 </body>
-  </html>
+</html>
+
   
