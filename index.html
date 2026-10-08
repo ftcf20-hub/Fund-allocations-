@@ -27,19 +27,27 @@
       box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     }
 
-    /* Slim Moving Top Marquee Bar */
+    /* Slim Moving Top Bar (CSS Marquee for Mobile & Desktop Compatibility) */
     .top-bar {
       background-color: var(--dark-blue);
       color: #fff;
-      padding: 5px 0;
-      font-size: 12px;
+      padding: 4px 0;
+      font-size: 11px;
       overflow: hidden;
       white-space: nowrap;
       border-bottom: 1px solid rgba(255,255,255,0.1);
+      width: 100%;
     }
-    .top-bar marquee {
+    .marquee-container {
+      display: inline-block;
+      white-space: nowrap;
+      animation: marquee 25s linear infinite;
       font-family: 'Noto Nastaliq Urdu', serif;
       font-weight: 600;
+    }
+    @keyframes marquee {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
     }
     .top-bar i { color: #ffcc00; margin-left: 6px; margin-right: 12px; }
 
@@ -195,7 +203,7 @@
       border-bottom: 4px solid var(--primary-blue);
       transition: 0.3s;
     }
-    .service-card:hover { transform: translateY(-5px); }
+     .service-card:hover { transform: translateY(-5px); }
     .service-card i {
       font-size: 40px;
       color: var(--primary-blue);
@@ -356,15 +364,16 @@
   </style>
 </head>
 <body>
-   <!-- Sticky Wrapper for Top Bar and Navbar -->
+
+  <!-- Sticky Wrapper for Top Bar and Navbar -->
   <div class="sticky-header-wrapper">
-    <!-- Slim Moving Top Marquee Bar -->
+    <!-- Slim Moving Top Bar (CSS Animation for Mobile & Desktop) -->
     <div class="top-bar">
-      <marquee behavior="scroll" direction="right" scrollamount="5">
+      <div class="marquee-container">
         <i class="fas fa-bullhorn"></i> خوش آمدید! FTCF Pakistan (فیملی ٹرسٹ اینڈ کیئر فاؤنڈیشن) — 
         <i class="fas fa-phone-alt"></i> رابطہ نمبرز: 0343-8800890 / 0344-9461259 / 0342-2735966 — 
         <i class="fas fa-hand-holding-heart"></i> شفاف امداد، خدمتِ خلق اور فلاحی سرگرمیاں جاری ہیں!
-      </marquee>
+      </div>
     </div>
 
     <!-- Main Navigation Header -->
@@ -410,7 +419,7 @@
       <h3 style="text-align: center; color: var(--dark-blue); margin-bottom: 25px;"><i class="fas fa-history"></i> فاؤنڈیشن کا پس منظر — سفرِ خدمت</h3>
       <div style="font-family: 'Noto Nastaliq Urdu', serif; font-size: 15px; color: #444; line-height: 2.3; text-align: right;">
         <p style="margin-bottom: 15px;">
-          ہم شیروان ایبٹ آباد کے ایک گاؤں سے تعلق رکھتے ہیں۔ اگر ہم اپنے پورے علاقے یعنی ایبٹ آباد، مانسہرہ، ہری پور اور حویلیاں کا جائزہ لیں تو یہاں کثیر تعداد میں ایسے علاقے موجود ہیں جہاں کے تقریباً اسی فیصد (80%) لوگ بے روزگار ہیں۔ ان علاقوں میں نہ تو بنیادی سہولیات کا کوئی خاص انتظام ہے اور نہ ہی روزگار کا کوئی پائیدار ذریعہ۔ زیادہ تر لوگ دن بھر سخت محنت اور مزدوری کر کے اپنے معصوم بچوں کا پیٹ پالتے ہیں۔
+          ہم ایبٹ آباد کے ایک گاؤں سے تعلق رکھتے ہیں۔ اگر ہم اپنے پورے علاقے یعنی ایبٹ آباد، مانسہرہ، ہری پور اور حویلیاں کا جائزہ لیں تو یہاں کثیر تعداد میں ایسے علاقے موجود ہیں جہاں کے تقریباً اسی فیصد (80%) لوگ بے روزگار ہیں۔ ان علاقوں میں نہ تو بنیادی سہولیات کا کوئی خاص انتظام ہے اور نہ ہی روزگار کا کوئی پائیدار ذریعہ۔ زیادہ تر لوگ دن بھر سخت محنت اور مزدوری کر کے اپنے معصوم بچوں کا پیٹ پالتے ہیں۔
         </p>
         <p style="margin-bottom: 15px;">
           ان حالات کو مدنظر رکھتے ہوئے مغل برادرز نے اپنے علاقے کے ایسے ہی غریب اور سفید پوش (عزت دار) لوگوں کی مدد کے لیے ایک عملی قدم اٹھانے کا عزم کیا۔ یہ مقدس سفر انہوں نے سب سے پہلے اپنے خاندان سے شروع کیا اور پھر اسے وسعت دی تاکہ علاقے کے ہر اس مستحق فرد کی مدد کی جا سکے جو پس کر رہ جاتا ہے۔
@@ -456,7 +465,7 @@
     <!-- Split Section: Apply Form & Quick Donation Trigger -->
     <div class="info-split">
       
-      <!-- Public Application Form (Name, Phone, Address, Reason, Amount) -->
+      <!-- Public Application Form -->
       <div id="apply" class="card-box">
         <h4>مدد کی درخواست فارم (Assistance Request)</h4>
         <div class="form-group">
@@ -536,7 +545,7 @@
     </div>
   </div>
 
-  <!-- Floating Contact Icons (WhatsApp & Email) -->
+  <!-- Floating Contact Icons -->
   <div class="floating-icons">
     <a href="https://wa.me/923433052346" target="_blank" class="float-icon float-whatsapp" title="WhatsApp Contact">
       <i class="fab fa-whatsapp"></i>
@@ -553,7 +562,7 @@
     <p style="font-size: 11px; margin-top: 5px;">© 2026 All Rights Reserved. Abbottabad, Pakistan.</p>
   </footer>
 
-  <!-- Scripts for Popup, Copy & WhatsApp Form -->
+  <!-- Scripts -->
   <script>
     function openDonateModal() {
       document.getElementById('donateModal').style.display = 'flex';
@@ -576,7 +585,6 @@
         alert("کاپی کرنے میں خرابی پیش آئی۔");
       });
     }
-
     function sendToWhatsAppForm() {
       var name = document.getElementById('pName').value.trim();
       var phone = document.getElementById('pPhone').value.trim();
@@ -602,4 +610,4 @@
   </script>
 
 </body>
-            </html>
+</html>
