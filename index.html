@@ -144,6 +144,15 @@
     .service-card h4 { font-size: 18px; margin-bottom: 10px; color: var(--primary-blue); }
     .service-card p { font-size: 13px; color: var(--text-dark); opacity: 0.8; font-family: 'Noto Nastaliq Urdu', serif; line-height: 1.8; }
 
+    /* Activity Gallery Grid */
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+    .gallery-card {
+      background: var(--card-bg); border-radius: 10px; overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.05); text-align: center;
+    }
+    .gallery-card img { width: 100%; height: 200px; object-fit: cover; }
+    .gallery-card p { padding: 15px; font-size: 13px; font-family: 'Noto Nastaliq Urdu', serif; font-weight: 600; }
+
     /* Split Section */
     .info-split { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 50px; }
     @media(max-width: 768px) { .info-split { grid-template-columns: 1fr; } .nav-links { display: none; } }
@@ -197,7 +206,7 @@
 </head>
 <body id="htmlRoot">
 
-  <!-- Sticky Wrapper for Top Bar and Navbar -->
+   <!-- Sticky Wrapper for Top Bar and Navbar -->
   <div class="sticky-header-wrapper">
     <!-- Slim Moving Top Bar with Dynamic Info -->
     <div class="top-bar">
@@ -220,6 +229,7 @@
           <li><a href="#" data-tr="navHome">ہوم</a></li>
           <li><a href="#about" data-tr="navAbout">تعارف</a></li>
           <li><a href="#services" data-tr="navServices">شعبے</a></li>
+          <li><a href="#gallery" data-tr="navGallery">سرگرمیاں</a></li>
           <li><a href="#apply" data-tr="navApply">درخواست</a></li>
           <li><a href="#volunteer" data-tr="navVolunteer">رضاکار</a></li>
           <li><a href="#faq" data-tr="navFaq">سوالات</a></li>
@@ -289,6 +299,17 @@
         <i class="fas fa-shield-alt"></i>
         <h4 data-tr="srv4Title">علاقائی فلاح و بہبود</h4>
         <p data-tr="srv4Desc">علاقے کی فلاح و بہبود اور باہمی بھائی چارے کو فروغ دینا۔</p>
+      </div>
+    </div>
+
+    <!-- Admin Controlled Activity Gallery Section -->
+    <div id="gallery" style="margin-top: 50px;">
+      <div class="section-title">
+        <h3 data-tr="galTitle">سرگرمیوں کی جھلکیاں (Activity Gallery)</h3>
+        <p data-tr="galDesc">شفاف امدادی سرگرمیاں (عزتِ نفس کے تحفظ کے ساتھ)</p>
+      </div>
+      <div class="gallery-grid" id="dynamicGalleryGrid">
+        <!-- Rendered dynamically from Admin / LocalStorage -->
       </div>
     </div>
 
@@ -384,7 +405,7 @@
         <div class="faq-answer" data-tr="a1">جی ہاں! آپ اپنی زکوٰۃ، صدقات اور عطیات بالکل جمع کروا سکتے ہیں۔ زکوٰۃ کی مد میں آنے والی رقم کو بالخصوص شرعی اصولوں کے مطابق مستحق اور حق دار نادار افراد تک پہنچایا جاتا ہے۔</div>
       </div>
 
-       <div class="faq-item">
+      <div class="faq-item">
         <div class="faq-question" onclick="toggleFaq(this)">
           <span data-tr="q2">2. مالی امداد یا راشن کے لیے کون سے افراد یا خاندان اہل ہیں؟</span>
           <i class="fas fa-chevron-down"></i>
@@ -419,7 +440,7 @@
 
   </div>
 
-  <!-- Donation Accounts Popup Modal -->
+    <!-- Donation Accounts Popup Modal -->
   <div id="donateModal" class="modal-overlay">
     <div class="modal-content">
       <span class="close-modal" onclick="closeDonateModal()">&times;</span>
@@ -497,6 +518,11 @@
           <label>واٹس ایپ نمبر (میسج وصول کرنے کے لیے):</label>
           <input type="text" id="admWhatsapp" class="form-control">
         </div>
+        <div class="form-group">
+          <label>گیلری تصاویر اور کیپشنز (JSON Format میں درج کریں):</label>
+          <textarea id="admGallery" class="form-control" rows="4"></textarea>
+          <small style="font-size: 10px; opacity: 0.7;">مثال: [{"img": "url", "ur": "عنوان اردو میں", "en": "English title"}]</small>
+        </div>
         <button onclick="saveAdminChanges()" class="submit-btn" style="background-color: #10b981; margin-top: 10px;">تبدیلیاں محفوظ کریں (Save)</button>
       </div>
     </div>
@@ -506,9 +532,9 @@
   <div class="floating-icons">
     <a href="https://wa.me/923433052346" target="_blank" class="float-icon float-whatsapp" title="WhatsApp Contact"><i class="fab fa-whatsapp"></i></a>
     <a href="mailto:ftcf.20@gmail.com" class="float-icon float-email" title="Email FTCF"><i class="fas fa-envelope"></i></a>
-                                                                                           </div>
+  </div>
 
-   <!-- Footer -->
+  <!-- Footer -->
   <footer>
     <i class="fas fa-hands-helping" style="font-size: 28px; margin-bottom: 10px;"></i>
     <p>Family Trust & Care Foundation (FTCF) — Founded by Mughal Brothers</p>
@@ -525,6 +551,7 @@
         navHome: "ہوم",
         navAbout: "تعارف",
         navServices: "شعبے",
+        navGallery: "سرگرمیاں",
         navApply: "درخواست",
         navVolunteer: "رضاکار",
         navFaq: "سوالات",
@@ -548,6 +575,8 @@
         srv3Desc: "رمضان المبارک اور مشکل حالات میں مستحقین و سفید پوش خاندانوں کو راشن کی فراہمی۔",
         srv4Title: "علاقائی فلاح و بہبود",
         srv4Desc: "علاقے کی فلاح و بہبود اور باہمی بھائی چارے کو فروغ دینا۔",
+        galTitle: "سرگرمیوں کی جھلکیاں (Activity Gallery)",
+        galDesc: "شفاف امدادی سرگرمیاں (عزتِ نفس کے تحفظ کے ساتھ)",
         formTitle: "مدد کی درخواست فارم (Assistance Request)",
         lblName: "مکمل نام (Full Name)",
         lblPhone: "فون نمبر (Phone Number)",
@@ -588,6 +617,7 @@
         navHome: "Home",
         navAbout: "About",
         navServices: "Services",
+        navGallery: "Gallery",
         navApply: "Apply",
         navVolunteer: "Volunteer",
         navFaq: "FAQ",
@@ -611,6 +641,8 @@
         srv3Desc: "Ration distribution to deserving and white-collar families during Ramzan and crises.",
         srv4Title: "Community Welfare",
         srv4Desc: "Promoting regional welfare and mutual brotherhood.",
+        galTitle: "Activity Gallery",
+        galDesc: "Transparent relief drives with privacy protection",
         formTitle: "Assistance Request Form",
         lblName: "Full Name",
         lblPhone: "Phone Number",
@@ -661,6 +693,7 @@
           el.innerText = translations[currentLang][key];
         }
       });
+      renderGallery();
     }
 
     // Default Config & LocalStorage Sync
@@ -668,7 +701,11 @@
       marqueeText: "خوش آمدید! FTCF Pakistan — رابطہ نمبرز: 0343-8800890 / 0344-9461259 / 0342-2735966 — شفاف امداد اور فلاحی سرگرمیاں جاری ہیں!",
       targetAmount: 150000,
       collectedAmount: 97500,
-      whatsappNumber: "923433052346"
+      whatsappNumber: "923433052346",
+      galleryItems: [
+        { img: "https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=600&q=80", ur: "مستحق خاندانوں میں راشن پیکج کی تقسیم", en: "Ration package distribution to needy families" },
+        { img: "https://images.unsplash.com/photo-1532629345422-7515f3d16bb9?auto=format&fit=crop&w=600&q=80", ur: "میڈیکل سپورٹ اور ہنگامی امدادی سرگرمی", en: "Medical support and emergency relief drive" }
+      ]
     };
 
     if(localStorage.getItem('ftcf_config')) {
@@ -682,6 +719,23 @@
       document.getElementById('displayCollectedText').innerText = `اب تک جمع شدہ رقم: ${Number(siteConfig.collectedAmount).toLocaleString()} روپے`;
       document.getElementById('displayPercentText').innerText = `${percentage}%`;
       document.getElementById('displayProgressBar').style.width = `${percentage}%`;
+      renderGallery();
+    }
+
+    function renderGallery() {
+      const grid = document.getElementById('dynamicGalleryGrid');
+      grid.innerHTML = '';
+      if(siteConfig.galleryItems && siteConfig.galleryItems.length > 0) {
+        siteConfig.galleryItems.forEach(item => {
+          const caption = currentLang === 'ur' ? item.ur : item.en;
+          grid.innerHTML += `
+            <div class="gallery-card">
+              <img src="${item.img}" alt="FTCF Activity">
+              <p>${caption}</p>
+            </div>
+          `;
+        });
+      }
     }
 
     window.onload = applyConfigToPage;
@@ -699,21 +753,27 @@
         document.getElementById('admTarget').value = siteConfig.targetAmount;
         document.getElementById('admCollected').value = siteConfig.collectedAmount;
         document.getElementById('admWhatsapp').value = siteConfig.whatsappNumber;
+        document.getElementById('admGallery').value = JSON.stringify(siteConfig.galleryItems, null, 2);
       } else {
         alert("غلط پاسورڈ!");
       }
     }
 
     function saveAdminChanges() {
-      siteConfig.marqueeText = document.getElementById('admMarqueeText').value;
-      siteConfig.targetAmount = Number(document.getElementById('admTarget').value);
-      siteConfig.collectedAmount = Number(document.getElementById('admCollected').value);
-      siteConfig.whatsappNumber = document.getElementById('admWhatsapp').value;
+      try {
+        siteConfig.marqueeText = document.getElementById('admMarqueeText').value;
+        siteConfig.targetAmount = Number(document.getElementById('admTarget').value);
+        siteConfig.collectedAmount = Number(document.getElementById('admCollected').value);
+        siteConfig.whatsappNumber = document.getElementById('admWhatsapp').value;
+        siteConfig.galleryItems = JSON.parse(document.getElementById('admGallery').value);
 
-      localStorage.setItem('ftcf_config', JSON.stringify(siteConfig));
-      applyConfigToPage();
-      closeAdminModal();
-      alert("ایڈمن سیٹنگز کامیابی سے اپڈیٹ ہو گئی ہیں!");
+        localStorage.setItem('ftcf_config', JSON.stringify(siteConfig));
+        applyConfigToPage();
+        closeAdminModal();
+        alert("ایڈمن سیٹنگز اور گیلری کامیابی سے اپڈیٹ ہو گئی ہیں!");
+      } catch(e) {
+        alert("گیلری کا فارمیٹ (JSON) درست نہیں ہے۔ براہ کرم چیک کریں۔");
+      }
     }
 
     // FAQ Accordion Toggle
@@ -799,3 +859,5 @@
 
 </body>
 </html>
+
+  
