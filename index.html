@@ -11,7 +11,6 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
   <script>
-    // Your Firebase Configuration
     const firebaseConfig = {
       apiKey: "AIzaSyD5PPM88VmJjxTvrhXZtaFml-cM9txnS1M",
       authDomain: "ftcf-portal.firebaseapp.com",
@@ -22,7 +21,6 @@
       measurementId: "G-TWRDXN6186"
     };
 
-    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
   </script>
@@ -53,62 +51,33 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; transition: background 0.3s, color 0.3s; }
     body { background-color: var(--light-bg); color: var(--text-dark); line-height: 1.6; }
 
-    .sticky-header-wrapper {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    }
+    .sticky-header-wrapper { position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
 
     .top-bar {
       background: linear-gradient(135deg, var(--dark-blue), #00284d);
-      color: #fff;
-      padding: 6px 0;
-      font-size: 12px;
-      overflow: hidden;
-      white-space: nowrap;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      width: 100%;
+      color: #fff; padding: 6px 0; font-size: 12px;
+      overflow: hidden; white-space: nowrap; border-bottom: 1px solid rgba(255,255,255,0.1); width: 100%;
     }
-    .marquee-container {
-      display: inline-block;
-      white-space: nowrap;
-      animation: marquee 30s linear infinite;
-      font-family: 'Noto Nastaliq Urdu', serif;
-      font-weight: 600;
-    }
-    @keyframes marquee {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
+    .marquee-container { display: inline-block; white-space: nowrap; animation: marquee 30s linear infinite; font-family: 'Noto Nastaliq Urdu', serif; font-weight: 600; }
+    @keyframes marquee { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
     .top-bar i { color: #ffcc00; margin-left: 6px; margin-right: 12px; }
 
     header { background: var(--nav-bg); }
-    .navbar {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 12px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+    .navbar { max-width: 1200px; margin: 0 auto; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
     .logo-area { display: flex; align-items: center; gap: 15px; }
+    
+    /* Logo Box / Image Styling */
     .logo-icon-box {
       width: 45px; height: 45px;
       background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
       border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
-      color: #fff; font-size: 22px;
+      color: #fff; font-size: 22px; overflow: hidden;
       box-shadow: 0 4px 12px rgba(0, 96, 174, 0.3);
     }
-    .logo-area h1 {
-      font-family: 'Poppins', sans-serif;
-      font-size: 22px; font-weight: 800;
-      color: var(--primary-blue);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      line-height: 1.1;
-    }
+    .logo-icon-box img { width: 100%; height: 100%; object-fit: cover; }
+
+    .logo-area h1 { font-family: 'Poppins', sans-serif; font-size: 22px; font-weight: 800; color: var(--primary-blue); letter-spacing: 1px; text-transform: uppercase; line-height: 1.1; }
     .logo-area span { font-size: 11px; color: #777; font-weight: 600; display: block; }
     
     .nav-links { display: flex; gap: 20px; list-style: none; align-items: center; }
@@ -117,28 +86,24 @@
 
     .utilities-box { display: flex; gap: 8px; align-items: center; }
     .util-btn {
-      background: #e2e8f0; color: #333; border: none;
-      width: 35px; height: 35px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px; font-weight: 700; cursor: pointer;
+      background: #e2e8f0; color: #333; border: none; width: 35px; height: 35px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; cursor: pointer;
     }
     [data-theme="dark"] .util-btn { background: #334155; color: #f1f5f9; }
 
     .donate-btn-nav {
-      background-color: var(--accent-red) !important;
-      color: #fff !important; padding: 8px 16px; border-radius: 6px;
-      text-transform: uppercase; font-size: 12px !important; cursor: pointer;
-      border: none; box-shadow: 0 4px 10px rgba(220, 5, 5, 0.3);
+      background-color: var(--accent-red) !important; color: #fff !important; padding: 8px 16px; border-radius: 6px;
+      text-transform: uppercase; font-size: 12px !important; cursor: pointer; border: none; box-shadow: 0 4px 10px rgba(220, 5, 5, 0.3);
     }
 
+    /* Hero Section with Dynamic Background */
     .hero {
-      background: linear-gradient(rgba(0, 96, 174, 0.9), rgba(0, 61, 115, 0.95)), url('https://images.unsplash.com/photo-1532629345422-7515f3d16bb9?auto=format&fit=crop&w=1400&q=80');
       background-size: cover; background-position: center;
       color: #fff; padding: 90px 20px; text-align: center;
     }
     .hero-content { max-width: 850px; margin: 0 auto; }
-    .hero h2 { font-family: 'Noto Nastaliq Urdu', serif; font-size: 34px; margin-bottom: 20px; line-height: 1.8; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-    .hero p { font-size: 16px; margin-bottom: 30px; color: #e0e0e0; font-family: 'Noto Nastaliq Urdu', serif; }
+    .hero h2 { font-family: 'Noto Nastaliq Urdu', serif; font-size: 34px; margin-bottom: 20px; line-height: 1.8; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+    .hero p { font-size: 16px; margin-bottom: 30px; color: #e0e0e0; font-family: 'Noto Nastaliq Urdu', serif; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
     .hero-buttons { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
     .btn-main { padding: 14px 28px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 14px; cursor: pointer; border: none; }
     .btn-primary-custom { background-color: #fff; color: var(--primary-blue); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
@@ -157,8 +122,7 @@
     .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
     .service-card {
       background: var(--card-bg); padding: 35px 20px; border-radius: 10px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.06); text-align: center;
-      border-bottom: 4px solid var(--primary-blue); transition: 0.3s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06); text-align: center; border-bottom: 4px solid var(--primary-blue); transition: 0.3s;
     }
     .service-card:hover { transform: translateY(-5px); }
     .service-card i { font-size: 40px; color: var(--primary-blue); margin-bottom: 15px; }
@@ -166,10 +130,7 @@
     .service-card p { font-size: 13px; color: var(--text-dark); opacity: 0.8; font-family: 'Noto Nastaliq Urdu', serif; line-height: 1.8; }
 
     .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
-    .gallery-card {
-      background: var(--card-bg); border-radius: 10px; overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.05); text-align: center;
-    }
+    .gallery-card { background: var(--card-bg); border-radius: 10px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.05); text-align: center; }
     .gallery-card img { width: 100%; height: 200px; object-fit: cover; }
     .gallery-card p { padding: 15px; font-size: 13px; font-family: 'Noto Nastaliq Urdu', serif; font-weight: 600; }
 
@@ -202,7 +163,7 @@
     .faq-answer { display: none; font-family: 'Noto Nastaliq Urdu', serif; font-size: 14px; opacity: 0.85; line-height: 1.8; margin-top: 10px; padding-right: 15px; }
 
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; justify-content: center; align-items: center; }
-    .modal-content { background: var(--card-bg); width: 90%; max-width: 500px; padding: 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; text-align: right; }
+    .modal-content { background: var(--card-bg); width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto; padding: 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; text-align: right; }
     .close-modal { position: absolute; top: 15px; left: 20px; font-size: 22px; cursor: pointer; color: #777; }
     .account-card-item { background: rgba(0,0,0,0.03); border: 1px solid #cbd5e1; padding: 12px 15px; border-radius: 8px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
     .copy-btn { background: var(--primary-blue); color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 12px; cursor: pointer; }
@@ -213,34 +174,9 @@
     .donation-category-box { display: none; }
     .donation-category-box.active { display: block; }
 
-    .social-share-section {
-      background: var(--card-bg);
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-      text-align: center;
-      margin-top: 50px;
-      border-top: 4px solid var(--primary-blue);
-    }
-    .share-buttons-container {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-top: 15px;
-      flex-wrap: wrap;
-    }
-    .share-btn {
-      padding: 10px 20px;
-      border-radius: 6px;
-      color: #fff;
-      font-weight: 600;
-      font-size: 13px;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    }
+    .social-share-section { background: var(--card-bg); padding: 30px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); text-align: center; margin-top: 50px; border-top: 4px solid var(--primary-blue); }
+    .share-buttons-container { display: flex; justify-content: center; gap: 15px; margin-top: 15px; flex-wrap: wrap; }
+    .share-btn { padding: 10px 20px; border-radius: 6px; color: #fff; font-weight: 600; font-size: 13px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
     .share-whatsapp { background-color: #25d366; }
     .share-facebook { background-color: #1877f2; }
     .share-twitter { background-color: #1da1f2; }
@@ -264,10 +200,12 @@
       </div>
     </div>
 
-    <header>
+     <header>
       <div class="navbar">
         <div class="logo-area">
-          <div class="logo-icon-box"><i class="fas fa-hands-helping"></i></div>
+          <div class="logo-icon-box" id="displayLogoBox">
+            <i class="fas fa-hands-helping" id="defaultLogoIcon"></i>
+          </div>
           <div>
             <h1>FTCF Pakistan</h1>
             <span id="subTitleText" data-tr="subTitle">فیملی ٹرسٹ اینڈ کیئر فاؤنڈیشن</span>
@@ -292,7 +230,7 @@
     </header>
   </div>
 
-  <section class="hero">
+  <section class="hero" id="displayHeroSection">
     <div class="hero-content">
       <h2 data-tr="heroTitle">انسانیت کی خدمت، باہمی تعاون اور شفاف فلاحی نظام</h2>
       <p data-tr="heroDesc">فیملی ٹرسٹ اینڈ کیئر فاؤنڈیشن (FTCF) علاقے کے ضرورت مندوں، بیماروں اور مستحق خاندانوں کی بروقت مالی اور فلاحی معاونت کے لیے دن رات کوشاں ہے۔</p>
@@ -437,7 +375,7 @@
       </div>
     </div>
 
-    <div id="volunteer" class="card-box" style="margin-top: 40px; border-top: 4px solid var(--primary-blue);">
+     <div id="volunteer" class="card-box" style="margin-top: 40px; border-top: 4px solid var(--primary-blue);">
       <h4 style="text-align: center; color: var(--primary-blue); margin-bottom: 10px;"><i class="fas fa-user-plus"></i> <span data-tr="volTitle">بطور رضاکار (Volunteer) شمولیت اختیار کریں</span></h4>
       <p data-tr="volDesc" style="text-align: center; font-size: 13px; margin-bottom: 20px; font-family: 'Noto Nastaliq Urdu', serif; opacity: 0.8;">اگر آپ ایبٹ آباد یا گردونواح میں فلاحی کاموں کے لیے ہماری ٹیم کا حصہ بننا چاہتے ہیں تو فارم پُر کریں:</p>
       <div style="max-width: 600px; margin: 0 auto;">
@@ -576,6 +514,14 @@
       </div>
 
       <div id="adminPanelControls" style="display: none;">
+        <div class="form-group">
+          <label>لوگو امیج کا لنک (Logo Image URL):</label>
+          <input type="text" id="admLogoUrl" class="form-control" placeholder="ImgBB یا PostImages کا لنک دیں">
+        </div>
+        <div class="form-group">
+          <label>ہیرو سیکشن بیک گراؤنڈ تصویر کا لنک (Hero Background URL):</label>
+          <input type="text" id="admHeroBgUrl" class="form-control" placeholder="بینر یا تصویر کا لنک دیں">
+        </div>
         <div class="form-group">
           <label>اوپر چلنے والی پٹی (Marquee Text):</label>
           <input type="text" id="admMarqueeText" class="form-control">
@@ -796,8 +742,10 @@
       renderLedger();
     }
 
-    // Default Fallback Data if Firebase is empty
+    // Default Fallback Data with Logo & Hero Background URLs
     let siteConfig = {
+      logoUrl: "",
+      heroBgUrl: "https://images.unsplash.com/photo-1532629345422-7515f3d16bb9?auto=format&fit=crop&w=1400&q=80",
       marqueeText: "خوش آمدید! FTCF Pakistan — رابطہ نمبرز: 0343-8800890 / 0344-9461259 / 0342-2735966 — شفاف امداد اور فلاحی سرگرمیاں جاری ہیں!",
       targetAmount: 150000,
       collectedAmount: 97500,
@@ -808,8 +756,8 @@
         { count: "12+", ur: "کامیاب پروجیکٹس", en: "Completed Projects" }
       ],
       ledgerItems: [
-        { desc: "مستحقین میں راشن پیکج تقسیم", date: "2026-10-01", amount: "45,000" },
-        { desc: "مستحق مریض کی طبی امداد", date: "2026-10-05", amount: "20,000" }
+        { desc: "مستحقین میں راشن پیکج تقسیم", date: "2026-10-01", amount: "00" },
+        { desc: "مستحق مریض کی طبی امداد", date: "2026-10-05", amount: "00" }
       ],
       galleryItems: [
         { img: "https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=600&q=80", ur: "مستحق خاندانوں میں راشن پیکج کی تقسیم", en: "Ration package distribution to needy families" },
@@ -817,23 +765,36 @@
       ]
     };
 
-    // Load Data from Firebase Firestore on Startup
     async function loadDataFromFirebase() {
       try {
         const doc = await db.collection("ftcf_data").doc("main_config").get();
         if (doc.exists) {
           siteConfig = doc.data();
         } else {
-          // If first time, save default data to Firebase
           await db.collection("ftcf_data").doc("main_config").set(siteConfig);
         }
       } catch(e) {
-        console.error("Error loading from Firebase, using default config:", e);
+        console.error("Error loading from Firebase:", e);
       }
       applyConfigToPage();
     }
 
     function applyConfigToPage() {
+      // Apply Logo Image or fallback icon
+      const logoBox = document.getElementById('displayLogoBox');
+      if (siteConfig.logoUrl && siteConfig.logoUrl.trim() !== "") {
+        logoBox.innerHTML = `<img src="${siteConfig.logoUrl}" alt="FTCF Logo">`;
+      } else {
+        logoBox.innerHTML = `<i class="fas fa-hands-helping"></i>`;
+      }
+
+      // Apply Hero Section Background Image with Overlay
+      const heroSec = document.getElementById('displayHeroSection');
+      const bgImg = siteConfig.heroBgUrl ? siteConfig.heroBgUrl : 'https://images.unsplash.com/photo-1532629345422-7515f3d16bb9?auto=format&fit=crop&w=1400&q=80';
+      heroSec.style.background = `linear-gradient(rgba(0, 96, 174, 0.9), rgba(0, 61, 115, 0.95)), url('${bgImg}')`;
+      heroSec.style.backgroundSize = 'cover';
+      heroSec.style.backgroundPosition = 'center';
+
       document.getElementById('displayMarquee').innerHTML = `<i class="fas fa-bullhorn"></i> ${siteConfig.marqueeText}`;
       const percentage = Math.min(Math.round((siteConfig.collectedAmount / siteConfig.targetAmount) * 100), 100);
       document.getElementById('displayTargetText').innerText = `ماہانہ ہدف: ${Number(siteConfig.targetAmount).toLocaleString()} روپے`;
@@ -902,9 +863,11 @@
 
     function checkAdminLogin() {
       const pass = document.getElementById('adminPass').value;
-      if (pass === '0022') {
+      if (pass === '0023') {
         document.getElementById('adminLoginForm').style.display = 'none';
         document.getElementById('adminPanelControls').style.display = 'block';
+        document.getElementById('admLogoUrl').value = siteConfig.logoUrl || '';
+        document.getElementById('admHeroBgUrl').value = siteConfig.heroBgUrl || '';
         document.getElementById('admMarqueeText').value = siteConfig.marqueeText;
         document.getElementById('admTarget').value = siteConfig.targetAmount;
         document.getElementById('admCollected').value = siteConfig.collectedAmount;
@@ -917,9 +880,11 @@
       }
     }
 
-  async function saveAdminChangesToFirebase() {
+    async function saveAdminChangesToFirebase() {
       try {
         const updatedConfig = {
+          logoUrl: document.getElementById('admLogoUrl').value.trim(),
+          heroBgUrl: document.getElementById('admHeroBgUrl').value.trim(),
           marqueeText: document.getElementById('admMarqueeText').value,
           targetAmount: Number(document.getElementById('admTarget').value),
           collectedAmount: Number(document.getElementById('admCollected').value),
@@ -929,20 +894,18 @@
           galleryItems: JSON.parse(document.getElementById('admGallery').value)
         };
 
-        // Save directly to Firebase Firestore
         await db.collection("ftcf_data").doc("main_config").set(updatedConfig);
         
         siteConfig = updatedConfig;
         applyConfigToPage();
         closeAdminModal();
-        alert("ڈیٹا کامیابی سے فائر بیس پر لائیو محفوظ ہو گیا ہے! اب ہر وزٹر اسے دیکھ سکے گا۔");
+        alert("لوگو اور ہیرو بیک گراؤنڈ سمیت تمام ڈیٹا کامیابی سے فائر بیس پر لائیو محفوظ ہو گیا ہے!");
       } catch(e) {
         alert("JSON فارمیٹ یا انٹرنیٹ میں خرابی ہے۔ براہ کرم بریکٹس [] اور کما , چیک کریں۔");
         console.error(e);
       }
     }
-
-    function shareOnSocial(platform) {
+function shareOnSocial(platform) {
       const shareUrl = window.location.href;
       const shareText = encodeURIComponent("فیملی ٹرسٹ اینڈ کیئر فاؤنڈیشن (FTCF) کے فلاحی مشن کا وزٹ کریں اور خدمتِ خلق میں حصہ بنیں:");
       if(platform === 'whatsapp') {
@@ -1034,3 +997,4 @@
 
 </body>
 </html>
+    
